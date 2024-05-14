@@ -1,8 +1,6 @@
 const Stock = require("../model/Stock");
 
 
-
-
 //_________________________________________________________________1:First _Part (Stock-Crud)_______________________________________________________________________________
 
 
@@ -70,7 +68,40 @@ async function findSN(req, res, next) {
     } catch (err) {}
 }
 
+// Function to find Stock by produit_id
+async function findStockByProduitId(req, res, next) {
+    try {
+        const data = await Stock.find({ produit_id: req.params.produitId });
+        res.json(data);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+    }
+}
 
+// Function to update multiple Stock at once
+async function updateMultipleStock(req, res, next) {
+    try {
+        const { ids, updateData } = req.body;
+        const data = await Stock.updateMany({ _id: { $in: ids } }, updateData);
+        res.json(data);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
+// Function to delete multiple Stock by IDs
+async function deleteMultipleStock(req, res, next) {
+    try {
+        const { ids } = req.body;
+        const data = await Stock.deleteMany({ _id: { $in: ids } });
+        res.json(data);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+    }
+}
 
 //____________________________________________________________________2: seconde Part (Socket)______________________________________________________________________________________
 
@@ -86,6 +117,9 @@ module.exports = {
     showS,
     findS,
     findSN,
+    findStockByProduitId,
+    updateMultipleStock,
+    deleteMultipleStock
 
 
 

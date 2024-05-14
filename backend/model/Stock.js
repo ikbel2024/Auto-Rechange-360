@@ -7,7 +7,7 @@ const Schema = mongo.Schema;
 // Creating a new Schema for the Pieces
 const Stock = new Schema({
     nom: String,
-    reference: Number,
+    reference: String,
     produit_id: String,
     quantité: Number,
     Description: String

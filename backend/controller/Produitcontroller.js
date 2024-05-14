@@ -32,15 +32,18 @@ async function deletePR(req, res, next) {
     }
 }
 
-// Function to update a Produit
 async function updatePR(req, res, next) {
     try {
-        const data = await Produit.findByIdAndUpdate(req.params.id, req.body);
+        const data = await Produit.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!data) {
+            return res.status(404).send("Produit not found");
+        }
         res.send("updated");
-    } catch (err) {}
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+    }
 }
-
-
 
 // Function to get all  the Produit
 async function showPR(req, res, next) {
@@ -71,7 +74,115 @@ async function findProduitName(req, res, next) {
 }
 
 
+// Function to find a Produit by name
+async function findProduitName(req, res, next) {
+    try {
+        const data = await Produit.findOne({ nom: req.params.name });
+        if (!data) {
+            return res.status(404).send("Produit not found");
+        }
+        res.send(data);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+    }
+}
 
+// Function to find Produit by fournisseur (supplier)
+async function findProduitByFournisseur(req, res, next) {
+    try {
+        const data = await Produit.find({ id_fournisseur: req.params.fournisseurId });
+        res.json(data);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
+// Function to paginate Produit
+async function paginateProduit(req, res, next) {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page - 1) * limit;
+
+        const data = await Produit.find().skip(skip).limit(limit);
+        const count = await Produit.countDocuments();
+
+        res.json({
+            total: count,
+            page: page,
+            pages: Math.ceil(count / limit),
+            data: data
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
+// Function to get all unique Brand IDs
+async function getUniqueBrandIds(req, res, next) {
+    try {
+        const data = await Produit.distinct("id_marque");
+        res.json(data);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
+// Function to update multiple Produits at once
+async function updateMultipleProduits(req, res, next) {
+    try {
+        const { ids, updateData } = req.body;
+        const data = await Produit.updateMany({ _id: { $in: ids } }, updateData);
+        res.json(data);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
+// Function to delete multiple Produits by IDs
+async function deleteMultipleProduits(req, res, next) {
+    try {
+        const { ids } = req.body;
+        const data = await Produit.deleteMany({ _id: { $in: ids } });
+        res.json(data);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
+
+
+// Function to count the number of Produits
+async function countProduits(req, res, next) {
+    try {
+        const count = await Produit.countDocuments();
+        res.json({ count: count });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
+// Function to find a Produit by name and fournisseur
+async function findProduitByNameAndFournisseur(req, res, next) {
+    try {
+        const { nom, fournisseurId } = req.query;
+        const data = await Produit.find({ nom: nom, id_fournisseur: fournisseurId });
+        if (data.length === 0) {
+            return res.status(404).send("Produit not found");
+        }
+        res.json(data);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+    }
+}
 
 
 
@@ -148,7 +259,14 @@ module.exports = {
     showPR,
     findPR,
     findProduitName,
-    //affichesocket
+    // affichesocket,
+    findProduitByFournisseur,
+    paginateProduit,
+    countProduits,
+    findProduitByNameAndFournisseur,
+    getUniqueBrandIds,
+    updateMultipleProduits,
+    deleteMultipleProduits
 
 
 };
