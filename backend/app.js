@@ -2,9 +2,9 @@
 const http = require("http");
 const express = require("express");
 const mongoose = require("mongoose");
-const dbConnection = require("../Auto-Rechange-360/config/dbconnection.json");
+const dbConnection = require("../Auto-Rechange-360/backend/config/dbconnection.json");
 const bodyParser = require("body-parser");
-const produitRouter = require("../Auto-Rechange-360/routes/ProduitR");
+const produitRouter = require("../Auto-Rechange-360/backend/routes/ProduitR");
 const path = require("path");
 
 
