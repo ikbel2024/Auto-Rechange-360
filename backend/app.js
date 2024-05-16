@@ -2,16 +2,17 @@
 const http = require("http");
 const express = require("express");
 const mongoose = require("mongoose");
-const dbConnection = require("../EcoRide/config/dbconnection.json");
+const dbConnection = require("./config/dbconnection.json");
 const bodyParser = require("body-parser");
 
-const userRouter = require("../EcoRide/routes/user");
+const userRouter = require("./routes/user");
 
 const path = require("path");
 
 //akrem
 
-const user = require("../EcoRide/models/user");
+const user = require("./models/user");
+const role = require("./models/role");
 
 
 // Connecting to MongoDB
