@@ -1,4 +1,7 @@
 const User = require("../models/user");
+const validator = require('validator'); 
+const bcrypt= require('bcrypt'); 
+const jwt = require('jsonwebtoken'); 
 
 async function add(req, res, next) {
     try {
@@ -8,7 +11,8 @@ async function add(req, res, next) {
             adresse: req.body.adresse,
             email: req.body.email,
             num_tel: req.body.num_tel,
-            mot_de_passe: req.body.mot_de_passe
+            mot_de_passe: req.body.mot_de_passe, 
+            roleId: req.body.roleId
         });
         await user.save();
         res.status(200).send("add good");
@@ -43,26 +47,9 @@ async function deletebyid(req, res, next) {
         console.log(err);
     }
 }
-exports.login = (req, res, next) => {
-    User.findOne({ email: req.body.email })
-        .then(user => {
-            if (!user) {
-                return res.status(401).json({ message: 'Paire login/mot de passe incorrecte'});
-            }
-            bcrypt.compare(req.body.password, user.password)
-                .then(valid => {
-                    if (!valid) {
-                        return res.status(401).json({ message: 'Paire login/mot de passe incorrecte' });
-                    }
-                    res.status(200).json({
-                        userId: user._id,
-                        token: 'TOKEN'
-                    });
-                })
-                .catch(error => res.status(500).json({ error }));
-        })
-        .catch(error => res.status(500).json({ error }));
- };
+
+
+
  exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
       .then(hash => {
@@ -77,30 +64,12 @@ exports.login = (req, res, next) => {
       .catch(error => res.status(500).json({ error }));
   };
  
-  exports.login = (req, res, next) => {
-    User.findOne({ email: req.body.email })
-        .then(user => {
-            if (!user) {
-                return res.status(401).json({ message: 'Paire login/mot de passe incorrecte'});
-            }
-            bcrypt.compare(req.body.password, user.password)
-                .then(valid => {
-                    if (!valid) {
-                        return res.status(401).json({ message: 'Paire login/mot de passe incorrecte' });
-                    }
-                    res.status(200).json({
-                        userId: user._id,
-                        token: 'TOKEN'
-                    });
-                })
-                .catch(error => res.status(500).json({ error }));
-        })
-        .catch(error => res.status(500).json({ error }));
- };
+  
 module.exports = {
     add,
     getall,
     getbyid,
     deletebyid,
+    
 
 };

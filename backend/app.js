@@ -6,6 +6,7 @@ const dbConnection = require("./config/dbconnection.json");
 const bodyParser = require("body-parser");
 
 const userRouter = require("./routes/user");
+const roleRouter = require("./routes/role");
 
 const path = require("path");
 
@@ -35,6 +36,8 @@ app.use(bodyParser.json());
 
 // Using fournisseur router
 app.use("/User", userRouter);
+app.use("/Role", roleRouter);
+
 
 // Creating HTTP server
 const server = http.createServer(app);

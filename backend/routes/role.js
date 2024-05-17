@@ -7,9 +7,9 @@ router.get("/getall", roleController.getall);
 router.get("/getbyid/:id", roleController.getbyid);
 router.delete("/deletebyid/:id", roleController.deletebyid);
 router.get("/role", (req, res, next) => {
-    res.render("Role");});
+    res.render("Role");
+});
 
-    const roleController = require('../controllers/rolecontroller');
 
 
 
