@@ -7,6 +7,9 @@ const bodyParser = require("body-parser");
 const produitRouter = require("../backend/routes/ProduitR");
 const path = require("path");
 
+
+require('dotenv').config();
+
 const axios = require('axios'); // Import Axios for making HTTP requests
 
 //twig need Produit root to can test in navigateur
@@ -14,6 +17,11 @@ const axios = require('axios'); // Import Axios for making HTTP requests
 const produit = require("./model/Produit");
 
 
+// Ensure environment variable is loaded correctly
+console.log("GEMINI_API_KEY:", process.env.GEMINI_API_KEY);
+
+// Correct path to chat router
+const chatRouter = require('../backend/routes/chat');
 
 
 // Connecting to MongoDB
@@ -34,9 +42,9 @@ app.set("view engine", "twig");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Using Produit router
+// Setting up routes
 app.use("/ProduitR", produitRouter);
-
+app.use('/chat', chatRouter); // Ensure this is correctly integrated
 // Creating HTTP server
 const server = http.createServer(app);
 
