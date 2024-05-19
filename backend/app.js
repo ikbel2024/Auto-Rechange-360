@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const produitRouter = require("../backend/routes/ProduitR");
 const path = require("path");
 
+const axios = require('axios'); // Import Axios for making HTTP requests
 
 //twig need Produit root to can test in navigateur
 //const { affichesocket } = require("./controller/Produitcontroller").default;
@@ -85,8 +86,45 @@ io.on("connection", (socket) => {
     });
 });
 
+// Define NHTSA vPIC API URL
+const VPIC_API_URL = 'https://vpic.nhtsa.dot.gov/api/vehicles';
+
+// Function to decode a VIN
+async function decodeVIN(vin, modelYear) {
+    try {
+        // Make a GET request to the DecodeVin endpoint
+        const response = await axios.get(`${VPIC_API_URL}/DecodeVin/${vin}`, {
+            params: {
+                format: 'json',
+                modelyear: modelYear
+            }
+        });
+
+        // Extract and return the decoded VIN data from the response
+        return response.data.Results;
+    } catch (error) {
+        console.error('Error decoding VIN:', error.message);
+        throw new Error('Failed to decode VIN');
+    }
+}
+
+// Endpoint to decode a VIN
+app.get('/decode-vin/:vin', async(req, res) => {
+    const vin = req.params.vin;
+    const modelYear = req.query.modelyear || ''; // Optional query parameter
+
+    try {
+        const decodedData = await decodeVIN(vin, modelYear);
+        res.json(decodedData);
+    } catch (error) {
+        console.error('Error decoding VIN:', error.message);
+        res.status(500).json({ error: 'Failed to decode VIN' });
+    }
+});
+
+
 // Starting server
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
