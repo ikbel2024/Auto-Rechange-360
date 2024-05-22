@@ -3,15 +3,21 @@ const uniqueValidator = require('mongoose-unique-validator');
 const validator = require('validator'); 
 const bcrypt= require('bcrypt'); 
 const jwt = require('jsonwebtoken'); 
+const { isEmail} = require('validator') 
 
 // Schéma pour le modèle User
 const userSchema = new mongoose.Schema({
   nom: String,
   prenom: String,
   adresse: { type: String, required: true },
-  email: { type: String, required: true, unique: true , lowercase:true },
+  email: { type: String, 
+    required: [true , 'please enter ur email'],
+     unique: true , lowercase:true , 
+    validate: [isEmail ,'Please enter a valid mail'] },
   num_tel: { type: Number, required: true, unique: true },
-  mot_de_passe:  { type: String, required: true , minLenght:8 },
+  mot_de_passe:  { type: String,
+     required: [true,'Please enter an password'] ,
+      minLenght:[8 , 'Minimum password length is 8 characters' ] },
    
   roleId: { type: mongoose.Schema.Types.ObjectId, ref: 'Role' }, // Référence vers le modèle Role
   matricule_fiscale: {
