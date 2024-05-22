@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 const userRouter = require("./routes/user");
 const roleRouter = require("./routes/role");
 const authRoutes = require("./routes/authRoutes");
+const cookieParser = require('cookie-parser'); 
 
 
 const path = require("path");
@@ -38,6 +39,7 @@ app.use(bodyParser.json());
 
 
 app.use(express.static('public'));
+app.use(cookieParser());
 
 app.set('view engine', 'ejs');
 
@@ -104,6 +106,23 @@ server.listen(PORT, () => {
 app.get('/', (req, res) => res.render('home'));
 app.get('/smoothies', (req, res) => res.render('smoothies'));
 app.use(authRoutes);
+
+//cookies
+app.get('/set-cookies', (req,res) =>{
+    // res.setHeader('set-cookie','newUser=true'); 
+
+    res.cookie('newUser', false); 
+    res.cookie('isEmployee', true,{ maxAge:1000 * 60 * 60 * 24 , httpOnly: true}); 
+    res.send('you got the cookie'); 
+}); 
+
+app.get('/read-cookies',(req,res)=>{
+    const cookies = req.cookies; 
+    console.log(cookies.newUser); 
+
+    res.json(cookies); 
+
+});
 
 
 // Exporting app for testing
