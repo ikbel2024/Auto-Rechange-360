@@ -9,9 +9,9 @@ const userSchema = new mongoose.Schema({
   nom: String,
   prenom: String,
   adresse: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true , lowercase:true },
   num_tel: { type: Number, required: true, unique: true },
-  mot_de_passe:  { type: String, required: true },
+  mot_de_passe:  { type: String, required: true , minLenght:8 },
    
   roleId: { type: mongoose.Schema.Types.ObjectId, ref: 'Role' }, // Référence vers le modèle Role
   matricule_fiscale: {

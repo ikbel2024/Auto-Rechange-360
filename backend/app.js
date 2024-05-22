@@ -7,6 +7,8 @@ const bodyParser = require("body-parser");
 
 const userRouter = require("./routes/user");
 const roleRouter = require("./routes/role");
+const authRoutes = require("./routes/authRoutes");
+
 
 const path = require("path");
 
@@ -34,9 +36,15 @@ app.set("view engine", "twig");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+
+app.use(express.static('public'));
+
+app.set('view engine', 'ejs');
+
 // Using fournisseur router
 app.use("/User", userRouter);
 app.use("/Role", roleRouter);
+
 
 
 // Creating HTTP server
@@ -93,6 +101,10 @@ const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+app.get('/', (req, res) => res.render('home'));
+app.get('/smoothies', (req, res) => res.render('smoothies'));
+app.use(authRoutes);
+
 
 // Exporting app for testing
 module.exports = app;
