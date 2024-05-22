@@ -53,6 +53,15 @@ userSchema.methods.generateAuthTokenAndSaveUser = async function(){
   }
 };*/
 // Modèle User basé sur le schéma
+userSchema.post('save', function (doc , next){
+  console.log('new user was created & saved', doc); 
+  next(); 
+});
+
+userSchema.pre('save', function (next){
+  console.log('user about to be created and saved', this); 
+  next(); 
+});
 const User = mongoose.model('User', userSchema);
 
 module.exports = User  ;
