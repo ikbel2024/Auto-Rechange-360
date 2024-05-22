@@ -52,16 +52,14 @@ userSchema.methods.generateAuthTokenAndSaveUser = async function(){
       res.status(400).send(); 
   }
 };*/
-// Modèle User basé sur le schéma
-userSchema.post('save', function (doc , next){
-  console.log('new user was created & saved', doc); 
+// fire a function before doc saved to db
+userSchema.pre('save', async function ( next){
+  const salt = await bcrypt.genSalt(); 
+  this.mot_de_passe = await bcrypt.hash(this.mot_de_passe, salt);  
   next(); 
 });
 
-userSchema.pre('save', function (next){
-  console.log('user about to be created and saved', this); 
-  next(); 
-});
+
 const User = mongoose.model('User', userSchema);
 
 module.exports = User  ;
