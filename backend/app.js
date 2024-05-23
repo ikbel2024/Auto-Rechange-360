@@ -25,8 +25,11 @@ app.use(bodyParser.json());
 // Routes
 var postRouter = require('./routes/post');
 var commentRouter = require('./routes/comment');
+var respondRouter = require('./routes/respond');
 app.use('/post',postRouter);
 app.use('/comment',commentRouter);
+app.use('/respond',respondRouter);
+
 
 const commandeRoutes = require('./routes/commandeRoutes');
 app.use('/commandes', commandeRoutes);

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Post = require('../model/post');
-var postcontroller = require('../controller/postcontroller');
+var postcontroller = require('../controller/respondcontroller');
 const validate=require('../middl/validate');
 
 

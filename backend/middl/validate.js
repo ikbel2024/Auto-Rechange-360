@@ -1,12 +1,14 @@
 const yup=require("yup");
 //const { validate } = require("../model/classroom");
 
-const validate=async(req,res,next)=>{
+const validatepost =async(req,res,next)=>{
     try{
         const Schema=yup.object().shape({
             name:yup.string().required(),
-            email:yup.string().email().required(),
-            nbrstudent:yup.number().required()
+            post:yup.string().required(),
+            date:yup.number().required(),
+            likes:yup.number().required()
+
 
         })
         await Schema.validate(req.body,{abortEarly:false});
@@ -17,4 +19,23 @@ const validate=async(req,res,next)=>{
         res.status(500).send(err);
     }
 }
-module.exports= validate;
+
+const validatecomment =async(req,res,next)=>{
+    try{
+        const Schema=yup.object().shape({
+            name:yup.string().required(),
+            description:yup.string().required(),
+            date:yup.number().required(),
+            likes:yup.number().required()
+
+
+        })
+        await Schema.validate(req.body,{abortEarly:false});
+        next();
+        
+    }catch(err){
+        console.log(err);
+        res.status(500).send(err);
+    }
+}
+module.exports= {validatepost,validatecomment};
