@@ -184,6 +184,22 @@ async function findProduitByNameAndFournisseur(req, res, next) {
     }
 }
 
+// Function to sort Produits
+async function sortProduits(req, res, next) {
+    try {
+        const { sortBy = 'name', order = 'asc' } = req.query; // Default sorting by name in ascending order
+        const sortOrder = order === 'desc' ? -1 : 1; // Set sort order
+
+        const data = await Produit.find().sort({
+            [sortBy]: sortOrder
+        });
+
+        res.json(data);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+    }
+}
 
 
 //_________________________________________________________________2:Second_Part (Socket)_________________________________________________________________________________________
@@ -236,9 +252,9 @@ async function fetchAllDetails(entityType) {
 }
 */
 // Fetch Fournisseur details by ID
-async function fetchFournisseurDetails(id) {
-    return await Produit.findById(id);
-}
+//async function fetchFournisseurDetails(id) {
+//return await Produit.findById(id);
+//}
 
 // Fetch Pieces details by ID
 //async function fetchPiecesDetails(id) {
@@ -266,7 +282,8 @@ module.exports = {
     findProduitByNameAndFournisseur,
     getUniqueBrandIds,
     updateMultipleProduits,
-    deleteMultipleProduits
+    deleteMultipleProduits,
+    sortProduits
 
 
 };

@@ -3,7 +3,7 @@ const router = express.Router();
 
 const Produitcontroller = require("../controller/Produitcontroller");
 const Stockcontroller = require("../controller/Stockcontroller");
-//const validate = require("../middl/validate").default;
+const validate = require("../middl/validate").default;
 
 const { json } = require("body-parser");
 
@@ -49,6 +49,8 @@ router.put('/updateMultiple', Produitcontroller.updateMultipleProduits);
 // Delete multiple Produits by IDs
 router.delete('/deleteMultiple', Produitcontroller.deleteMultipleProduits);
 
+router.get('/sort', Produitcontroller.sortProduits);
+
 //___________________Srock________________________________________
 
 router.post('/addS', Stockcontroller.add);
@@ -59,13 +61,21 @@ router.get('/findS/:id', Stockcontroller.findS);
 router.get('/findSN/:name', Stockcontroller.findSN);
 
 // Find stock by produit_id
-router.get('/produit/produitId', Stockcontroller.findStockByProduitId);
+router.get('/produit/:produitId', Stockcontroller.findStockByProduitId);
+
 
 // Update multiple Stock at once
 router.put('/updateMultiple', Stockcontroller.updateMultipleStock);
 
 // Delete multiple Stock by IDs
 router.delete('/deleteMultiple', Stockcontroller.deleteMultipleStock);
+
+// Route to count the number of stocks
+router.get('/countS', Stockcontroller.countStocks);
+
+// Route to calculate total stock quantity
+router.get('/totalQuantity', Stockcontroller.calculateTotalStockQuantity);
+
 
 
 //_________________Socket________________________________________

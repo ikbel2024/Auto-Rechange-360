@@ -1,114 +1,184 @@
 const Stock = require("../model/Stock");
-
-
-//_________________________________________________________________1:First _Part (Stock-Crud)_______________________________________________________________________________
-
+//const Stock = require("../model/Produit");
 
 // Function to add a new Stock
 async function add(req, res, next) {
     try {
         const stock = new Stock(req.body);
         await stock.save();
-        res.status(200).send("Stock add");
-    } catch (err) {
-        console.log(err);
+        res.status(200).send("Stock added successfully");
+    } catch (error) {
+        console.error("Error adding stock:", error);
+        res.status(500).send("Internal Server Error");
     }
 }
 
-
-
-
-
-// Function to delete a Stock
+// Function to delete a Stock by ID
 async function deleteS(req, res, next) {
     try {
-        const data = await Stock.findByIdAndDelete(req.params.id);
-        res.send("removed");
-    } catch (err) {
-        // Handle errors here
-        console.error(err);
+        const deletedStock = await Stock.findByIdAndDelete(req.params.id);
+        if (!deletedStock) {
+            return res.status(404).send("Stock not found");
+        }
+        res.send("Stock removed successfully");
+    } catch (error) {
+        console.error("Error deleting stock:", error);
         res.status(500).send("Internal Server Error");
     }
 }
 
-
-// Function to update a Stock
+// Function to update a Stock by ID
 async function updateS(req, res, next) {
     try {
-        const data = await Stock.findByIdAndUpdate(req.params.id, req.body);
-        res.send("updated");
-    } catch (err) {}
-}
-
-
-// Function to get all  the Pieces
-async function showS(req, res, next) {
-    try {
-        const data = await Stock.find();
-        res.json(data);
-    } catch (err) {
-        console.log(err);
-    }
-}
-
-// Function to find a Piece by ID
-async function findS(req, res, next) {
-    try {
-        const data = await Stock.findById(req.params.id);
-        res.send(data);
-    } catch (err) {}
-}
-
-
-// Function to find a Piece by Name
-async function findSN(req, res, next) {
-    try {
-        const data = await Stock.findOne(req.params);
-        res.send(data);
-    } catch (err) {}
-}
-
-// Function to find Stock by produit_id
-async function findStockByProduitId(req, res, next) {
-    try {
-        const data = await Stock.find({ produit_id: req.params.produitId });
-        res.json(data);
-    } catch (err) {
-        console.error(err);
+        const updatedStock = await Stock.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!updatedStock) {
+            return res.status(404).send("Stock not found");
+        }
+        res.send("Stock updated successfully");
+    } catch (error) {
+        console.error("Error updating stock:", error);
         res.status(500).send("Internal Server Error");
     }
 }
 
-// Function to update multiple Stock at once
+// Function to get all Stocks
+async function showS(req, res, next) {
+    try {
+        const stocks = await Stock.find();
+        res.json(stocks);
+    } catch (error) {
+        console.error("Error fetching stocks:", error);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
+// Function to find a Stock by ID
+async function findS(req, res, next) {
+    try {
+        const stock = await Stock.findById(req.params.id);
+        if (!stock) {
+            return res.status(404).send("Stock not found");
+        }
+        res.json(stock);
+    } catch (error) {
+        console.error("Error finding stock:", error);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
+// Function to find a Stock by Name
+async function findSN(req, res, next) {
+    try {
+        const stock = await Stock.findOne({ nom: req.params.name });
+        if (!stock) {
+            return res.status(404).send("Stock not found");
+        }
+        res.json(stock);
+    } catch (error) {
+        console.error("Error finding stock:", error);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
+
+// Function to find Stock by product_id
+async function findStockByProduitId(req, res, next) {
+    try {
+        const stocks = await Stock.find({ produit_id: req.params.produitId });
+        res.json(stocks);
+    } catch (error) {
+        console.error("Error finding stocks by product ID:", error);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
 async function updateMultipleStock(req, res, next) {
     try {
         const { ids, updateData } = req.body;
-        const data = await Stock.updateMany({ _id: { $in: ids } }, updateData);
-        res.json(data);
-    } catch (err) {
-        console.error(err);
-        res.status(500).send("Internal Server Error");
+        console.log("Received update request for IDs:", ids);
+
+        if (!Array.isArray(ids) || ids.length === 0) {
+            console.error("Invalid IDs provided:", ids);
+            return res.status(400).json({ error: "Ids must be a non-empty array" });
+        }
+
+        const updatedStocks = [];
+
+        for (const id of ids) {
+            // Update each stock individually
+            const updatedStock = await Stock.findByIdAndUpdate(id, updateData, { new: true });
+            updatedStocks.push(updatedStock);
+        }
+
+        // Send the updated stocks as a response
+        console.log("Stocks updated successfully:", updatedStocks);
+        res.json({ message: "Stocks updated successfully", updatedStocks });
+    } catch (error) {
+        console.error("Error updating multiple stocks:", error);
+        res.status(500).json({ error: "Internal Server Error" });
     }
 }
 
-// Function to delete multiple Stock by IDs
 async function deleteMultipleStock(req, res, next) {
     try {
         const { ids } = req.body;
-        const data = await Stock.deleteMany({ _id: { $in: ids } });
-        res.json(data);
+        console.log("Received delete request for IDs:", ids);
+
+        if (!Array.isArray(ids) || ids.length === 0) {
+            console.error("Invalid IDs provided:", ids);
+            return res.status(400).json({ error: "Ids must be a non-empty array" });
+        }
+
+        // Delete multiple stocks by IDs
+        const result = await Stock.deleteMany({ _id: { $in: ids } });
+        console.log("Stocks deleted successfully:", result);
+        res.json({ message: "Stocks deleted successfully", result });
+    } catch (error) {
+        console.error("Error deleting multiple stocks:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
+// Function to count the number of Stocks
+async function countStocks(req, res, next) {
+    try {
+        const count = await Stock.countDocuments();
+        res.json({ count });
     } catch (err) {
         console.error(err);
         res.status(500).send("Internal Server Error");
     }
 }
 
-//____________________________________________________________________2: seconde Part (Socket)______________________________________________________________________________________
+// Function to calculate the total stock quantity
+async function calculateTotalStockQuantity(req, res, next) {
+    try {
+        // Query all stocks from the database
+        const stocks = await Stock.find();
+
+        // Log the retrieved stocks for debugging
+        console.log("Retrieved stocks:", stocks);
+
+        // Calculate the total quantity by summing up the quantities of all stocks
+        let totalQuantity = 0;
+        for (const stock of stocks) {
+            totalQuantity += stock.quantité;
+        }
+
+        // Log the total quantity for debugging
+        console.log("Total quantity:", totalQuantity);
+
+        // Send the total quantity as a response
+        res.json({ totalQuantity });
+    } catch (error) {
+        console.error("Error calculating total stock quantity:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
 
 
 
 
-//__________________________________________________________________________________________________________________________________________________________________________________
 
 module.exports = {
     add,
@@ -119,8 +189,7 @@ module.exports = {
     findSN,
     findStockByProduitId,
     updateMultipleStock,
-    deleteMultipleStock
-
-
-
+    deleteMultipleStock,
+    countStocks,
+    calculateTotalStockQuantity
 };
