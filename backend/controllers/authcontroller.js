@@ -1,51 +1,43 @@
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const User = require('../models/user');
+const { JWT_SECRET } = process.env;
+const { validationResult } = require('express-validator');
 
-//handle errors
-const handleErrors = (err) => {
-    console.log(err.message, err.code);
-    let errors = { email: '', mot_de_passe: '' };
+exports.register = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
 
-    //duplicate error code 
+  const { nom, prenom, adresse, email, num_tel, mot_de_passe, role, matricule_fiscale } = req.body;
 
-    if (err.code === 11000) {
-        errors.email = 'that email is already registred'; 
-        return errors;
-    }
+  try {
+    const user = new User({ nom, prenom, adresse, email, num_tel, mot_de_passe, role, matricule_fiscale });
+    await user.save();
+    res.status(201).json({ message: 'User registered successfully' });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
-    //validation failed
-    if (err.message.includes("User validation failed")) {
-        Object.values(err.errors).forEach(({ properties }) => {
-            errors[properties.path] = properties.message;
-        });
-    }
-    return errors;
+exports.login = async (req, res) => {
+  const { email, mot_de_passe, role } = req.body;
 
-}
+  try {
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: 'User not found' });
 
-module.exports.signup_get = (req, res) => {
-    res.render('signup');
-}
+    if (user.role !== role) return res.status(403).json({ message: 'Role does not match' });
 
-module.exports.login_get = (req, res) => {
-    res.render('login');
-}
-module.exports.signup_post = async (req, res) => {
-    const { nom, prenom, adresse, email, num_tel, mot_de_passe, roleId } = req.body;
-    try {
+    const isMatch = await bcrypt.compare(mot_de_passe, user.mot_de_passe);
+    if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
 
-        const user = await User.create({ nom, prenom, adresse, email, num_tel, mot_de_passe, roleId });
-        res.status(201).json(user);
+    const payload = { id: user.id, role: user.role };
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
 
-    }
-    catch (err) {
-        const errors = handleErrors(err);
-        res.status(400).json({ errors });
-    }
-}
-module.exports.login_post = async (req, res) => {
-
-    const { nom, prenom, adresse, email, num_tel, mot_de_passe, roleId } = req.body;
-
-    console.log(nom, prenom, adresse, email, num_tel, mot_de_passe, roleId);
-    res.send('user login');
-}
+    res.json({ token });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
