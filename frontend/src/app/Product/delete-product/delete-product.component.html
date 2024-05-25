@@ -1,0 +1,19 @@
+<div class="card">
+    <div class="card-header">
+        Delete Product
+    </div>
+    <div class="card-body">
+        <!-- Form for selecting and deleting a product -->
+        <form (ngSubmit)="onDeleteProduct()" class="needs-validation" novalidate>
+            <div class="form-group">
+                <label for="productId">Product ID:</label>
+                <input type="text" class="form-control" id="productId" [(ngModel)]="productId" name="productId" required>
+                <div class="invalid-feedback">Please enter a valid Product ID.</div>
+            </div>
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    </div>
+</div>
+
+<!-- Back Button -->
+<button class="btn btn-secondary mb-3" (click)="goBack()">Back to Dashboard</button>
