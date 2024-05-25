@@ -1,0 +1,27 @@
+<app-navbar></app-navbar>
+<div class="layout">
+    <div class="sidebar">
+        <!-- Admin Panel Buttons -->
+        <div class="admin-buttons">
+            <button class="btn btn-primary btn-block" routerLink="/addProduct">Add Product</button>
+            <button class="btn btn-danger btn-block" routerLink="/delete-product">Delete Product</button>
+            <button class="btn btn-warning btn-block" routerLink="/update-product/:id">Update Product</button>
+            <button class="btn btn-info btn-block" routerLink="/ShowProducts">Show Products</button>
+            <button class="btn btn-success btn-block" routerLink="/SearchProducts">Search Product</button>
+            <button class="btn btn-secondary btn-block" routerLink="/CountProduct">Count Products</button>
+        </div>
+
+        <!-- Back Button -->
+        <button class="btn btn-secondary mt-3" (click)="goBack()">Back to Dashboard</button>
+    </div>
+    <div class="content">
+        <h1>Product Details For Test </h1>
+        <!-- Add your product details here -->
+        <div *ngIf="product">
+            <p><strong>ID:</strong> {{ product.id }}</p>
+            <p><strong>Name:</strong> {{ product.name }}</p>
+            <p><strong>Description:</strong> {{ product.description }}</p>
+            <p><strong>Price:</strong> {{ product.price }}</p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="container">
+    <h2>Update Product</h2>
+
+    <form>
+        <div class="form-group">
+            <label for="id">ID:</label>
+            <input type="text" class="form-control" id="id" name="id" [(ngModel)]="product.id" disabled>
+        </div>
+
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" class="form-control" id="title" name="title" [(ngModel)]="product.title">
+        </div>
+
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="text" class="form-control" id="price" name="price" [(ngModel)]="product.price">
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Quantity:</label>
+            <input type="text" class="form-control" id="quantity" name="quantity" [(ngModel)]="product.quantity">
+        </div>
+
+        <div class="form-group">
+            <label for="like">Like:</label>
+            <input type="text" class="form-control" id="like" name="like" [(ngModel)]="product.like">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+
+    <!-- Back Button -->
+    <button class="btn btn-secondary mb-3" (click)="goBack()">Back to Dashboard</button>
+</div>
