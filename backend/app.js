@@ -2,6 +2,7 @@
 const http = require("http");
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require('cors');
 const dbConnection = require("../backend/config/dbconnection.json");
 const bodyParser = require("body-parser");
 const produitRouter = require("../backend/routes/ProduitR");
@@ -34,6 +35,15 @@ mongoose.connect(dbConnection.url, {
 // Setting up Express app
 var app = express();
 
+// Configurer les options CORS pour autoriser uniquement les requêtes du projet Angular
+const corsOptions = {
+    origin: 'http://localhost:4200', // Autoriser uniquement les requêtes provenant de ce domaine
+};
+
+// Utiliser CORS avec les options spécifiées
+app.use(cors(corsOptions));
+
+
 // Setting up view engine
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "twig");
@@ -63,6 +73,12 @@ io.on("connection", (socket) => {
         } catch (error) {
             console.error('Error handling "aff" event:', error);
         }
+    });
+
+    // Listen for events from server
+    socket.on('notification', (data) => {
+        console.log('New notification:', data);
+        // Handle notification (e.g., display it to the user)
     });
 
     // Listen for the 'delete' event from the client

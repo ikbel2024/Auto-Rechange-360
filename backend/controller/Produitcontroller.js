@@ -12,6 +12,7 @@ const Stock = require("../model/Stock");
 async function addPR(req, res, next) {
     try {
         const produit = new Produit(req.body);
+
         await produit.save();
         res.status(200).send("Produit add");
     } catch (err) {
@@ -169,11 +170,12 @@ async function countProduits(req, res, next) {
     }
 }
 
-// Function to find a Produit by name and fournisseur
-async function findProduitByNameAndFournisseur(req, res, next) {
+async function findProduitByNameAndFournisseur(req, res) {
     try {
         const { nom, fournisseurId } = req.query;
+        console.log('Query parameters:', req.query); // Debugging log
         const data = await Produit.find({ nom: nom, id_fournisseur: fournisseurId });
+        console.log('Query result:', data); // Debugging log
         if (data.length === 0) {
             return res.status(404).send("Produit not found");
         }
@@ -183,6 +185,7 @@ async function findProduitByNameAndFournisseur(req, res, next) {
         res.status(500).send("Internal Server Error");
     }
 }
+
 
 // Function to sort Produits
 async function sortProduits(req, res, next) {
