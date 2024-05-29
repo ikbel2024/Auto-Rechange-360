@@ -14,7 +14,7 @@ async function addPR(req, res, next) {
         const produit = new Produit(req.body);
 
         await produit.save();
-        res.status(200).send("Produit add");
+        res.status(200).send("Product add");
     } catch (err) {
         console.log(err);
     }
@@ -37,7 +37,7 @@ async function updatePR(req, res, next) {
     try {
         const data = await Produit.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!data) {
-            return res.status(404).send("Produit not found");
+            return res.status(404).send("Product not found");
         }
         res.send("updated");
     } catch (err) {
@@ -78,9 +78,9 @@ async function findProduitName(req, res, next) {
 // Function to find a Produit by name
 async function findProduitName(req, res, next) {
     try {
-        const data = await Produit.findOne({ nom: req.params.name });
+        const data = await Produit.findOne({ name: req.params.name });
         if (!data) {
-            return res.status(404).send("Produit not found");
+            return res.status(404).send("Product not found");
         }
         res.send(data);
     } catch (err) {
@@ -92,7 +92,7 @@ async function findProduitName(req, res, next) {
 // Function to find Produit by fournisseur (supplier)
 async function findProduitByFournisseur(req, res, next) {
     try {
-        const data = await Produit.find({ id_fournisseur: req.params.fournisseurId });
+        const data = await Produit.find({ supplierId: req.params.supplierId });
         res.json(data);
     } catch (err) {
         console.error(err);
@@ -125,7 +125,7 @@ async function paginateProduit(req, res, next) {
 // Function to get all unique Brand IDs
 async function getUniqueBrandIds(req, res, next) {
     try {
-        const data = await Produit.distinct("id_marque");
+        const data = await Produit.distinct("brandId");
         res.json(data);
     } catch (err) {
         console.error(err);
@@ -172,9 +172,9 @@ async function countProduits(req, res, next) {
 
 async function findProduitByNameAndFournisseur(req, res) {
     try {
-        const { nom, fournisseurId } = req.query;
+        const { name, supplierId } = req.query;
         console.log('Query parameters:', req.query); // Debugging log
-        const data = await Produit.find({ nom: nom, id_fournisseur: fournisseurId });
+        const data = await Produit.find({ name: name, supplierId: supplierId });
         console.log('Query result:', data); // Debugging log
         if (data.length === 0) {
             return res.status(404).send("Produit not found");

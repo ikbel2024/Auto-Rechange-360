@@ -6,7 +6,7 @@ async function add(req, res, next) {
     try {
         const stock = new Stock(req.body);
         await stock.save();
-        res.status(200).send("Stock added successfully");
+        res.status(200).send("category added successfully");
     } catch (error) {
         console.error("Error adding stock:", error);
         res.status(500).send("Internal Server Error");
@@ -18,9 +18,9 @@ async function deleteS(req, res, next) {
     try {
         const deletedStock = await Stock.findByIdAndDelete(req.params.id);
         if (!deletedStock) {
-            return res.status(404).send("Stock not found");
+            return res.status(404).send("category not found");
         }
-        res.send("Stock removed successfully");
+        res.send("category removed successfully");
     } catch (error) {
         console.error("Error deleting stock:", error);
         res.status(500).send("Internal Server Error");
@@ -32,9 +32,9 @@ async function updateS(req, res, next) {
     try {
         const updatedStock = await Stock.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!updatedStock) {
-            return res.status(404).send("Stock not found");
+            return res.status(404).send("category not found");
         }
-        res.send("Stock updated successfully");
+        res.send("category updated successfully");
     } catch (error) {
         console.error("Error updating stock:", error);
         res.status(500).send("Internal Server Error");
@@ -57,7 +57,7 @@ async function findS(req, res, next) {
     try {
         const stock = await Stock.findById(req.params.id);
         if (!stock) {
-            return res.status(404).send("Stock not found");
+            return res.status(404).send("category not found");
         }
         res.json(stock);
     } catch (error) {
@@ -69,9 +69,9 @@ async function findS(req, res, next) {
 // Function to find a Stock by Name
 async function findSN(req, res, next) {
     try {
-        const stock = await Stock.findOne({ nom: req.params.name });
+        const stock = await Stock.findOne({ name: req.params.name });
         if (!stock) {
-            return res.status(404).send("Stock not found");
+            return res.status(404).send("category not found");
         }
         res.json(stock);
     } catch (error) {
@@ -84,10 +84,10 @@ async function findSN(req, res, next) {
 // Function to find Stock by product_id
 async function findStockByProduitId(req, res, next) {
     try {
-        const stocks = await Stock.find({ produit_id: req.params.produitId });
+        const stocks = await Stock.find({ productId: req.params.productId });
         res.json(stocks);
     } catch (error) {
-        console.error("Error finding stocks by product ID:", error);
+        console.error("Error finding category by product ID:", error);
         res.status(500).send("Internal Server Error");
     }
 }
@@ -111,8 +111,8 @@ async function updateMultipleStock(req, res, next) {
         }
 
         // Send the updated stocks as a response
-        console.log("Stocks updated successfully:", updatedStocks);
-        res.json({ message: "Stocks updated successfully", updatedStocks });
+        console.log("category updated successfully:", updatedStocks);
+        res.json({ message: "category updated successfully", updatedStocks });
     } catch (error) {
         console.error("Error updating multiple stocks:", error);
         res.status(500).json({ error: "Internal Server Error" });
@@ -157,12 +157,12 @@ async function calculateTotalStockQuantity(req, res, next) {
         const stocks = await Stock.find();
 
         // Log the retrieved stocks for debugging
-        console.log("Retrieved stocks:", stocks);
+        console.log("Retrieved category:", stocks);
 
         // Calculate the total quantity by summing up the quantities of all stocks
         let totalQuantity = 0;
         for (const stock of stocks) {
-            totalQuantity += stock.quantité;
+            totalQuantity += stock.quantity;
         }
 
         // Log the total quantity for debugging
@@ -171,7 +171,7 @@ async function calculateTotalStockQuantity(req, res, next) {
         // Send the total quantity as a response
         res.json({ totalQuantity });
     } catch (error) {
-        console.error("Error calculating total stock quantity:", error);
+        console.error("Error calculating total category quantity:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 }

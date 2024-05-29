@@ -17,7 +17,7 @@ router.get('/Produit', (req, res, next) => {
 })
 
 
-//_________________Produit___________________________________
+//_________________Product___________________________________
 //, validate
 router.post('/add', Produitcontroller.addPR);
 
@@ -29,11 +29,11 @@ router.get('/show', Produitcontroller.showPR);
 
 router.get('/find/:id', Produitcontroller.findPR);
 
-router.get('/findName/name', Produitcontroller.findProduitName);
+
 // Find a product by name
 router.get('/name/:name', Produitcontroller.findProduitName);
 // Find products by Fournisseur
-router.get('/fournisseur/:fournisseurId', Produitcontroller.findProduitByFournisseur);
+router.get('/fournisseur/:supplierId', Produitcontroller.findProduitByFournisseur);
 // Paginate products
 router.get('/paginate', Produitcontroller.paginateProduit);
 // Count all products
@@ -61,7 +61,7 @@ router.get('/findS/:id', Stockcontroller.findS);
 router.get('/findSN/:name', Stockcontroller.findSN);
 
 // Find stock by produit_id
-router.get('/produit/:produitId', Stockcontroller.findStockByProduitId);
+router.get('/produit/:productId', Stockcontroller.findStockByProduitId);
 
 
 // Update multiple Stock at once
