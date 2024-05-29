@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="layout">
+        <div class="sidebar">
+            <!-- Admin Panel Buttons -->
+            <div class="admin-buttons">
+                <button class="btn btn-primary btn-block" routerLink="/addProduct">Add Product</button>
+                <button class="btn btn-danger btn-block" routerLink="/delete-product">Delete Product</button>
+                <button class="btn btn-warning btn-block" routerLink="/update-product/:id">Update Product</button>
+                <button class="btn btn-info btn-block" routerLink="/ShowProucts">Show Products</button>
+                <button class="btn btn-success btn-block" routerLink="/SearchProducts">Search Product</button>
+                <button class="btn btn-secondary btn-block" routerLink="/CountProduct">Count Products</button>
+            </div>
+
+            <!-- Back Button -->
+            <button class="btn btn-secondary mt-3" (click)="goBack()">Back to Dashboard</button>
+        </div>
+
+        <div class="content">
+            <h2>Product List</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Like</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of products | async">
+                        <td>{{ product.id }}</td>
+                        <td>{{ product.title }}</td>
+                        <td>{{ product.price }}</td>
+                        <td>{{ product.quantity }}</td>
+                        <td>{{ product.like }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
