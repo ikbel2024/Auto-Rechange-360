@@ -7,7 +7,8 @@ const ProduitSchema = new mongoose.Schema({
     prix: { type: Number, required: true },
     description: { type: String, required: true },
     idmarque: { type: String, required: true },
-    idfournisseur: { type: String, required: true }
+    idfournisseur: { type: String, required: true },
+    quantite: { type: Number, required: true } // Ajout de ce champ
 });
 
 const Produit = mongoose.model('Produit', ProduitSchema);
