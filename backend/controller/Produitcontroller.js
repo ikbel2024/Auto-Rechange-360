@@ -33,6 +33,27 @@ async function deletePR(req, res, next) {
     }
 }
 
+
+
+// Function to delete a Produit by name
+async function deleteByName(req, res, next) {
+    try {
+        const data = await Produit.findOneAndDelete({ name: req.params.name });
+        if (!data) {
+            return res.status(404).json({ message: "The specified product was not found in the inventory." });
+        }
+        res.json({ message: "The product has been successfully deleted." });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "An error occurred on the server. Please try again later." });
+    }
+}
+
+
+
+
+
+
 async function updatePR(req, res, next) {
     try {
         const data = await Produit.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -157,7 +178,7 @@ async function deleteMultipleProduits(req, res, next) {
     }
 }
 
-
+/*
 
 // Function to count the number of Produits
 async function countProduits(req, res, next) {
@@ -168,7 +189,46 @@ async function countProduits(req, res, next) {
         console.error(err);
         res.status(500).send("Internal Server Error");
     }
+}  */
+
+
+
+// Function to count products by category
+async function countProduits(req, res, next) {
+    try {
+        const category = req.query.category;
+        const count = await Produit.countDocuments({ category: category });
+        res.json({ count: count });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+    }
 }
+
+
+// Function to search and count products by category
+async function countProductsByCategory(req, res) {
+    try {
+        // Extract category from request query
+        const category = req.query.category;
+
+        // Check if category is provided
+        if (!category) {
+            return res.status(400).send("Category parameter is missing.");
+        }
+
+        // Search and count products by category
+        const count = await Produit.countDocuments({ category: category });
+
+        // Send response with the count
+        res.json({ count: count });
+    } catch (err) {
+        // Handle errors
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
 
 async function findProduitByNameAndFournisseur(req, res) {
     try {
@@ -274,6 +334,7 @@ async function fetchAllDetails(entityType) {
 module.exports = {
     addPR,
     deletePR,
+    deleteByName,
     updatePR,
     showPR,
     findPR,
@@ -282,6 +343,9 @@ module.exports = {
     findProduitByFournisseur,
     paginateProduit,
     countProduits,
+    countProductsByCategory,
+
+
     findProduitByNameAndFournisseur,
     getUniqueBrandIds,
     updateMultipleProduits,

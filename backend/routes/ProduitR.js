@@ -23,6 +23,8 @@ router.post('/add', Produitcontroller.addPR);
 
 router.delete('/delete/:id', Produitcontroller.deletePR);
 
+router.delete('/deleteByName/:name', Produitcontroller.deleteByName);
+
 router.put('/update/:id', Produitcontroller.updatePR);
 
 router.get('/show', Produitcontroller.showPR);
@@ -38,6 +40,9 @@ router.get('/fournisseur/:supplierId', Produitcontroller.findProduitByFournisseu
 router.get('/paginate', Produitcontroller.paginateProduit);
 // Count all products
 router.get('/count', Produitcontroller.countProduits);
+router.get('/countp', Produitcontroller.countProductsByCategory);
+
+
 // Find a product by name and category
 router.get('/search', Produitcontroller.findProduitByNameAndFournisseur);
 // Get all unique Brand IDs
