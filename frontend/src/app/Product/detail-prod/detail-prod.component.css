@@ -1,0 +1,55 @@
+/* Custom CSS styles */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.card {
+    margin-bottom: 20px;
+    border: 1px solid #525050;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.feature-container {
+    display: flex;
+    align-items: center;
+}
+
+.feature-image {
+    width: 50px;
+    height: auto;
+    margin-left: 10px;
+}
+
+.welcome-message {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.animated.infinite.pulse {
+    animation: pulse 2s infinite;
+}
+
+.feature-image {
+    width: 70px;
+    /* Set the desired width */
+    height: auto;
+    /* Maintain aspect ratio */
+    margin-left: 10px;
+    /* Adjust margin as needed */
+}
