@@ -7,9 +7,10 @@ var mongo = require('mongoose');
         idpost : Number,
         idcomment : Number,
         idrespond : Number,
-        commentaire : { type: Schema.Types.ObjectId, ref: 'respond' },
-        date : Number,
+        iduser : Number,
+        respond : String,
         likes : Number,
+        dislikes : Number,
     });
 
     module.exports=mongo.model("respond",Respond);

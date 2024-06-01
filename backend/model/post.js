@@ -4,12 +4,11 @@ var mongo = require('mongoose');
 
  const Schema = mongo.Schema;
  const Post= new Schema({
-        idpost : Number,
+        iduser : Number,
         name : String,
         post : String,
-        commentaire : { type: Schema.Types.ObjectId, ref: 'comment' },
-        date : Number,
         likes : Number,
+        views : Number,
     });
 
     module.exports=mongo.model("post",Post);

@@ -58,4 +58,35 @@ async function show (req, res, next) {
     }
   }
 
-module.exports ={ show , add, update, dlete ,findid, findname };
+  async function findCommentsByUser(req, res, next) {
+    try {
+        const userId = req.params.iduser;
+
+        // Find all comments by the given iduser
+        const comments = await Post.find({ iduser: userId });
+
+        // Send the comments as response
+        res.json(comments);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
+async function findCommentsByPost(req, res, next) {
+  try {
+      const postId = req.params.idpost;
+
+      // Find all comments by the given idpost
+      const comments = await Post.find({ idpost: postId });
+
+      // Send the comments as response
+      res.json(comments);
+  } catch (err) {
+      console.log(err);
+      res.status(500).send('Internal Server Error');
+  }
+}
+
+
+module.exports ={ show , add, update, dlete ,findid, findname, findCommentsByUser, findCommentsByPost };

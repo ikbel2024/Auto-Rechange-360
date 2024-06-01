@@ -6,8 +6,8 @@ const validatepost =async(req,res,next)=>{
         const Schema=yup.object().shape({
             name:yup.string().required(),
             post:yup.string().required(),
-            date:yup.number().required(),
-            likes:yup.number().required()
+            likes:yup.number().required(),
+            views : yup.number().required()
 
 
         })
@@ -23,10 +23,12 @@ const validatepost =async(req,res,next)=>{
 const validatecomment =async(req,res,next)=>{
     try{
         const Schema=yup.object().shape({
-            name:yup.string().required(),
-            description:yup.string().required(),
-            date:yup.number().required(),
-            likes:yup.number().required()
+            
+            comment:yup.string().required(),
+            
+            likes:yup.number().required(),
+            dislikes:yup.number().required()
+
 
 
         })
