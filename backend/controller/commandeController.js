@@ -8,7 +8,7 @@ const path = require('path');
 // Créer une nouvelle commande
 exports.createCommande = async (req, res) => {
     try {
-        const { client, adresse, produits, clientEmail } = req.body;
+        const { client, adresse, produits,etat, clientEmail } = req.body;
 
         // Vérifier les quantités disponibles pour chaque produit et calculer le total
         let total = 0;
@@ -24,7 +24,7 @@ exports.createCommande = async (req, res) => {
         }
 
         // Créer la commande avec le montant total
-        const newCommande = new Commande({ client, adresse, produits, total });
+        const newCommande = new Commande({ client, adresse,etat, produits, total });
         const savedCommande = await newCommande.save();
 
         // Mettre à jour les quantités de produits
@@ -55,58 +55,91 @@ exports.createCommande = async (req, res) => {
     }
 };
 
-// Fonction pour générer un PDF à partir des détails de la commande
+/// Fonction pour générer un PDF à partir des détails de la commande
 async function generatePDF(commande, produitsDetails) {
     return new Promise((resolve, reject) => {
-        const doc = new PDFDocument();
+        const doc = new PDFDocument({ margin: 50 });
         const fileName = path.join(__dirname, `Commande_${commande._id}.pdf`);
         const writeStream = fs.createWriteStream(fileName);
 
         doc.pipe(writeStream);
 
-        // Ajouter un logo (chemin vers votre logo dans le dossier 'assets')
+        // En-tête
         const logoPath = path.join(__dirname, '../assets/logo.jpg');
         doc.image(logoPath, 50, 45, { width: 50 })
-            .moveDown()
             .fontSize(20)
             .fillColor('#333333')
-            .text('Détails de la commande', { align: 'center', underline: true })
+            .text('Détails de la commande', 110, 57)
+            .fontSize(10)
+            .text(`Date: ${new Date().toLocaleDateString()}`, { align: 'right' })
             .moveDown();
 
         // Informations sur le client et la commande
         doc.fontSize(12)
             .fillColor('#666666')
             .text(`ID de la commande: ${commande._id}`, { continued: true })
-            .text(`Date: ${new Date().toLocaleDateString()}`, { align: 'right' })
             .moveDown()
             .fillColor('#000000')
             .text(`Client: ${commande.client}`)
-            .text(`Adresse de livraison: ${commande.adresse}`)
             .moveDown();
+
+        // Ligne de séparation
+        doc.moveTo(50, 160)
+            .lineTo(550, 160)
+            .stroke();
 
         // Détails des produits commandés
         doc.fontSize(14)
             .fillColor('#4CAF50')
-            .text('Produits commandés:')
+            .text('Produits commandés:', 50, 180)
             .moveDown();
+
+        // Table des produits
+        const tableTop = 200;
+        let itemY = tableTop + 20;
+        
+        doc.fontSize(12)
+            .fillColor('#000000')
+            .text('N°', 50, tableTop)
+            .text('Produit', 70, tableTop)
+            .text('Réf.', 250, tableTop)
+            .text('Quantité', 350, tableTop)
+            .text('Prix Unitaire', 450, tableTop, { width: 90, align: 'right' });
 
         produitsDetails.forEach((produit, index) => {
             const item = commande.produits.find(p => p.produitId.toString() === produit._id.toString());
             doc.fontSize(12)
                 .fillColor('#000000')
-                .text(`${index + 1}. ${produit.nom} (Réf: ${produit.reference}) - Quantité: ${item.quantite} - Prix: ${produit.prix.toFixed(2)} €`);
+                .text(`${index + 1}`, 50, itemY)
+                .text(`${produit.nom}`, 70, itemY)
+                .text(`${produit.reference}`, 250, itemY)
+                .text(`${item.quantite}`, 350, itemY)
+                .text(`${produit.prix.toFixed(2)} DT`, 450, itemY, { width: 90, align: 'right' });
+            itemY += 20;
         });
 
+        // Montant total
         doc.moveDown()
             .fontSize(14)
             .fillColor('#FF5722')
-            .text(`Montant total: ${commande.total.toFixed(2)} €`, { align: 'right' })
+            .text(`Montant total: ${commande.total.toFixed(2)} DT`, { align: 'right' })
             .moveDown();
 
-        // Ajouter des notes ou des remerciements
+        // Remerciements et informations de contact
         doc.fontSize(10)
             .fillColor('#000000')
-            .text('Merci pour votre achat!', { align: 'center' });
+            .text('Merci pour votre achat !', { align: 'center' })
+            .moveDown()
+            .text('Pour toute question ou assistance, veuillez nous contacter à support@autorechange.com.tn ou appeler le +33 1 23 45 67 89.', { align: 'center' });
+
+        // Pied de page
+        doc.moveTo(50, 700)
+            .lineTo(550, 700)
+            .stroke();
+
+        doc.fontSize(10)
+            .fillColor('#666666')
+            .text('Société XYZ - 123 Rue de Exemple, 75001 Paris, France', 50, 710, { align: 'center' });
 
         doc.end();
 
