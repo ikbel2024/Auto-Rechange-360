@@ -8,7 +8,7 @@ const path = require('path');
 // Créer une nouvelle commande
 exports.createCommande = async (req, res) => {
     try {
-        const { client, adresse, produits,etat, clientEmail } = req.body;
+        const { client, adresse,telephone,methodePaiement, produits,etat, clientEmail } = req.body;
 
         // Vérifier les quantités disponibles pour chaque produit et calculer le total
         let total = 0;
@@ -24,7 +24,7 @@ exports.createCommande = async (req, res) => {
         }
 
         // Créer la commande avec le montant total
-        const newCommande = new Commande({ client, adresse,etat, produits, total });
+        const newCommande = new Commande({ client, adresse,telephone,methodePaiement,etat, produits, total });
         const savedCommande = await newCommande.save();
 
         // Mettre à jour les quantités de produits

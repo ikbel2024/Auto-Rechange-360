@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const CommandeSchema = new mongoose.Schema({
     client: { type: String, required: true },
     adresse: { type: String, required: true },
+    telephone: { type: String, required: true }, // Nouveau champ
+    methodePaiement: { type: String, required: true }, // Nouveau champ
     dateCommande: { type: Date, default: Date.now },
     produits: [{
         produitId: { type: mongoose.Schema.Types.ObjectId, ref: 'Produit' },
