@@ -1,9 +1,7 @@
 const Garage= require("../model/garage");
 const Appointment = require('../model/appointment');
 const stripe = require('stripe')('sk_test_51PJNMnP0cq6YOYrXmkLzypwjDm1YYDrl3GiLEq6Zlb81bNPfAUpnWHbgI3tFtCKusANEl3U59NQch52AXDshHHrY00zPIpvOD8');
-
-
-
+const axios = require('axios');
 
 
 // Function to add a new Garage
@@ -109,6 +107,84 @@ const handlePayment = async (req, res) => {
       res.status(500).json({ message: 'Erreur lors du paiement', error: error.message });
   }
 };
+const getGarageStatisticsByCity = async (req, res) => {
+  try {
+    // Récupérer tous les garages depuis la base de données
+    const allGarages = await Garage.find();
+
+    // Initialiser un objet pour stocker les statistiques
+    const statistics = {};
+
+    // Calculer le nombre de garages par ville
+    allGarages.forEach(garage => {
+      const city = garage.city;
+
+      // Vérifier si la ville existe déjà dans les statistiques
+      if (statistics[city]) {
+        statistics[city]++;
+      } else {
+        statistics[city] = 1;
+      }
+    });
+
+    res.json(statistics);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Une erreur s\'est produite lors du traitement de la requête.' });
+  }
+}
+// Fonction pour ajouter un avis à un garage spécifique
+const addReview = async (req, res) => {
+  const { garageId } = req.params;
+  const { rating, comment } = req.body;
+  
+  try {
+      // Trouver le garage par ID
+      const garage = await Garage.findById(garageId);
+
+      if (!garage) {
+          return res.status(404).json({ success: false, message: "Garage non trouvé" });
+      }
+
+      // Créer un nouvel avis
+      const newReview = {
+          rating: rating,
+          comment: comment,
+          user: req.user ? req.user._id : null // Utilise req.user._id si req.user est défini, sinon null
+      };
+
+      // Ajouter l'avis au garage
+      garage.reviews.push(newReview);
+      
+      // Calculer la nouvelle note moyenne du garage
+      const totalRating = garage.reviews.reduce((acc, curr) => acc + curr.rating, 0);
+      garage.rating = totalRating / garage.reviews.length;
+
+      // Enregistrer les modifications du garage
+      await garage.save();
+
+      res.status(201).json({ success: true, message: "Avis ajouté avec succès", review: newReview });
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ success: false, message: "Erreur serveur" });
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   module.exports = {
     add,
@@ -119,5 +195,9 @@ const handlePayment = async (req, res) => {
     scheduleAppointment,
     createStripeCharge,
     handlePayment,
+    getGarageStatisticsByCity,
+    addReview,
+    
+    
     
   };

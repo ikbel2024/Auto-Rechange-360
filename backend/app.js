@@ -6,6 +6,8 @@ const bodyParser = require("body-parser");
 const mongoconnect = require("../BACKEND/config/dbconnection.json");
 const path = require("path");
 const { add } = require("./controller/chatcontroller");
+
+
 /*const {
   addpartiesocket,
   affichesocket,
@@ -25,8 +27,8 @@ const facturerouter = require("./routes/facture");
 const garagerouter = require("./routes/garage");
 const garageCategoryrouter = require("./routes/garageCategory");
 const stripe = require('stripe')('sk_test_51PJNMnP0cq6YOYrXmkLzypwjDm1YYDrl3GiLEq6Zlb81bNPfAUpnWHbgI3tFtCKusANEl3U59NQch52AXDshHHrY00zPIpvOD8');
-
 const { addgarageCategory } = require("./controller/garageCategorycontroller");
+const geolib = require('geolib');
 var app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "twig");
@@ -36,6 +38,9 @@ app.use("/classrom", classroomrouter);
 app.use("/joueur", joueurrouter);
 app.use("/facture", facturerouter);
 app.use("/garage", garagerouter);
+app.use('/api', garagerouter);
+app.use('/garageCategory', garageCategoryrouter);
+
 
 
 
@@ -111,6 +116,10 @@ io.on("connection", (socket) => {
   
 });*/
 
-
+app.get('/findGarageCategoriesNearby', (req, res) => {
+  // Implement your logic to find nearby garage categories
+  res.json({ success: true, nearbyCategories: [] });
+});
 server.listen(4000, console.log("server run"));
 module.exports = app;
+

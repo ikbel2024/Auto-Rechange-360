@@ -1,4 +1,5 @@
 const GarageCategory= require("../model/garageCategory");
+const geolib = require('geolib');
 
 
 
@@ -103,6 +104,43 @@ const addgarageCategory = async (req, res) => {
 
 
 
+// Fonction pour rechercher des catégories de garage à proximité de l'emplacement actuel de l'utilisateur
+const findGarageCategoriesNearby = async (req, res) => {
+    try {
+        const { latitude, longitude, distance } = req.query;
+
+        // Vérifier si les paramètres de latitude et de longitude sont fournis
+        if (!latitude || !longitude) {
+            return res.status(400).json({ success: false, message: "Veuillez fournir des coordonnées de géolocalisation valides" });
+        }
+
+        // Récupérer toutes les catégories de garage
+        const allCategories = await GarageCategory.find({});
+
+        // Filtrer les catégories de garage à proximité de l'emplacement actuel de l'utilisateur
+        const nearbyCategories = allCategories.filter(category => {
+            const garageLocation = category.location;
+            if (garageLocation) {
+                const garageLatitude = garageLocation.latitude;
+                const garageLongitude = garageLocation.longitude;
+
+                // Calculer la distance entre l'emplacement actuel de l'utilisateur et l'emplacement du garage
+                const distanceInMeters = geolib.getDistance(
+                    { latitude: parseFloat(latitude), longitude: parseFloat(longitude) },
+                    { latitude: parseFloat(garageLatitude), longitude: parseFloat(garageLongitude) }
+                );
+
+                // Vérifier si le garage est à une distance inférieure ou égale à la distance spécifiée par l'utilisateur
+                return distanceInMeters <= distance;
+            }
+        });
+
+        res.status(200).json({ success: true, nearbyCategories });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Erreur serveur lors de la recherche des catégories de garage à proximité" });
+    }
+};
 
 
 
@@ -110,7 +148,13 @@ const addgarageCategory = async (req, res) => {
 
 
 
-  module.exports = {add,update,show,getbyid,deleteGarageCategory,searchByServices, addgarageCategory,
+
+
+
+
+
+
+  module.exports = {add,update,show,getbyid,deleteGarageCategory,searchByServices, addgarageCategory, findGarageCategoriesNearby,
 
     
   };

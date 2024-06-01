@@ -12,6 +12,7 @@ router.get('/show', garageCategorycontroller.show);
 router.get('/getbyid/:id', garageCategorycontroller.getbyid);
 router.delete('/delete/:id', garageCategorycontroller.deleteGarageCategory);
 router.get('/search', garageCategorycontroller.searchByServices);
+router.get('/findGarageCategoriesNearby', garageCategorycontroller.findGarageCategoriesNearby);
 
 
 

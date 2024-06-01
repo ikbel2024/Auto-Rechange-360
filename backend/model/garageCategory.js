@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// Schéma de la catégorie de garage
 const GarageCategorySchema = new mongoose.Schema({
   name: {
     type: String,
@@ -32,12 +31,32 @@ const GarageCategorySchema = new mongoose.Schema({
     type: String,
     enum: ['Personalized', 'Efficient', 'Balanced']
   },
+  // Informations de géolocalisation
   location: {
+    type: {
+      type: String,
+      enum: ['Point'],
+      required: true
+    },
+    coordinates: {
+      type: [Number],
+      required: true
+    }
+  },
+  address: {
+    type: String
+  },
+  city: {
+    type: String
+  },
+  postalCode: {
     type: String
   }
 });
 
-// Modèle de la catégorie de garage
+// Indique à Mongoose que le champ "location" utilise un index géospatial
+GarageCategorySchema.index({ location: '2dsphere' });
+
 const GarageCategory = mongoose.model('GarageCategory', GarageCategorySchema);
 
 module.exports = GarageCategory;
