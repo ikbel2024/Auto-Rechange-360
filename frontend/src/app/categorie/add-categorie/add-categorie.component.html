@@ -1,0 +1,112 @@
+<div class="container">
+    <!-- Welcome Message with Animation -->
+    <div class="row mt-4">
+        <div class="col-md-12 text-center">
+            <p class="welcome-message animated infinite pulse">Welcome to the admin controller center - simplify business, manage products and categories effortlessly.</p>
+        </div>
+    </div>
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <div class="container-fluid text-center">
+            <!-- Added text-center class here -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/administration">
+                            <i class="fas fa-chart-line me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/addProduct">
+                            <i class="fas fa-box-open me-1"></i>Products
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/ShowCategorie">
+                            <i class="fas fa-cubes me-1"></i>Stocks
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="layout">
+        <div class="sidebar">
+            <!-- Admin Panel Buttons -->
+            <div class="admin-buttons">
+                <button class="btn btn-primary btn-block" routerLink="/AddCategorie">Add Category</button>
+                <button class="btn btn-danger btn-block" routerLink="/DeleteCategorie">Delete Category</button>
+                <button class="btn btn-warning btn-block" routerLink="/UpdateCategorie/:id">Update Category</button>
+                <button class="btn btn-info btn-block" routerLink="/ShowCategorie">Show Category</button>
+                <button class="btn btn-success btn-block" routerLink="/SearchCategorie">Search Category</button>
+                <button class="btn btn-secondary btn-block" routerLink="/CountCategorie">Count Category</button>
+            </div>
+            <button class="btn btn-secondary mt-3" (click)="goBack()">Back to Dashboard</button>
+        </div>
+
+        <div class="content">
+            <h2>Professional Category Addition Form</h2>
+            <form [formGroup]="registerForm" class="needs-validation" novalidate (ngSubmit)="onSubmit()">
+                <div class="form-group row">
+                    <label for="name" class="col-sm-2 col-form-label">Category Name:</label>
+                    <div class="col-sm-10">
+                        <input type="text" formControlName="name" class="form-control" id="name" required minlength="3">
+                        <div class="invalid-feedback" *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
+                            <div *ngIf="registerForm.get('name')?.hasError('required')">Category name is required</div>
+                            <div *ngIf="registerForm.get('name')?.hasError('minlength')">Category name must be at least 3 characters long</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="reference" class="col-sm-2 col-form-label">Reference:</label>
+                    <div class="col-sm-10">
+                        <input type="text" formControlName="reference" class="form-control" id="reference" required>
+                        <div class="invalid-feedback" *ngIf="registerForm.get('reference')?.invalid && registerForm.get('reference')?.touched">
+                            Reference is required
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="productId" class="col-sm-2 col-form-label">Product ID:</label>
+                    <div class="col-sm-10">
+                        <input type="text" formControlName="productId" class="form-control" id="productId" required>
+                        <div class="invalid-feedback" *ngIf="registerForm.get('productId')?.invalid && registerForm.get('productId')?.touched">
+                            Product ID is required
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="quantity" class="col-sm-2 col-form-label">Quantity:</label>
+                    <div class="col-sm-10">
+                        <input type="number" formControlName="quantity" class="form-control" id="quantity" required>
+                        <div class="invalid-feedback" *ngIf="registerForm.get('quantity')?.invalid && registerForm.get('quantity')?.touched">
+                            Quantity is required
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="description" class="col-sm-2 col-form-label">Category Description:</label>
+                    <div class="col-sm-10">
+                        <input type="text" formControlName="description" class="form-control" id="description">
+                        <div class="invalid-feedback" *ngIf="registerForm.get('description')?.invalid && registerForm.get('description')?.touched">
+                            Category description is required
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-10 offset-sm-2">
+                        <button class="btn btn-info btn-block" type="submit" [disabled]="registerForm.invalid">Add Category</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
