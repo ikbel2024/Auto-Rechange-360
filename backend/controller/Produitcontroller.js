@@ -1,12 +1,14 @@
-const produit = require("../model/Produit");
 const Produit = require("../model/Produit");
 const Stock = require("../model/Stock");
+const multer = require('multer');
+
+const fs = require('fs');
+
 
 
 
 
 //_________________________________________________________________1:First _Part (Produit-Crud)_______________________________________________________________________________
-
 
 // Function to add a new Produit
 async function addPR(req, res, next) {
@@ -19,6 +21,8 @@ async function addPR(req, res, next) {
         console.log(err);
     }
 }
+
+
 
 
 // Function to delete a Produit
@@ -178,6 +182,69 @@ async function deleteMultipleProduits(req, res, next) {
     }
 }
 
+
+/*
+
+// Define multer storage
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, "uploads/");
+    },
+    filename: function(req, file, cb) {
+        cb(null, Date.now() + "-" + file.originalname);
+    }
+});
+
+// Initialize multer with the defined storage
+const upload = multer({ storage: storage }).single("image"); // "image" is the name of the file field in the form
+
+// Function to add a new Produit with picture and additional fields
+async function addPic(req, res, next) {
+    try {
+        // Upload the file
+        upload(req, res, async function(err) {
+            if (err instanceof multer.MulterError) {
+                return res.status(500).json({ message: "An error occurred while uploading the file." });
+            } else if (err) {
+                console.error(err);
+                return res.status(500).json({ message: "An error occurred while uploading the file." });
+            }
+
+            // Retrieve the uploaded file path
+            const imagePath = req.file.path;
+
+            // Create a new Produit instance with the uploaded file path and additional fields
+            const produit = new Produit({
+                name: req.body.name,
+                reference: req.body.reference,
+                dateAdded: req.body.dateAdded,
+                price: req.body.price,
+                description: req.body.description,
+                brandId: req.body.brandId,
+                category: req.body.category,
+                stockQuantity: req.body.stockQuantity,
+                supplierId: req.body.supplierId,
+                imageUrl: imagePath // Include the image URL in the Produit schema
+            });
+
+            // Save the new Produit instance to the database
+            await produit.save();
+
+            // Respond with success message
+            res.status(200).json("Product added successfully.");
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json("An error occurred while adding the product.");
+    }
+}
+
+module.exports = {
+    addPic
+};
+*/
+
+
 /*
 
 // Function to count the number of Produits
@@ -333,6 +400,7 @@ async function fetchAllDetails(entityType) {
 
 module.exports = {
     addPR,
+    // addPic,
     deletePR,
     deleteByName,
     updatePR,

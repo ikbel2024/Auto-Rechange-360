@@ -9,6 +9,8 @@ const produitRouter = require("../backend/routes/ProduitR");
 const path = require("path");
 
 
+
+
 require('dotenv').config();
 
 const axios = require('axios'); // Import Axios for making HTTP requests
@@ -42,6 +44,7 @@ const corsOptions = {
 
 // Utiliser CORS avec les options spécifiées
 app.use(cors(corsOptions));
+
 
 
 // Setting up view engine

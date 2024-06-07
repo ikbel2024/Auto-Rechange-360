@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
+
+
+
 const Produitcontroller = require("../controller/Produitcontroller");
 const Stockcontroller = require("../controller/Stockcontroller");
 const validate = require("../middl/validate").default;
@@ -20,6 +23,10 @@ router.get('/Produit', (req, res, next) => {
 //_________________Product___________________________________
 //, validate
 router.post('/add', Produitcontroller.addPR);
+
+// Use the upload middleware for file uploads
+//router.post('/addPic', upload.single('image'), Produitcontroller.addPic);
+
 
 router.delete('/delete/:id', Produitcontroller.deletePR);
 

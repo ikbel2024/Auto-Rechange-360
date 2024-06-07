@@ -12,10 +12,12 @@ const produit = new Schema({
     dateAdded: Date,
     price: Number,
     description: String,
-    brandId: String,
-    supplierId: String,
+    brandid: String,
     category: String,
-    imageUrl: String
+    stockQuantity: Number,
+    supplierId: String,
+
+    //image: String
 
 })
 module.exports = mongo.model("Product", produit);
