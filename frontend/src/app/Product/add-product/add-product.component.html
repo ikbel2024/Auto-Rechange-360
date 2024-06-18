@@ -1,0 +1,111 @@
+<!-- Welcome Message with Animation -->
+<div class="row mt-4">
+    <div class="col-md-12 text-center">
+        <p class="welcome-message animated infinite pulse">Welcome to the admin controller center - simplify business, manage products and categories effortlessly.</p>
+    </div>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <div class="container-fluid text-center">
+        <!-- Added text-center class here -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/administration">
+                        <i class="fas fa-chart-line me-1"></i>Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/addProduct">
+                        <i class="fas fa-box-open me-1"></i>Products
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/ShowCategorie">
+                        <i class="fas fa-cubes me-1"></i>Stocks
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+
+    <div class="layout">
+        <div class="sidebar">
+            <!-- Admin Panel Buttons -->
+            <div class="admin-buttons">
+                <button class="btn btn-primary btn-block mb-1" routerLink="/addProduct">Add Product</button>
+                <button class="btn btn-danger btn-block mb-1" routerLink="/delete-product">Delete Product</button>
+                <button class="btn btn-warning btn-block mb-1" routerLink="/update-product/:id">Update Product</button>
+                <button class="btn btn-info btn-block mb-1" routerLink="/ShowProucts">Show Products</button>
+                <button class="btn btn-success btn-block mb-1" routerLink="/SearchProducts">Search Product</button>
+                <button class="btn btn-secondary btn-block mb-1" routerLink="/CountProduct">Count Products</button>
+            </div>
+
+            <!-- Back Button -->
+            <button class="btn btn-secondary mt-3" (click)="goBack()">Back to Dashboard</button>
+        </div>
+
+        <div class="content">
+            <h2>Add Product</h2>
+            <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+                <div class="form-group row mb-2">
+                    <label for="name" class="col-sm-3 col-form-label">Name:</label>
+                    <div class="col-sm-9">
+                        <input id="name" formControlName="name" type="text" class="form-control form-control-sm" required>
+                    </div>
+                </div>
+                <div class="form-group row mb-2">
+                    <label for="reference" class="col-sm-3 col-form-label">Reference:</label>
+                    <div class="col-sm-9">
+                        <input id="reference" formControlName="reference" type="text" class="form-control form-control-sm" required>
+                    </div>
+                </div>
+                <div class="form-group row mb-2">
+                    <label for="dateAdded" class="col-sm-3 col-form-label">Date Added:</label>
+                    <div class="col-sm-9">
+                        <input id="dateAdded" formControlName="dateAdded" type="date" class="form-control form-control-sm" required>
+                    </div>
+                </div>
+                <div class="form-group row mb-2">
+                    <label for="price" class="col-sm-3 col-form-label">Price:</label>
+                    <div class="col-sm-9">
+                        <input id="price" formControlName="price" type="number" class="form-control form-control-sm" required>
+                    </div>
+                </div>
+                <div class="form-group row mb-2">
+                    <label for="description" class="col-sm-3 col-form-label">Description:</label>
+                    <div class="col-sm-9">
+                        <input id="description" formControlName="description" type="text" class="form-control form-control-sm" required>
+                    </div>
+                </div>
+                <div class="form-group row mb-2">
+                    <label for="brandId" class="col-sm-3 col-form-label">Brand ID:</label>
+                    <div class="col-sm-9">
+                        <input id="brandId" formControlName="brandId" type="text" class="form-control form-control-sm" required>
+                    </div>
+                </div>
+                <div class="form-group row mb-2">
+                    <label for="category" class="col-sm-3 col-form-label">Category:</label>
+                    <div class="col-sm-9">
+                        <input id="category" formControlName="category" type="text" class="form-control form-control-sm" required>
+                    </div>
+                </div>
+                <div class="form-group row mb-2">
+                    <label for="stockQuantity" class="col-sm-3 col-form-label">Stock Quantity:</label>
+                    <div class="col-sm-9">
+                        <input id="stockQuantity" formControlName="stockQuantity" type="number" class="form-control form-control-sm" required>
+                    </div>
+                </div>
+                <div class="form-group row mb-2">
+                    <label for="supplierId" class="col-sm-3 col-form-label">Supplier ID:</label>
+                    <div class="col-sm-9">
+                        <input id="supplierId" formControlName="supplierId" type="text" class="form-control form-control-sm" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block mt-3">Add Product</button>
+            </form>
+        </div>
+    </div>
+</div>
