@@ -3,6 +3,9 @@ const Stock = require("../model/Stock");
 const multer = require('multer');
 
 const fs = require('fs');
+// Define multer storage
+
+const path = require('path');
 
 
 
@@ -183,8 +186,9 @@ async function deleteMultipleProduits(req, res, next) {
 }
 
 
-/*
+//___________________________________________________________________________________________________
 
+/*
 // Define multer storage
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -195,58 +199,49 @@ const storage = multer.diskStorage({
     }
 });
 
-// Initialize multer with the defined storage
-const upload = multer({ storage: storage }).single("image"); // "image" is the name of the file field in the form
+const upload = multer({ storage: storage }).array("image", 5);
 
-// Function to add a new Produit with picture and additional fields
 async function addPic(req, res, next) {
     try {
-        // Upload the file
         upload(req, res, async function(err) {
-            if (err instanceof multer.MulterError) {
-                return res.status(500).json({ message: "An error occurred while uploading the file." });
-            } else if (err) {
-                console.error(err);
-                return res.status(500).json({ message: "An error occurred while uploading the file." });
+            if (err instanceof multer.MulterError || err) {
+                console.log(err);
+                return res.status(500).json({ message: "Erreur lors du téléversement des fichiers." });
+            }
+            if (!req.files || req.files.length === 0) {
+                return res.status(400).json({ message: "Aucun fichier téléchargé." });
             }
 
-            // Retrieve the uploaded file path
-            const imagePath = req.file.path;
+            const images = req.files.map(file => file.path);
 
-            // Create a new Produit instance with the uploaded file path and additional fields
-            const produit = new Produit({
+            const ProduitData = {
                 name: req.body.name,
+                description: req.body.description,
                 reference: req.body.reference,
                 dateAdded: req.body.dateAdded,
                 price: req.body.price,
                 description: req.body.description,
-                brandId: req.body.brandId,
+                brandid: req.body.brandid,
                 category: req.body.category,
                 stockQuantity: req.body.stockQuantity,
                 supplierId: req.body.supplierId,
-                imageUrl: imagePath // Include the image URL in the Produit schema
-            });
+                image: images
 
-            // Save the new Produit instance to the database
-            await produit.save();
+            };
 
-            // Respond with success message
-            res.status(200).json("Product added successfully.");
+            // Example: save new record to the database or perform other operations
+            const Produit = new Produit(ProduitData);
+            await Produit.save();
+            res.status(200).json({ message: "Fichiers téléversés avec succès" });
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json("An error occurred while adding the product.");
+        console.error('Erreur lors du traitement de la requête:', err);
+        res.status(500).json({ message: "Erreur lors du traitement de la requête." });
     }
 }
-
-module.exports = {
-    addPic
-};
 */
 
-
 /*
-
 // Function to count the number of Produits
 async function countProduits(req, res, next) {
     try {
@@ -256,7 +251,7 @@ async function countProduits(req, res, next) {
         console.error(err);
         res.status(500).send("Internal Server Error");
     }
-}  */
+} */
 
 
 
@@ -400,7 +395,7 @@ async function fetchAllDetails(entityType) {
 
 module.exports = {
     addPR,
-    // addPic,
+    //addPic,
     deletePR,
     deleteByName,
     updatePR,

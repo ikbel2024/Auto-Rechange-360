@@ -2,11 +2,12 @@ const express = require("express");
 const router = express.Router();
 
 
-
+//const multer = require('multer');
+//const upload = multer({ dest: 'uploads/' });
 
 const Produitcontroller = require("../controller/Produitcontroller");
 const Stockcontroller = require("../controller/Stockcontroller");
-const validate = require("../middl/validate").default;
+//const validate = require("../middl/validate").default;
 
 const { json } = require("body-parser");
 
@@ -26,6 +27,7 @@ router.post('/add', Produitcontroller.addPR);
 
 // Use the upload middleware for file uploads
 //router.post('/addPic', upload.single('image'), Produitcontroller.addPic);
+
 
 
 router.delete('/delete/:id', Produitcontroller.deletePR);
@@ -88,6 +90,8 @@ router.get('/countS', Stockcontroller.countStocks);
 // Route to calculate total stock quantity
 router.get('/totalQuantity', Stockcontroller.calculateTotalStockQuantity);
 
+// Route to delete category by name
+router.delete('/deleteByNameS/:name', Stockcontroller.deleteCategorieByNameS);
 
 
 //_________________Socket________________________________________

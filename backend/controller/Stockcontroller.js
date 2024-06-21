@@ -1,6 +1,7 @@
 const Stock = require("../model/Stock");
 //const Stock = require("../model/Produit");
 
+
 // Function to add a new Stock
 async function add(req, res, next) {
     try {
@@ -140,24 +141,50 @@ async function deleteMultipleStock(req, res, next) {
 }
 
 // Function to count the number of Stocks
+
 async function countStocks(req, res, next) {
     try {
+        // Count the total number of documents
         const count = await Stock.countDocuments();
-        res.json({ count });
+
+        // Aggregate to calculate the total quantity
+        const aggregateResult = await Stock.aggregate([{
+            $group: {
+                _id: null,
+                totalQuantity: { $sum: '$quantity' }
+            }
+        }]);
+
+        // Extract the total quantity from the aggregation result
+        const totalQuantity = aggregateResult.length > 0 ? aggregateResult[0].totalQuantity : 0;
+
+        console.log(`Total stock count: ${count}`);
+        console.log(`Total quantity: ${totalQuantity}`);
+
+        res.json({ count, totalQuantity });
     } catch (err) {
-        console.error(err);
-        res.status(500).send("Internal Server Error");
+        console.error('Error counting stocks:', err);
+        res.status(500).send('Internal Server Error');
     }
 }
 
-// Function to calculate the total stock quantity
+
+// Function to calculate the total stock quantity with names
 async function calculateTotalStockQuantity(req, res, next) {
     try {
         // Query all stocks from the database
         const stocks = await Stock.find();
 
-        // Log the retrieved stocks for debugging
-        console.log("Retrieved category:", stocks);
+        // Initialize an array to store stock details (name and quantity)
+        let stockDetails = [];
+
+        // Iterate through each stock to retrieve name and quantity
+        for (const stock of stocks) {
+            stockDetails.push({
+                name: stock.name,
+                quantity: stock.quantity
+            });
+        }
 
         // Calculate the total quantity by summing up the quantities of all stocks
         let totalQuantity = 0;
@@ -168,14 +195,31 @@ async function calculateTotalStockQuantity(req, res, next) {
         // Log the total quantity for debugging
         console.log("Total quantity:", totalQuantity);
 
-        // Send the total quantity as a response
-        res.json({ totalQuantity });
+        // Send the total quantity and stock details as a response
+        res.json({ totalQuantity, stocks: stockDetails });
     } catch (error) {
-        console.error("Error calculating total category quantity:", error);
+        console.error("Error calculating total stock quantity:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 }
 
+
+
+// Function to delete a category by name
+async function deleteCategorieByNameS(req, res, next) {
+    try {
+        const { name } = req.params;
+        console.log('Deleting category:', name); // Check if name is correctly received
+        const data = await Stock.findOneAndDelete({ name: name });
+        if (!data) {
+            return res.status(404).json({ message: "The specified category was not found." });
+        }
+        res.json({ message: "The category has been successfully deleted." });
+    } catch (err) {
+        console.error('Error deleting category:', err);
+        res.status(500).json({ message: "An error occurred on the server. Please try again later." });
+    }
+}
 
 
 
@@ -191,5 +235,6 @@ module.exports = {
     updateMultipleStock,
     deleteMultipleStock,
     countStocks,
-    calculateTotalStockQuantity
+    calculateTotalStockQuantity,
+    deleteCategorieByNameS
 };

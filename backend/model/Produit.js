@@ -16,8 +16,7 @@ const produit = new Schema({
     category: String,
     stockQuantity: Number,
     supplierId: String,
-
-    //image: String
+    // image: { type: [String], required: true },
 
 })
 module.exports = mongo.model("Product", produit);
