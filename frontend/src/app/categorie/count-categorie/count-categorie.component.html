@@ -1,0 +1,100 @@
+<!-- Welcome Message with Animation -->
+<div class="row mt-4">
+    <div class="col-md-12 text-center">
+        <p class="welcome-message animated infinite pulse">
+            Welcome to the Admin Control Center - Simplify Business, Manage Products and Categories Effortlessly
+        </p>
+    </div>
+</div>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <div class="container-fluid text-center">
+        <a class="navbar-brand" href="#">
+            <img src="assets/logo.png" alt="Logo" height="30">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/administration">
+                        <i class="fas fa-chart-line me-1"></i>Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/addProduct">
+                        <i class="fas fa-box-open me-1"></i>Products
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/ShowCategorie">
+                        <i class="fas fa-cubes me-1"></i>Stocks
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <!-- Sidebar -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title text-center mb-4">Admin Panel</h5>
+                    <div class="admin-buttons">
+                        <button class="btn btn-dark btn-block mb-2" routerLink="/AddCategorie">Add Category</button>
+                        <button class="btn btn-dark btn-block mb-2" routerLink="/DeleteCategorie">Delete Category</button>
+                        <button class="btn btn-dark btn-block mb-2" routerLink="/UpdateCategorie/:id">Update Category</button>
+                        <button class="btn btn-dark btn-block mb-2" routerLink="/ShowCategorie">Show Category</button>
+                        <button class="btn btn-dark btn-block mb-2" routerLink="/SearchCategorie">Search Category</button>
+                        <button class="btn btn-dark btn-block mb-2" routerLink="/CountCategorie">Count Category</button>
+                    </div>
+                    <button class="btn btn-dark btn-secondary mt-3" (click)="goBack()">Back to Dashboard</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <!-- Main Content Area -->
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title mb-4">Count Car Category by Manufacturer</h2>
+                    <form (submit)="onCountByCategory()" class="needs-validation" novalidate>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn btn-info mr-2">Count Total Stocks</button>
+                                <button type="button" class="btn btn-primary" (click)="calculateTotalQuantity()">Calculate Total Quantity</button>
+                            </div>
+                        </div>
+                    </form>
+                    <hr>
+                    <div *ngIf="countResult !== undefined">
+                        <p class="lead">Total Car Parts: {{ countResult }}</p>
+                        <!-- Display grouped data if available -->
+                        <div *ngIf="groupedData && groupedData.length > 0">
+                            <h4>Grouped Data</h4>
+                            <ul class="list-group">
+                                <li class="list-group-item" *ngFor="let group of groupedData">
+                                    {{ group.source }}: {{ group.count }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <hr>
+                    <div *ngIf="categoryQuantities.length > 0">
+                        <h4>Total Quantity by Category</h4>
+                        <ul class="list-group">
+                            <li class="list-group-item" *ngFor="let category of categoryQuantities">
+                                {{ category.name }}: {{ category.totalQuantity }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
