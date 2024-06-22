@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="layout">
+        <div class="sidebar">
+            <!-- Admin Panel Buttons -->
+            <div class="admin-buttons">
+                <button class="btn btn-primary btn-block" routerLink="/AddCategorie">Add Categorie</button>
+                <button class="btn btn-danger btn-block" routerLink="/DeleteCategorie">Delete Categorie</button>
+                <button class="btn btn-warning btn-block" routerLink="/UpdateCategorie/:id">Update Categorie</button>
+                <!-- Move the "Show Products" button to the sidebar -->
+                <button class="btn btn-info btn-block" routerLink="/ShowCategorie">Show Categorie</button>
+                <button class="btn btn-success btn-block" routerLink="/SearchCategorie">Search Categorie</button>
+                <button class="btn btn-secondary btn-block" routerLink="/CountCategorie">Count Categorie</button>
+            </div>
+
+
+
+            <!-- Back Button -->
+            <button class="btn btn-secondary mt-3" (click)="goBack()">Back to Dashboard</button>
+        </div>
+        <div class="content">
+            <h2>Categorie List</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Like</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let Categorie of categories | async">
+                        <td>{{ Categorie.id }}</td>
+                        <td>{{ Categorie.title }}</td>
+                        <td>{{ Categorie.price }}</td>
+                        <td>{{ Categorie.quantity }}</td>
+                        <td>{{ Categorie.like }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

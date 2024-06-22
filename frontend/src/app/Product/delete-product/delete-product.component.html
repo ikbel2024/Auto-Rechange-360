@@ -1,0 +1,66 @@
+<div class="container">
+    <div class="layout">
+        <div class="sidebar">
+            <!-- Admin Panel Buttons -->
+            <div class="admin-buttons">
+                <button class="btn btn-primary btn-block" routerLink="/addProduct">Add Product</button>
+                <button class="btn btn-danger btn-block" routerLink="/delete-product">Delete Product</button>
+                <button class="btn btn-warning btn-block" routerLink="/update-product/:id">Update Product</button>
+                <button class="btn btn-info btn-block" routerLink="/ShowProducts">Show Products</button>
+                <button class="btn btn-success btn-block" routerLink="/SearchProducts">Search Product</button>
+                <button class="btn btn-secondary btn-block" routerLink="/CountProduct">Count Products</button>
+            </div>
+
+            <!-- Back Button -->
+            <button class="btn btn-secondary mt-3" (click)="goBack()">Back to Dashboard</button>
+        </div>
+        <div class="content">
+            <h2>Delete Product</h2>
+            <!-- Form for selecting and deleting a product -->
+            <form (ngSubmit)="onDeleteProduct()" class="needs-validation" novalidate>
+                <div class="form-group row">
+                    <label for="productName" class="col-sm-2 col-form-label">Product Name:</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="productName" [(ngModel)]="productName" name="productName" required>
+                        <div class="invalid-feedback">
+                            Please enter a valid Product Name.
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Buttons for Search, Show Details, and Delete -->
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <button class="btn btn-primary mr-2" (click)="onSearchProduct()">Search Product</button>
+
+                    <table class="table" *ngIf="searchResults">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Reference</th>
+                                <th>Date Added</th>
+                                <th>Price</th>
+                                <th>Description</th>
+                                <th>Category</th>
+                                <th>Image</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let product of searchResults">
+                                <td>{{ product.name }}</td>
+                                <td>{{ product.reference }}</td>
+                                <td>{{ product.dateAdded }}</td>
+                                <td>{{ product.price }}</td>
+                                <td>{{ product.description }}</td>
+                                <td>{{ product.category }}</td>
+                                <td><img [src]="product.imageUrl" alt="Product Image" style="max-width: 100px;"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn btn-danger" (click)="onDeleteProduct()">Delete Product</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

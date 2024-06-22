@@ -1,0 +1,66 @@
+<div class="container">
+    <div class="layout">
+        <div class="sidebar">
+            <!-- Admin Panel Buttons -->
+            <div class="admin-buttons">
+                <button class="btn btn-primary btn-block" routerLink="/AddCategorie">Add Categorie</button>
+                <button class="btn btn-danger btn-block" routerLink="/DeleteCategorie">Delete Categorie</button>
+                <button class="btn btn-warning btn-block" routerLink="/UpdateCategorie/:id">Update Categorie</button>
+                <!-- Move the "Show Products" button to the sidebar -->
+                <button class="btn btn-info btn-block" routerLink="/ShowCategorie">Show Categorie</button>
+                <button class="btn btn-success btn-block" routerLink="/SearchCategorie">Search Categorie</button>
+                <button class="btn btn-secondary btn-block" routerLink="/CountCategorie">Count Categorie</button>
+            </div>
+
+
+
+            <!-- Back Button -->
+            <button class="btn btn-secondary mt-3" (click)="goBack()">Back to Dashboard</button>
+        </div>
+        <div class="content">
+            <h2>Update Categorie</h2>
+            <form>
+                <div class="form-group row">
+                    <label for="id" class="col-sm-2 col-form-label">ID:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="id" name="id" [(ngModel)]="Categorie.id" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="title" class="col-sm-2 col-form-label">Title:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="title" name="title" [(ngModel)]="Categorie.title">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="price" class="col-sm-2 col-form-label">Price:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="price" name="price" [(ngModel)]="Categorie.price">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="quantity" class="col-sm-2 col-form-label">Quantity:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="quantity" name="quantity" [(ngModel)]="Categorie.quantity">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="like" class="col-sm-2 col-form-label">Like:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="like" name="like" [(ngModel)]="Categorie.like">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-10 offset-sm-2">
+                        <button type="submit" class="btn btn-primary btn-block">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

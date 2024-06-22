@@ -1,0 +1,18 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="container mt-5">
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input id="email" formControlName="email" type="email" class="form-control" [class.is-invalid]="loginForm.get('email')!.invalid && loginForm.get('email')!.touched">
+    <div *ngIf="loginForm.get('email')!.invalid && loginForm.get('email')!.touched" class="invalid-feedback">
+      Veuillez entrer un email valide.
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="mot_de_passe" class="form-label">Mot de passe</label>
+    <input id="mot_de_passe" formControlName="mot_de_passe" type="password" class="form-control" [class.is-invalid]="loginForm.get('mot_de_passe')!.invalid && loginForm.get('mot_de_passe')!.touched">
+    <div *ngIf="loginForm.get('mot_de_passe')!.invalid && loginForm.get('mot_de_passe')!.touched" class="invalid-feedback">
+      Veuillez entrer un mot de passe.
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Connexion</button>
+  <div *ngIf="loginError" class="alert alert-danger mt-3">{{ loginError }}</div>
+</form>
