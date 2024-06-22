@@ -1,0 +1,21 @@
+<div class="commande-info-container">
+  <h2>Informations de Commande</h2>
+  <form (ngSubmit)="validerCommande()">
+    <label>Nom:</label>
+    <input type="text" [(ngModel)]="nom" name="nom" required>
+
+    <label>Adresse:</label>
+    <input type="text" [(ngModel)]="adresse" name="adresse" required>
+
+    <label>Téléphone:</label>
+    <input type="tel" [(ngModel)]="telephone" name="telephone" required>
+
+    <label>Méthode de Paiement:</label>
+    <select [(ngModel)]="methodePaiement" name="methodePaiement" required>
+      <option value="carte">Carte de crédit</option>
+      <option value="paypal">PayPal</option>
+    </select>
+
+    <button type="submit" class="confirmation-button">Confirmer la commande</button>
+  </form>
+</div>

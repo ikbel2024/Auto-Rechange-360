@@ -1,0 +1,73 @@
+/* commande-info.component.css */
+
+.commande-info-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.commande-info-container h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.commande-info-container form {
+  display: grid;
+  gap: 20px;
+}
+
+.commande-info-container label {
+  font-size: 18px;
+  color: #555;
+}
+
+.commande-info-container input[type="text"],
+.commande-info-container input[type="tel"],
+.commande-info-container select {
+  width: calc(100% - 20px);
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.commande-info-container input[type="text"]:focus,
+.commande-info-container input[type="tel"]:focus,
+.commande-info-container select:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.commande-info-container select {
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23000000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+
+.commande-info-container button {
+  padding: 12px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+}
+
+.commande-info-container button:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 600px) {
+  .commande-info-container {
+    padding: 20px;
+  }
+}
