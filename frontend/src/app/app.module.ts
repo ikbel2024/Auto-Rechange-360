@@ -31,6 +31,7 @@ import { ShowCategorieComponent } from './categorie/show-categorie/show-categori
 import { SearchCategorieComponent } from './categorie/search-categorie/search-categorie.component';
 import { CountCategorieComponent } from './categorie/count-categorie/count-categorie.component';
 import { ChatBotComponent } from './chat-bot/chat-bot.component';
+import { CommandeModule } from './commande/commande.module';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { ChatBotComponent } from './chat-bot/chat-bot.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+	CommandeModule
     
   ],
   providers: [],
