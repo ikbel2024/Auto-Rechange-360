@@ -3,7 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { NotFoundComponent } from './not-found/not-found.component';
 import { DetailProdComponent } from './Product/detail-prod/detail-prod.component';
-
+import { PanierComponent } from './commande/panier/panier.component';
+import { OrdreComponent } from './commande/ordre/ordre.component';
 import { AddProductComponent } from './Product/add-product/add-product.component';
 
 import { TvComponent } from './categorie/Stock-Details/tv.component';
@@ -24,7 +25,6 @@ import { CountCategorieComponent } from './categorie/count-categorie/count-categ
 const routes: Routes = [
   { path: '', redirectTo: '/tv', pathMatch: 'full' },
   { path: 'tv', component: TvComponent },
-
   { path: 'addProduct', component: AddProductComponent },
   { path: 'administration', component: AdministrationComponent },
   { path: 'delete-product', component: DeleteProductComponent },
@@ -32,16 +32,16 @@ const routes: Routes = [
   { path: 'ShowProucts', component: ShowProductsComponent },
   { path: 'SearchProducts', component: SearchProductsComponent },
   { path: 'CountProduct', component: CountProductComponent },
-
   { path: 'ShowCategorie', component: ShowCategorieComponent },
   { path: 'UpdateCategorie/:id', component: UpdateCategorieComponent },
   { path: 'DeleteCategorie', component: DeleteCategorieComponent },
   { path: 'AddCategorie', component: AddCategorieComponent },
   { path: 'SearchCategorie', component: SearchCategorieComponent },
-  { path: 'CountCategorie', component: CountCategorieComponent }
-  ,
+  { path: 'CountCategorie', component: CountCategorieComponent },
   { path: 'product', component: DetailProdComponent },
-  { path: '**', component: NotFoundComponent },
+  { path: 'panier', component: PanierComponent },
+  { path: 'ordre/:id', component: OrdreComponent },
+
 ];
 
 @NgModule({
