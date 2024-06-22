@@ -1,30 +1,60 @@
 const Produit = require("../model/Produit");
-const Stock = require("../model/Stock");
-const multer = require('multer');
-
+const multer = require("multer");
 const fs = require('fs');
-// Define multer storage
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, "uploads/");
+    },
+    filename: function(req, file, cb) {
+        cb(null, Date.now() + "-" + file.originalname);
+    }
+});
 
-const path = require('path');
+const upload = multer({ storage: storage }).array("image", 5);
 
 
+const moment = require('moment'); // Import moment.js for date handling
 
-
-
-//_________________________________________________________________1:First _Part (Produit-Crud)_______________________________________________________________________________
-
-// Function to add a new Produit
-async function addPR(req, res, next) {
+async function addPR(req, res) {
     try {
-        const produit = new Produit(req.body);
+        upload(req, res, async function(err) {
+            if (err instanceof multer.MulterError || err) {
+                console.log(err);
+                return res.status(500).json({ message: "Erreur lors du téléversement des fichiers." });
+            }
 
-        await produit.save();
-        res.status(200).send("Product add");
+            if (!req.files || req.files.length === 0) {
+                return res.status(400).json({ message: "Aucun fichier téléchargé." });
+            }
+
+            const image = req.files.map(file => file.path);
+
+            // Parse date string into a Date object using moment.js
+            const dateAdded = moment(req.body.dateAdded, 'YYYY-MM-DDTHH:mm:ssZ').toDate();
+
+            // Construct Data object with parsed date
+            const Data = {
+                name: req.body.name,
+                reference: req.body.reference,
+                dateAdded: dateAdded, // Assign parsed Date object
+                price: req.body.price,
+                description: req.body.description,
+                brandid: req.body.brandid,
+                category: req.body.category,
+                stockQuantity: req.body.stockQuantity,
+                supplierId: req.body.supplierId,
+                image: image,
+            };
+
+            const produit = new Produit(Data);
+            await produit.save();
+            res.status(200).json({ message: "produit ajouté avec succès" });
+        });
     } catch (err) {
-        console.log(err);
+        console.error('Erreur lors de l\'ajout de l\'produit:', err);
+        res.status(500).json({ message: "Erreur lors de l'ajout de l'produit." });
     }
 }
-
 
 
 
@@ -61,16 +91,58 @@ async function deleteByName(req, res, next) {
 
 
 
-async function updatePR(req, res, next) {
+async function updatePR(req, res) {
     try {
-        const data = await Produit.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        if (!data) {
-            return res.status(404).send("Product not found");
-        }
-        res.send("updated");
+        upload(req, res, async function(err) {
+            if (err instanceof multer.MulterError || err) {
+                console.log(err);
+                return res.status(500).json({ message: "Erreur lors du téléversement des fichiers." });
+            }
+
+            const produitId = req.params.id;
+
+            // Find existing Produit by its ID
+            const existingProduit = await Produit.findById(produitId);
+            if (!existingProduit) {
+                return res.status(404).json({ message: "Produit non trouvé." });
+            }
+
+            // Remove old images if new images are uploaded
+            if (req.files && req.files.length > 0) {
+                // Remove old images from the file system
+                if (existingProduit.image && existingProduit.image.length > 0) {
+                    existingProduit.image.forEach(img => {
+                        if (fs.existsSync(img)) {
+                            fs.unlinkSync(img); // Delete existing image
+                        }
+                    });
+                }
+
+                // Update image paths with newly uploaded files
+                existingProduit.image = req.files.map(file => file.path);
+            }
+
+            // Update other fields of the Produit
+            existingProduit.name = req.body.name;
+            existingProduit.reference = req.body.reference;
+            if (req.body.dateAdded) {
+                existingProduit.dateAdded = moment(req.body.dateAdded, 'YYYY-MM-DDTHH:mm:ssZ').toDate();
+            }
+            existingProduit.price = req.body.price;
+            existingProduit.description = req.body.description;
+            existingProduit.brandid = req.body.brandid;
+            existingProduit.category = req.body.category;
+            existingProduit.stockQuantity = req.body.stockQuantity;
+            existingProduit.supplierId = req.body.supplierId;
+
+            // Save updated Produit to the database
+            await existingProduit.save();
+
+            res.status(200).json({ message: "Produit mis à jour avec succès", produit: existingProduit });
+        });
     } catch (err) {
-        console.error(err);
-        res.status(500).send("Internal Server Error");
+        console.error('Erreur lors de la mise à jour de l\'produit:', err);
+        res.status(500).json({ message: "Erreur lors de la mise à jour de l'produit." });
     }
 }
 
@@ -186,72 +258,6 @@ async function deleteMultipleProduits(req, res, next) {
 }
 
 
-//___________________________________________________________________________________________________
-
-/*
-// Define multer storage
-const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, "uploads/");
-    },
-    filename: function(req, file, cb) {
-        cb(null, Date.now() + "-" + file.originalname);
-    }
-});
-
-const upload = multer({ storage: storage }).array("image", 5);
-
-async function addPic(req, res, next) {
-    try {
-        upload(req, res, async function(err) {
-            if (err instanceof multer.MulterError || err) {
-                console.log(err);
-                return res.status(500).json({ message: "Erreur lors du téléversement des fichiers." });
-            }
-            if (!req.files || req.files.length === 0) {
-                return res.status(400).json({ message: "Aucun fichier téléchargé." });
-            }
-
-            const images = req.files.map(file => file.path);
-
-            const ProduitData = {
-                name: req.body.name,
-                description: req.body.description,
-                reference: req.body.reference,
-                dateAdded: req.body.dateAdded,
-                price: req.body.price,
-                description: req.body.description,
-                brandid: req.body.brandid,
-                category: req.body.category,
-                stockQuantity: req.body.stockQuantity,
-                supplierId: req.body.supplierId,
-                image: images
-
-            };
-
-            // Example: save new record to the database or perform other operations
-            const Produit = new Produit(ProduitData);
-            await Produit.save();
-            res.status(200).json({ message: "Fichiers téléversés avec succès" });
-        });
-    } catch (err) {
-        console.error('Erreur lors du traitement de la requête:', err);
-        res.status(500).json({ message: "Erreur lors du traitement de la requête." });
-    }
-}
-*/
-
-/*
-// Function to count the number of Produits
-async function countProduits(req, res, next) {
-    try {
-        const count = await Produit.countDocuments();
-        res.json({ count: count });
-    } catch (err) {
-        console.error(err);
-        res.status(500).send("Internal Server Error");
-    }
-} */
 
 
 
@@ -395,7 +401,7 @@ async function fetchAllDetails(entityType) {
 
 module.exports = {
     addPR,
-    //addPic,
+
     deletePR,
     deleteByName,
     updatePR,
@@ -407,8 +413,6 @@ module.exports = {
     paginateProduit,
     countProduits,
     countProductsByCategory,
-
-
     findProduitByNameAndFournisseur,
     getUniqueBrandIds,
     updateMultipleProduits,

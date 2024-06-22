@@ -25,8 +25,6 @@ router.get('/Produit', (req, res, next) => {
 //, validate
 router.post('/add', Produitcontroller.addPR);
 
-// Use the upload middleware for file uploads
-//router.post('/addPic', upload.single('image'), Produitcontroller.addPic);
 
 
 

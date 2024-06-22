@@ -55,8 +55,9 @@ app.set("view engine", "twig");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+
 // Setting up routes
-app.use("/ProduitR", produitRouter);
+app.use("/produit", produitRouter);
 app.use('/chat', chatRouter); // Ensure this is correctly integrated
 // Creating HTTP server
 const server = http.createServer(app);
