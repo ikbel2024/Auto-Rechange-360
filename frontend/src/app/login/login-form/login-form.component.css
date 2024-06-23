@@ -1,31 +1,155 @@
-/* Ajoutez ce code CSS à votre fichier HTML */
+*,
+*:before,
+*:after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f4f4f9;
+    font-family: 'Poppins', sans-serif;
+    
+}
 
 .login-container {
-    max-width: 400px;
-    margin: 0 auto;
-    margin-top: 100px;
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-  }
-  
-  .text-danger {
-    color: #dc3545;
-  }
-  
-  .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-  }
-  
-  .btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
-  }
-  
-  .btn-primary:focus,
-  .btn-primary.focus {
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
-  }
-  
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.background {
+    width: 330px; /* Reduced size */
+    height: 420px; /* Reduced size */
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+}
+
+.background .shape {
+    height: 150px; /* Reduced size */
+    position: absolute;
+    border-radius: 50%;
+}
+
+.shape:first-child {
+    background: linear-gradient(#1845ad, #23a2f6);
+    left: -50px;
+    top: -50px;
+}
+
+.shape:last-child {
+    background: linear-gradient(to right, #ff512f, #f09819);
+    right: -20px;
+    bottom: -50px;
+}
+
+.login-form {
+    height: 420px; /* Reduced size */
+    width: 300px; /* Reduced size */
+    background-color: rgba(255, 255, 255, 0.13);
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+    padding: 40px 30px;
+    text-align: center;
+}
+
+.login-form h3 {
+    font-size: 28px; /* Reduced size */
+    font-weight: 500;
+    line-height: 38px;
+    margin-bottom: 20px; /* Reduced margin */
+}
+
+label {
+    display: block;
+    margin-top: 20px;
+    font-size: 14px; /* Reduced size */
+    font-weight: 500;
+    text-align: left;
+}
+
+input {
+    display: block;
+    height: 40px; /* Reduced size */
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.07);
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 300;
+    color: #ffffff;
+}
+
+::placeholder {
+    color: #e5e5e5;
+}
+
+button {
+    margin-top: 20px; /* Reduced margin */
+    width: 100%;
+    background-color: #28a745; /* Changed color to green */
+    color: #ffffff;
+    padding: 10px 0; /* Reduced padding */
+    font-size: 16px; /* Reduced size */
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none; /* Remove border */
+    transition: background-color 0.3s ease; /* Add transition for smooth color change */
+}
+
+button:hover {
+    background-color: #218838; /* Darker shade for hover effect */
+}
+
+.options {
+    margin-top: 10px; /* Reduced margin */
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px; /* Reduced size */
+}
+
+.options a {
+    color: #110a91;
+    text-decoration: none;
+}
+
+.options a:hover {
+    text-decoration: underline;
+}
+
+.social-login {
+    margin-top: 20px; /* Reduced margin */
+}
+
+.social-login .google {
+    background: #db4437; /* Google button color */
+    color: #ffffff;
+    padding: 0.5px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease; /* Add transition for smooth color change */
+}
+
+.social-login .google:hover {
+    background: #c23321; /* Darker shade for hover effect */
+}
+
+.social-login .google i {
+    margin-right: 8px;
+}

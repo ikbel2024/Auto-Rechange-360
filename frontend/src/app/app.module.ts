@@ -34,6 +34,7 @@ import { ChatBotComponent } from './chat-bot/chat-bot.component';
 import { LoginFormComponent } from './login/login-form/login-form.component';
 import { RegisterFormComponent } from './login/register-form/register-form.component';
 import { AdminFormComponent } from './login/admin-form/admin-form.component';
+import { ResetpassFormComponent } from './login/resetpass-form/resetpass-form.component';
 
 
 @NgModule({
@@ -65,6 +66,7 @@ import { AdminFormComponent } from './login/admin-form/admin-form.component';
     LoginFormComponent,
     RegisterFormComponent,
     AdminFormComponent,
+    ResetpassFormComponent,
   ],
   imports: [
     BrowserModule,

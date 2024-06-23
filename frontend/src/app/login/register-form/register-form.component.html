@@ -1,47 +1,49 @@
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="nom">Nom:</label>
-    <input id="nom" formControlName="nom" type="text" />
-  </div>
+<div class="register-container">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+    <h3>Inscription</h3>
+    <div class="form-group">
+      <label for="nom">Nom:</label>
+      <input id="nom" formControlName="nom" type="text" />
+    </div>
 
-  <div>
-    <label for="prenom">Prénom:</label>
-    <input id="prenom" formControlName="prenom" type="text" />
-  </div>
+    <div class="form-group">
+      <label for="prenom">Prénom:</label>
+      <input id="prenom" formControlName="prenom" type="text" />
+    </div>
 
-  <div>
-    <label for="adresse">Adresse:</label>
-    <input id="adresse" formControlName="adresse" type="text" />
-  </div>
+    <div class="form-group">
+      <label for="adresse">Adresse:</label>
+      <input id="adresse" formControlName="adresse" type="text" />
+    </div>
 
-  <div>
-    <label for="email">Email:</label>
-    <input id="email" formControlName="email" type="email" />
-  </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input id="email" formControlName="email" type="email" />
+    </div>
 
-  <div>
-    <label for="num_tel">Numéro de téléphone:</label>
-    <input id="num_tel" formControlName="num_tel" type="text" />
-  </div>
+    <div class="form-group">
+      <label for="num_tel">Numéro de téléphone:</label>
+      <input id="num_tel" formControlName="num_tel" type="text" />
+    </div>
 
-  <div>
-    <label for="mot_de_passe">Mot de passe:</label>
-    <input id="mot_de_passe" formControlName="mot_de_passe" type="password" />
-  </div>
+    <div class="form-group">
+      <label for="mot_de_passe">Mot de passe:</label>
+      <input id="mot_de_passe" formControlName="mot_de_passe" type="password" />
+    </div>
 
-  <div>
-    <label for="role">Role:</label>
-    <select id="role" formControlName="role">
-      <option value="user">User</option>
-      <option value="admin">Admin</option>
-      <!-- Add other roles as needed -->
-    </select>
-  </div>
+    <div class="form-group">
+      <label for="role">Role:</label>
+      <select id="role" formControlName="role">
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
+    </div>
 
-  <div>
-    <label for="matricule_fiscale">Matricule Fiscale:</label>
-    <input id="matricule_fiscale" formControlName="matricule_fiscale" type="text" />
-  </div>
+    <div class="form-group">
+      <label for="matricule_fiscale">Matricule Fiscale:</label>
+      <input id="matricule_fiscale" formControlName="matricule_fiscale" type="text" />
+    </div>
 
-  <button type="submit">Register</button>
-</form>
+    <button type="submit" class="submit-btn">Register</button>
+  </form>
+</div>

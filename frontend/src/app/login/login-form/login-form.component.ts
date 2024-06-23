@@ -5,10 +5,12 @@ import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
+
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.css']
+
 })
 export class LoginFormComponent {
   loginForm: FormGroup;
