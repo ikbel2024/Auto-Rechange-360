@@ -35,12 +35,12 @@ import { LoginFormComponent } from './login/login-form/login-form.component';
 import { RegisterFormComponent } from './login/register-form/register-form.component';
 import { AdminFormComponent } from './login/admin-form/admin-form.component';
 import { ResetpassFormComponent } from './login/resetpass-form/resetpass-form.component';
+import { UserListComponent } from './login/userlist-form/userlist-form.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-
     NavbarComponent,
     NotFoundComponent,
     DetailProdComponent,
@@ -67,6 +67,8 @@ import { ResetpassFormComponent } from './login/resetpass-form/resetpass-form.co
     RegisterFormComponent,
     AdminFormComponent,
     ResetpassFormComponent,
+    UserListComponent
+    
   ],
   imports: [
     BrowserModule,

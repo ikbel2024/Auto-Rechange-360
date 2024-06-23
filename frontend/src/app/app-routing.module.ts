@@ -22,11 +22,17 @@ import { AddCategorieComponent } from './categorie/add-categorie/add-categorie.c
 import { CountCategorieComponent } from './categorie/count-categorie/count-categorie.component';
 import { LoginFormComponent } from './login/login-form/login-form.component';
 import { RegisterFormComponent } from './login/register-form/register-form.component';
+import { UserListComponent } from './login/userlist-form/userlist-form.component';
+import { AdminAuthGuardService } from './services/admin-auth-guard.service';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginFormComponent },
   { path: 'register', component: RegisterFormComponent },
+  { path: 'userlist', component: UserListComponent },
+  { path: 'admin/userlist', component: UserListComponent, canActivate: [AdminAuthGuardService] },
+
+
 
 
   { path: 'addProduct', component: AddProductComponent },

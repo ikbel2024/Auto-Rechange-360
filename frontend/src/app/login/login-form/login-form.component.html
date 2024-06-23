@@ -1,43 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Pièces de Rechange</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="login-form.component.css">
-</head>
-<body>
-    <div class="login-container">
-        <div class="background">
-            <div class="shape"></div>
-            <div class="shape"></div>
-        </div>
-        <form class="login-form">
-            <h3>Connexion</h3>
-
-            <label for="email">Email</label>
-            <input type="email" placeholder="Email" id="email">
-
-            <label for="password">Mot de passe</label>
-            <input type="password" placeholder="Mot de passe" id="password">
-
-            <button type="submit">Se connecter</button>
-
-            <div class="social-login">
-              <div class="google">
-                  <i class="fab fa-google"></i> Se connecter avec Google
-              </div>
-          </div>
-
-            <div class="options">
-                <a href="#">Mot de passe oublié ?</a>
-                <a href="/register">S'inscrire</a>
-            </div>
-
-            
-        </form>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="email">Email</label>
+      <input id="email" formControlName="email" type="email">
+      <div *ngIf="isFieldInvalid('email')" class="error-message">
+        {{ getEmailErrorMessage() }}
+      </div>
     </div>
-</body>
-</html>
+  
+    <div>
+      <label for="password">Password</label>
+      <input id="password" formControlName="password" type="password">
+      <div *ngIf="isFieldInvalid('password')" class="error-message">
+        {{ getPasswordErrorMessage() }}
+      </div>
+    </div>
+  
+    <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+  
+    <button type="submit">Login</button>
+  </form>
+  

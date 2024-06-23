@@ -1,87 +1,39 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = environment.apiUrl;
+  private apiUrl = 'http://localhost:3000/api';
 
   constructor(private http: HttpClient) {}
 
-  login(credentials: { email: string; mot_de_passe: string }): Observable<{ role: string; token: string }> {
-    return this.http.post<{ role: string; token: string }>(`${this.apiUrl}/login`, credentials).pipe(
-      map(response => {
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('role', response.role); // Stocker le rôle de l'utilisateur
-        return response;
-      }),
-      catchError(error => {
-        let errorMessage = 'An unknown error occurred!';
-        if (error.status === 404) {
-          errorMessage = 'User not found';
-        } else if (error.status === 400) {
-          errorMessage = 'Invalid credentials';
-        }
-        return throwError(errorMessage);
-      })
+  login(email: string, mot_de_passe: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/login`, { email, mot_de_passe }).pipe(
+      catchError(this.handleError)
     );
   }
 
-  isAdmin(): boolean {
-    const role = localStorage.getItem('role');
-    return role === 'admin';
+  isAdminUser(): boolean {
+    // Implement logic to determine if the user is an admin
+    // This is just an example; your actual implementation may vary
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    return user.role === 'admin';
+  }
+  saveToken(token: string): void {
+    localStorage.setItem('auth_token', token);
   }
 
-  register(user: {
-    nom: string;
-    prenom: string;
-    adresse: string;
-    email: string;
-    num_tel: string;
-    mot_de_passe: string;
-    role: string;
-    matricule_fiscale: string;
-  }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, user).pipe(
-      catchError(error => {
-        let errorMessage = 'An unknown error occurred!';
-        if (error.status === 400) {
-          errorMessage = 'Registration error';
-        }
-        return throwError(errorMessage);
-      })
-    );
+
+  getToken(): string | null {
+    return localStorage.getItem('auth_token');
   }
 
-  getUsers(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/users`).pipe(
-      catchError(error => {
-        let errorMessage = 'An unknown error occurred!';
-        return throwError(errorMessage);
-      })
-    );
-  }
-
-  banUser(userId: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/users/ban`, { userId }).pipe(
-      catchError(error => {
-        let errorMessage = 'An unknown error occurred!';
-        return throwError(errorMessage);
-      })
-    );
-  }
-
-  deleteUser(userId: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/users/${userId}`).pipe(
-      catchError(error => {
-        let errorMessage = 'An unknown error occurred!';
-        return throwError(errorMessage);
-      })
-    );
+  private handleError(error: any): Observable<never> {
+    // Handle error here, maybe log it and rethrow it
+    throw error;
   }
 }
-

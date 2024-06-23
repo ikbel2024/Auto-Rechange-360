@@ -1,1 +1,22 @@
-<p>resetpass-form works!</p>
+<div class="reset-password-form">
+    <h2>Changer le mot de passe</h2>
+    <form [formGroup]="resetPasswordForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="email">Email</label>
+        <input id="email" formControlName="email" type="email" placeholder="Entrez votre email">
+        <div *ngIf="isFieldInvalid('email')" class="error-message">
+          {{ getEmailErrorMessage() }}
+        </div>
+      </div>
+    
+      <button type="submit" [disabled]="resetPasswordForm.invalid">Envoyer le lien de réinitialisation</button>
+  
+      <div *ngIf="resetSuccessful" class="success-message">
+        Un lien de réinitialisation a été envoyé à {{ resetPasswordForm.value.email }}.
+        Veuillez vérifier votre boîte de réception.
+      </div>
+  
+      <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+    </form>
+  </div>
+  

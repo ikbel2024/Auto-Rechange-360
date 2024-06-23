@@ -1,155 +1,48 @@
-*,
-*:before,
-*:after {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
+/* src/app/components/login-form/login-form.component.css */
 
-body {
-    background-color: #f4f4f9;
-    font-family: 'Poppins', sans-serif;
-    
-}
-
-.login-container {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-
-.background {
-    width: 330px; /* Reduced size */
-    height: 420px; /* Reduced size */
-    position: absolute;
-    transform: translate(-50%, -50%);
-    left: 50%;
-    top: 50%;
-}
-
-.background .shape {
-    height: 150px; /* Reduced size */
-    position: absolute;
-    border-radius: 50%;
-}
-
-.shape:first-child {
-    background: linear-gradient(#1845ad, #23a2f6);
-    left: -50px;
-    top: -50px;
-}
-
-.shape:last-child {
-    background: linear-gradient(to right, #ff512f, #f09819);
-    right: -20px;
-    bottom: -50px;
-}
-
-.login-form {
-    height: 420px; /* Reduced size */
-    width: 300px; /* Reduced size */
-    background-color: rgba(255, 255, 255, 0.13);
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-    border-radius: 10px;
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
-    padding: 40px 30px;
-    text-align: center;
-}
-
-.login-form h3 {
-    font-size: 28px; /* Reduced size */
-    font-weight: 500;
-    line-height: 38px;
-    margin-bottom: 20px; /* Reduced margin */
-}
-
-label {
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  form label {
     display: block;
-    margin-top: 20px;
-    font-size: 14px; /* Reduced size */
-    font-weight: 500;
-    text-align: left;
-}
-
-input {
-    display: block;
-    height: 40px; /* Reduced size */
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+  
+  form input[type="email"],
+  form input[type="password"] {
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.07);
-    border-radius: 3px;
-    padding: 0 10px;
-    margin-top: 8px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  form .error-message {
+    color: #f44336;
     font-size: 14px;
-    font-weight: 300;
-    color: #ffffff;
-}
-
-::placeholder {
-    color: #e5e5e5;
-}
-
-button {
-    margin-top: 20px; /* Reduced margin */
-    width: 100%;
-    background-color: #28a745; /* Changed color to green */
-    color: #ffffff;
-    padding: 10px 0; /* Reduced padding */
-    font-size: 16px; /* Reduced size */
-    font-weight: 600;
-    border-radius: 5px;
+    margin-top: 5px;
+  }
+  
+  form button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
     cursor: pointer;
-    border: none; /* Remove border */
-    transition: background-color 0.3s ease; /* Add transition for smooth color change */
-}
-
-button:hover {
-    background-color: #218838; /* Darker shade for hover effect */
-}
-
-.options {
-    margin-top: 10px; /* Reduced margin */
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px; /* Reduced size */
-}
-
-.options a {
-    color: #110a91;
-    text-decoration: none;
-}
-
-.options a:hover {
-    text-decoration: underline;
-}
-
-.social-login {
-    margin-top: 20px; /* Reduced margin */
-}
-
-.social-login .google {
-    background: #db4437; /* Google button color */
-    color: #ffffff;
-    padding: 0.5px;
-    border-radius: 5px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease; /* Add transition for smooth color change */
-}
-
-.social-login .google:hover {
-    background: #c23321; /* Darker shade for hover effect */
-}
-
-.social-login .google i {
-    margin-right: 8px;
-}
+  }
+  
+  form button[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  

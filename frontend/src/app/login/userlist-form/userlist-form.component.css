@@ -1,0 +1,60 @@
+/* src/app/components/user-list/user-list.component.css */
+
+.user-list {
+  margin-top: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+thead {
+  background-color: #f0f0f0;
+  border-bottom: 2px solid #ddd;
+}
+
+th, td {
+  padding: 8px; /* Réduire le padding pour compacter les cellules */
+  text-align: left;
+}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}
+
+.btn-update, .btn-delete, .btn-ban {
+  padding: 6px 12px; /* Ajuster le padding des boutons */
+  font-size: 12px; /* Ajuster la taille de la police des boutons */
+  cursor: pointer;
+}
+
+.btn-update {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+}
+
+.btn-delete {
+  background-color: #f44336;
+  color: white;
+  border: none;
+}
+
+.btn-ban {
+  background-color: #ffa500;
+  color: white;
+  border: none;
+}
