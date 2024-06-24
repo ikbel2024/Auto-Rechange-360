@@ -1,0 +1,23 @@
+.container{
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    gap: 2rem;
+    padding:2rem;
+}
+
+.container div {
+    background-color: rgb(234, 235, 230);
+    padding: 1rem;
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+    width: 15rem;
+    font-size: 2rem;
+    margin-top: 2rem;
+}
+
+h1{
+text-align: center;
+margin-top: 1rem;
+}

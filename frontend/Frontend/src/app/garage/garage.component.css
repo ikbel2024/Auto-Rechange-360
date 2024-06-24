@@ -1,0 +1,23 @@
+.garage-rating {
+    margin: 10px 0;
+    height: 100%;
+  }
+  
+  .garage-rating .filled {
+    color: gold;
+  }
+
+  
+  .table-garage{
+    width: 80%;
+    margin: 1rem auto; 
+  }
+
+.header{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 2rem;
+}
+.search{
+  display: flex;
+ } 

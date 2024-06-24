@@ -1,0 +1,21 @@
+.container{
+    display: flex;
+    flex-direction: column;
+}
+
+.container{
+    width: 40%;
+}
+
+input{
+    border-radius: 4px;
+    padding: 1rem;
+    width: 20rem;  
+    height: 2.5rem;
+  }
+
+  fieldset{
+    border: 1.5px solid rgb(213, 234, 221);
+    padding: 0.5rem;
+
+  }
