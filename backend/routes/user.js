@@ -3,6 +3,10 @@ const { check } = require('express-validator');
 const passport = require('passport');
 const { resetPassword } = require('../controllers/usercontroller');
 const User = require('../models/user');
+const nodemailer = require('nodemailer');
+const crypto = require('crypto');
+
+
 
 const {
   register,
@@ -36,7 +40,7 @@ router.post('/register', [
 router.post('/login', [
   check('email').isEmail().withMessage('Valid email is required'),
   check('mot_de_passe').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
-  check('role').isIn(['client', 'fournisseur', 'livreur', 'admin']).withMessage('Invalid role')
+ // check('role').isIn(['client', 'fournisseur', 'livreur', 'admin']).withMessage('Invalid role')//
 ], login);
 
 // Google OAuth routes
@@ -128,6 +132,76 @@ router.put('/unban/:id', async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Erreur serveur');
+  }
+});
+
+router.post('/request-reset-password', async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpires = Date.now() + 3600000; // 1 heure
+
+    await user.save();
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'grakrem23@gmail.com',
+        pass: 'iori eoka tnst gsne' // Remplacez 'YOUR_APP_PASSWORD' par le mot de passe d'application généré
+      }
+    });
+
+    const mailOptions = {
+      to: user.email,
+      from: 'grakrem23@gmail.com',
+      subject: 'Password Reset',
+      text: `You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n` +
+            `Please click on the following link, or paste this into your browser to complete the process:\n\n` +
+            `http://localhost:4200/reset-password/${resetToken}\n\n` +
+            `If you did not request this, please ignore this email and your password will remain unchanged.\n`,
+    };
+
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.error('Error sending email:', err);
+        return res.status(500).send('Error sending email');
+      }
+      console.log('Email sent:', info.response);
+      res.status(200).send('Reset password email sent');
+    });
+  } catch (err) {
+    console.error('Error requesting password reset:', err);
+    res.status(500).send('Error requesting password reset');
+  }
+});
+
+router.post('/reset-password/:token', async (req, res) => {
+  try {
+    const user = await User.findOne({ 
+      resetPasswordToken: req.params.token, 
+      resetPasswordExpires: { $gt: Date.now() } 
+    });
+
+    if (!user) {
+      return res.status(400).send('Password reset token is invalid or has expired.');
+    }
+
+    user.password = req.body.password; // Assurez-vous de hacher le mot de passe avant de le stocker
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+
+    await user.save();
+    res.status(200).send('Password has been reset');
+  } catch (err) {
+    console.error('Error resetting password:', err);
+    res.status(500).send('Error resetting password');
   }
 });
 
