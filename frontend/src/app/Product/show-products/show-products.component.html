@@ -1,0 +1,86 @@
+<!-- Welcome Message with Animation -->
+<div class="row mt-4">
+    <div class="col-md-12 text-center">
+        <p class="welcome-message animated infinite pulse">Welcome to the admin controller center - simplify business, manage products and categories effortlessly.</p>
+    </div>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <div class="container-fluid text-center">
+        <!-- Added text-center class here -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/administration">
+                        <i class="fas fa-chart-line me-1"></i>Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/addProduct">
+                        <i class="fas fa-box-open me-1"></i>Products
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/ShowCategorie">
+                        <i class="fas fa-cubes me-1"></i>Stocks
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+
+    <div class="container">
+        <div class="layout">
+            <div class="sidebar">
+                <!-- Admin Panel Buttons -->
+                <div class="admin-buttons">
+                    <button class="btn btn-dark btn-block mb-2" routerLink="/addProduct">Add Product</button>
+                    <button class="btn btn-dark btn-block mb-2" routerLink="/ShowProucts">Show Products</button>
+                    <button class="btn btn-dark btn-block mb-2" routerLink="/SearchProducts">Search Product</button>
+                    <button class="btn btn-dark btn-block mb-2" routerLink="/CountProduct">Count Products</button>
+                </div>
+                <!-- Back Button -->
+                <button class="btn btn-dark btn-secondary mt-3" (click)="goBack()">Back to Dashboard</button>
+            </div>
+            <div class="content">
+                <h2>Products List</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+
+                            <th style="min-width: 150px;">Date</th>
+                            <th>reference</th>
+                            <th>Categorie</th>
+                            <th>Quantité</th>
+                            <th>Prix</th>
+                            <th>Image</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let product of products">
+
+                            <td>{{ product.name }}</td>
+
+                            <td style="min-width: 150px;">{{ product.dateAdded | date:'dd-MM-yyyy'}}</td>
+                            <td>{{ product.reference }}</td>
+                            <td>{{ product.category }}</td>
+                            <td>{{ product.stockQuantity }}</td>
+                            <td>{{ product.price | number:'1.2-2' }}</td>
+                            <td>
+                                <div>
+                                    <img [src]="'http://localhost:3000/' + product.image" class="img-fluid rounded-start student-image" alt="{{ product.name }}">
+                                </div>
+                            </td>
+                            <td style="white-space: nowrap;">
+                                <button class="btn btn-dark btn-sm mb-3" (click)="deleteProduct(product._id)">Delete</button>
+                                <button class="btn btn-dark btn-sm mb-3" [routerLink]="['/update-product', product._id]">Update</button>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>

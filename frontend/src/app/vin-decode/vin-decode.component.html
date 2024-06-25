@@ -1,0 +1,23 @@
+<div class="vin-decode-container">
+    <div class="form-group">
+        <label for="vinInput">VIN:</label>
+        <input id="vinInput" type="text" [(ngModel)]="vin" placeholder="Enter VIN" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="modelYearInput">Model Year:</label>
+        <input id="modelYearInput" type="text" [(ngModel)]="modelYear" placeholder="Enter Model Year (optional)" class="form-control">
+    </div>
+    <div class="button-group">
+        <button class="btn btn-primary" (click)="decodeVin()">Decode VIN</button>
+        <button class="btn btn-secondary" (click)="reset()">Reset</button>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+        <p>{{ errorMessage }}</p>
+    </div>
+
+    <div *ngIf="decodedData" class="decoded-data">
+        <h3>Decoded VIN Data:</h3>
+        <pre>{{ decodedData | json }}</pre>
+    </div>
+</div>

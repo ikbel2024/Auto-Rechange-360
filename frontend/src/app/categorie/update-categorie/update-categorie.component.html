@@ -1,0 +1,99 @@
+<!-- Welcome Message with Animation -->
+<div class="row mt-4">
+    <div class="col-md-12 text-center">
+        <p class="welcome-message animated infinite pulse">
+            Welcome to the admin controller center - simplify business, manage products and categories effortlessly.
+        </p>
+    </div>
+</div>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <div class="container-fluid text-center">
+        <!-- Added text-center class here -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/administration">
+                        <i class="fas fa-chart-line me-1"></i>Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/addProduct">
+                        <i class="fas fa-box-open me-1"></i>Products
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/ShowCategorie">
+                        <i class="fas fa-cubes me-1"></i>Stocks
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Container -->
+<div class="container">
+    <div class="layout">
+        <div class="sidebar">
+            <!-- Admin Panel Buttons -->
+            <div class="admin-buttons">
+                <button class="btn btn-dark btn-block mb-2" routerLink="/AddCategorie">Add Category</button>
+                <button class="btn btn-dark btn-block mb-2" routerLink="/ShowCategorie">Show Category</button>
+                <button class="btn btn-dark btn-block mb-2" routerLink="/SearchCategorie">Search Category</button>
+                <button class="btn btn-dark btn-block mb-2" routerLink="/CountCategorie">Count Category</button>
+            </div>
+            <!-- Back Button -->
+            <button class="btn btn-dark btn-secondary mt-3" (click)="goBack()">Back to Dashboard</button>
+        </div>
+
+        <div class="content">
+            <h2>Update Category</h2>
+            <form (ngSubmit)="onSubmit()">
+
+
+                <div class="form-group row">
+                    <label for="name" class="col-sm-2 col-form-label">Name:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="name" name="name" [(ngModel)]="categorie.name">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="reference" class="col-sm-2 col-form-label">Reference:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="reference" name="reference" [(ngModel)]="categorie.reference">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="productId" class="col-sm-2 col-form-label">Product ID:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="productId" name="productId" [(ngModel)]="categorie.productId">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="quantity" class="col-sm-2 col-form-label">Quantity:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="quantity" name="quantity" [(ngModel)]="categorie.quantity">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="description" class="col-sm-2 col-form-label">Description:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="description" name="description" [(ngModel)]="categorie.description">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-10 offset-sm-2">
+                        <button type="submit" class="btn btn-dark btn-block">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
