@@ -1,0 +1,11 @@
+<div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="{{p.image}}" alt="Card image cap ">
+    <div class="card-body ">
+        <h5 class="card-title ">Name : {{p.Name}}</h5>
+        <p class="card-text ">reference : {{p.reference}}</p>
+        <p class="card-text ">price : {{p.price}}</p>
+        <p class="card-text ">category : {{p.category}}</p>
+
+        <button class="btn btn-primary " (click)="sendDataToParent()">Like</button>
+    </div>
+</div>
