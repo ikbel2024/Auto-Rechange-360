@@ -105,6 +105,7 @@ export class MaintenanceVehiculeComponent implements OnInit {
       console.error('ID du véhicule à supprimer non défini');
     }
   }
+  
 
   deleteVehicule(): void {
     if (this.vehiculeIdToDelete) {
@@ -123,6 +124,7 @@ export class MaintenanceVehiculeComponent implements OnInit {
       console.error('ID du véhicule à supprimer non défini');
     }
   }
+
 
   selectVehiculeForUpdate(id: string): void {
     this.selectedVehiculeId = id;
@@ -147,4 +149,22 @@ export class MaintenanceVehiculeComponent implements OnInit {
       prix: 0
     };
   }
+
+
+  onVehiculeIdToDeleteChange(id: string): void {
+    if (id) {
+      this.vehiculeService.getVehiculeById(id).subscribe(
+        (data: Vehicule) => {
+          this.selectedVehicule = data;
+        },
+        (error) => {
+          console.error('Erreur lors de la récupération du véhicule pour suppression', error);
+          this.selectedVehicule = null;
+        }
+      );
+    } else {
+      this.selectedVehicule = null;
+    }
+  }
+
 }

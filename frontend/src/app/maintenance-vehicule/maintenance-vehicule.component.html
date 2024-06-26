@@ -124,7 +124,6 @@
 <hr class="hr-animated">
 
 <!--______________________________________Delete_____________________________________________-->
-
 <div class="container mt-4 vehicle-form-container">
   <hr class="hr-animated">
   <h2 class="form-title">Supprimer un Véhicule</h2>
@@ -134,6 +133,7 @@
         <div class="form-group">
           <label for="deleteId">ID du Véhicule</label>
           <input type="text" class="form-control" id="deleteId" [(ngModel)]="vehiculeIdToDelete" name="id" required #id="ngModel"
+            (ngModelChange)="onVehiculeIdToDeleteChange($event)"
             [ngClass]="{'is-invalid': id.invalid && (id.dirty || id.touched)}">
           <div *ngIf="id.invalid && (id.dirty || id.touched)" class="alert alert-danger">
             <div *ngIf="id.errors?.['required']">ID est requis.</div>
@@ -159,6 +159,8 @@
     </div>
   </div>
 </div>
+
+
 
 <hr class="hr-animated">
 
