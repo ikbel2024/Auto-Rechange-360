@@ -24,8 +24,13 @@ export class MaintenanceVehiculeComponent implements OnInit {
   selectedVehiculeId: string = '';
   isSubmitting: boolean = false;
 
-  vehiculeIdToDelete: string = '';
+
+  vehiculeIdToView: string = '';
   selectedVehicule: Vehicule | null = null;
+
+  vehiculeIdToDelete: string = '';
+  selectedVehiculeForDeletion: Vehicule | null = null;
+
 
   constructor(private vehiculeService: VehiculeService) {}
 
@@ -106,6 +111,37 @@ export class MaintenanceVehiculeComponent implements OnInit {
     }
   }
   
+  onVehiculeIdToViewChange(id: string): void {
+    if (id) {
+      this.vehiculeService.getVehiculeById(id).subscribe(
+        (data: Vehicule) => {
+          this.selectedVehicule = data;
+        },
+        (error) => {
+          console.error('Erreur lors de la récupération du véhicule', error);
+          this.selectedVehicule = null;
+        }
+      );
+    } else {
+      this.selectedVehicule = null;
+    }
+  }
+
+  onVehiculeIdToDeleteChange(id: string): void {
+    if (id) {
+      this.vehiculeService.getVehiculeById(id).subscribe(
+        (data: Vehicule) => {
+          this.selectedVehiculeForDeletion = data;
+        },
+        (error) => {
+          console.error('Erreur lors de la récupération du véhicule pour suppression', error);
+          this.selectedVehiculeForDeletion = null;
+        }
+      );
+    } else {
+      this.selectedVehiculeForDeletion = null;
+    }
+  }
 
   deleteVehicule(): void {
     if (this.vehiculeIdToDelete) {
@@ -113,7 +149,7 @@ export class MaintenanceVehiculeComponent implements OnInit {
         () => {
           console.log('Véhicule supprimé avec succès');
           this.loadVehicules();
-          this.selectedVehicule = null;
+          this.selectedVehiculeForDeletion = null;
           this.vehiculeIdToDelete = ''; // Réinitialiser l'ID après la suppression
         },
         (error) => {
@@ -125,18 +161,6 @@ export class MaintenanceVehiculeComponent implements OnInit {
     }
   }
 
-
-  selectVehiculeForUpdate(id: string): void {
-    this.selectedVehiculeId = id;
-    this.vehiculeService.getVehiculeById(id).subscribe(
-      (data: Vehicule) => {
-        this.vehiculeToUpdate = { ...data }; // Copier les données du véhicule sélectionné dans le formulaire de mise à jour
-      },
-      (error) => {
-        console.error('Erreur lors de la récupération du véhicule pour mise à jour', error);
-      }
-    );
-  }
 
   clearSelection(): void {
     this.selectedVehiculeId = '';
@@ -151,20 +175,6 @@ export class MaintenanceVehiculeComponent implements OnInit {
   }
 
 
-  onVehiculeIdToDeleteChange(id: string): void {
-    if (id) {
-      this.vehiculeService.getVehiculeById(id).subscribe(
-        (data: Vehicule) => {
-          this.selectedVehicule = data;
-        },
-        (error) => {
-          console.error('Erreur lors de la récupération du véhicule pour suppression', error);
-          this.selectedVehicule = null;
-        }
-      );
-    } else {
-      this.selectedVehicule = null;
-    }
-  }
+  
 
 }
