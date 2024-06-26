@@ -133,51 +133,55 @@
       <form #deleteFormRef="ngForm" (ngSubmit)="deleteVehicule()">
         <div class="form-group">
           <label for="deleteId">ID du Véhicule</label>
-          <input type="text" class="form-control" id="deleteId" [(ngModel)]="vehiculeIdToDelete" name="id" required #id="ngModel">
+          <input type="text" class="form-control" id="deleteId" [(ngModel)]="vehiculeIdToDelete" name="id" required #id="ngModel"
+            [ngClass]="{'is-invalid': id.invalid && (id.dirty || id.touched)}">
           <div *ngIf="id.invalid && (id.dirty || id.touched)" class="alert alert-danger">
             <div *ngIf="id.errors?.['required']">ID est requis.</div>
           </div>
         </div>
-        <button type="submit" class="btn btn-danger">Supprimer</button>
+        <button type="submit" class="btn btn-danger btn-delete">
+          <i class="fas fa-trash"></i> Supprimer
+        </button>
       </form>
     </div>
     <div class="col-md-6">
       <!-- Zone pour afficher les détails du véhicule avant suppression -->
-      <div *ngIf="deletedVehicule" class="card mt-3">
+      <div *ngIf="selectedVehicule" class="card mt-3 card-danger">
         <div class="card-body">
           <h5 class="card-title">Détails du Véhicule à Supprimer</h5>
-          <p><strong>Matricule:</strong> {{ deletedVehicule.matricule }}</p>
-          <p><strong>Modèle:</strong> {{ deletedVehicule.modele }}</p>
-          <p><strong>Couleur:</strong> {{ deletedVehicule.couleur }}</p>
-          <p><strong>Énergie:</strong> {{ deletedVehicule.energie }}</p>
-          <p><strong>Prix:</strong> {{ deletedVehicule.prix }}</p>
+          <p><strong>Matricule:</strong> {{ selectedVehicule.matricule }}</p>
+          <p><strong>Modèle:</strong> {{ selectedVehicule.modele }}</p>
+          <p><strong>Couleur:</strong> {{ selectedVehicule.couleur }}</p>
+          <p><strong>Énergie:</strong> {{ selectedVehicule.energie }}</p>
+          <p><strong>Prix:</strong> {{ selectedVehicule.prix }}</p>
         </div>
       </div>
     </div>
   </div>
 </div>
 
+<hr class="hr-animated">
 
+<!--____________________________________________Liste des véhicules ______________________________________________-->
 
-
-
-
-<!--__________________________________________________________________________________________-->
-
-  <h2>Liste des Véhicules</h2>
-  <div class="row">
-    <div class="col-lg-3 col-md-4 col-sm-6 mb-4" *ngFor="let vehicule of vehicules">
-      <div class="card h-100 card-background">
-        <div class="card-body">
-          <h5 class="card-title">Modèle : {{ vehicule.modele }}</h5>
-          <p class="card-text">Couleur : {{ vehicule.couleur }}</p>
-          <p class="card-text">Énergie : {{ vehicule.energie }}</p>
-        </div>
-        <div class="card-footer">
-          <button class="btn btn-primary mr-2">Modifier</button>
-          <button class="btn btn-danger" >Supprimer</button>
-        </div>
+<h2>Liste des Véhicules</h2>
+<div class="row">
+  <div class="col-lg-3 col-md-4 col-sm-6 mb-4" *ngFor="let vehicule of vehicules">
+    <div class="card h-100 card-background">
+      <div class="card-body">
+        <h5 class="card-title">Modèle : {{ vehicule.modele }}</h5>
+        <p class="card-text">Couleur : {{ vehicule.couleur }}</p>
+        <p class="card-text">Énergie : {{ vehicule.energie }}</p>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-edit">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button type="submit" class="btn btn-danger btn-delete">
+          <i class="fas fa-trash"></i> Supprimer
+        </button>
       </div>
     </div>
   </div>
 </div>
+

@@ -133,6 +133,8 @@ h2 {
     transform: translateX(0); /* Retour à la position initiale */
   }
 }
+
+
 .btn-edit {
   background-color: navy;
   color: white;
@@ -141,11 +143,28 @@ h2 {
 .btn-delete {
   background-color: lightgray;
   color: black;
+  position: relative;
+  padding-left: 30px; /* Ajustement selon la taille de l'icône */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-delete .fa-trash {
+  position: absolute;
+  left: 10px; /* Ajustement de la position de l'icône */
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .btn-delete:hover {
   background-color: red;
   color: white;
+}
+
+.btn i {
+  margin-right: 5px;
 }
 
 
