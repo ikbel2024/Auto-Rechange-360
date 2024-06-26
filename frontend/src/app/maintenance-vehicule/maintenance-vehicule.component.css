@@ -41,4 +41,35 @@ h2 {
 .btn-delete:hover {
   background-color: red;
   color: white;
+}.vehicle-form-container {
+  background-color: #f0f0f0; /* Couleur d'arrière-plan */
+  padding: 20px; /* Espacement intérieur */
+  text-align: center; /* Centrer le contenu */
+}
+
+.form-title {
+  text-align: left; /* Aligner le titre à gauche */
+  animation: none; /* Désactiver l'animation par défaut */
+}
+
+.flashing {
+  animation: blink 1s infinite; /* Animation de clignotement */
+}
+
+@keyframes blink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+
+.vehicle-form {
+  margin: 0 auto; /* Centrer le formulaire */
+  max-width: 400px; /* Largeur maximale du formulaire */
+}
+
+.vehicle-form .form-group {
+  text-align: left; /* Aligner le texte des labels à gauche */
 }

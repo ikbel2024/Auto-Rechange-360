@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { VehiculeService } from '../services/vehicule.service';
 import { Vehicule } from '../model/vehicule'; // Importer l'interface Vehicule
+import { NgForm } from '@angular/forms';
+
 
 @Component({
   selector: 'app-maintenance-vehicule',
@@ -11,6 +13,7 @@ export class MaintenanceVehiculeComponent implements OnInit {
   vehicules: Vehicule[] = [];
   vehiculeToAdd: Vehicule = { matricule: '', modele: '', couleur: '', energie: '', prix: 0 }; // Initialiser avec les valeurs par défaut de l'interface
   selectedVehiculeId: string = ''; // ID du véhicule sélectionné pour l'édition
+  isSubmitting: boolean = false; // Variable pour gérer l'état de soumission
 
   constructor(private vehiculeService: VehiculeService) {}
 
@@ -29,18 +32,27 @@ export class MaintenanceVehiculeComponent implements OnInit {
     );
   }
 
-  addVehicule(): void {
+   addVehicule(form: NgForm): void {
+    if (form.invalid) {
+      return; // Arrêter l'ajout si le formulaire est invalide
+    }
+
+    this.isSubmitting = true;
     this.vehiculeService.addVehicule(this.vehiculeToAdd).subscribe(
       (data) => {
         console.log('Véhicule ajouté avec succès', data);
-        this.loadVehicules(); // Recharger la liste après l'ajout
-        this.vehiculeToAdd = { matricule: '', modele: '', couleur: '', energie: '', prix: 0 }; // Réinitialiser le modèle d'ajout
+        this.loadVehicules();
+        this.vehiculeToAdd = { matricule: '', modele: '', couleur: '', energie: '', prix: 0 };
+        form.resetForm();
+        this.isSubmitting = false;
       },
       (error) => {
         console.error('Error adding vehicule', error);
+        this.isSubmitting = false;
       }
     );
   }
+
 
   updateVehicule(): void {
     if (!this.selectedVehiculeId) {
