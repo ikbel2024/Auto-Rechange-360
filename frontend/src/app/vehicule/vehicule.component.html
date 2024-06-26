@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-lg-3 col-md-4 col-sm-6 mb-4" *ngFor="let vehicule of vehicules">
+    <div class="card h-100 card-background"> <!-- Ajout de la classe card-background ici -->
+      <div class="card-body">
+        <h5 class="card-title">Model : {{ vehicule.modele }}</h5>
+        <p class="card-text">Color : {{ vehicule.couleur }}</p>
+        <p class="card-text">Energy : {{ vehicule.energie }}</p>
+      </div>
+    </div>
+  </div>
+</div>

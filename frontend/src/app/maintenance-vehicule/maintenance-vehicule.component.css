@@ -1,0 +1,44 @@
+.table-responsive {
+  margin: 20px 0;
+}
+
+.btn {
+  margin-right: 5px;
+}
+
+.btn-primary {
+  background-color: navy;
+  border-color: navy;
+}
+
+.btn-danger {
+  background-color: gray;
+  border-color: gray;
+}
+
+.btn i {
+  margin-right: 5px;
+}
+
+h2 {
+  color: #333;
+}
+
+.table {
+  margin-top: 20px;
+}
+
+.btn-edit {
+  background-color: navy;
+  color: white;
+}
+
+.btn-delete {
+  background-color: lightgray;
+  color: black;
+}
+
+.btn-delete:hover {
+  background-color: red;
+  color: white;
+}

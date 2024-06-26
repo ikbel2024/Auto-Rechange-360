@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-md-12">
+    <h2 class="text-center my-4">Vehicle Maintenance</h2>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Matricule</th>
+            <th>Modèle</th>
+            <th>Couleur</th>
+            <th>Énergie</th>
+            <th>Prix</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let vehicule of vehicules">
+            <td>{{ vehicule.matricule }}</td>
+            <td>{{ vehicule.modele }}</td>
+            <td>{{ vehicule.couleur }}</td>
+            <td>{{ vehicule.energie }}</td>
+            <td>{{ vehicule.prix | currency }}</td>
+            <td>
+              <button class="btn btn-primary btn-sm" (click)="onUpdateVehicule(vehicule.matricule)">
+                <i class="fas fa-edit"></i> Modifier
+              </button>
+              <button class="btn btn-danger btn-sm" (click)="onDeleteVehicule(vehicule.matricule)">
+                <i class="fas fa-trash-alt"></i> Supprimer
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

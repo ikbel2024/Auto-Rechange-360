@@ -1,0 +1,75 @@
+/* Container styling */
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+
+/* Headings styling */
+
+h2 {
+    font-weight: bold;
+    color: #333;
+}
+
+
+/* Form controls styling */
+
+.form-control {
+    border-radius: 0.25rem;
+}
+
+
+/* Button styling */
+
+.btn-dark,
+.btn-primary,
+.btn-info {
+    background-color: #343a40;
+    border-color: #343a40;
+    color: #fff;
+}
+
+.btn-dark:hover,
+.btn-primary:hover,
+.btn-info:hover {
+    background-color: #23272b;
+    border-color: #23272b;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+
+/* Layout styling */
+
+.row {
+    margin-top: 20px;
+}
+
+
+/* Sidebar styling */
+
+.admin-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+/* Card header styling */
+
+.card-header {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+
+/* List group styling */
+
+.list-group-item {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+}
