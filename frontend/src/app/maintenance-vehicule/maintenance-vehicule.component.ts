@@ -24,6 +24,10 @@ export class MaintenanceVehiculeComponent implements OnInit {
   vehiculeToAdd: Vehicule = { matricule: '', modele: '', couleur: '', energie: '', prix: 0 }; // Initialiser avec les valeurs par défaut de l'interface
   selectedVehiculeId: string = ''; // ID du véhicule sélectionné pour l'édition
   isSubmitting: boolean = false; // Variable pour gérer l'état de soumission
+  
+  vehiculeIdToDelete: string = ''; // Déclaration de la propriété pour l'ID du véhicule à supprimer
+  deletedVehicule: any; 
+
 
   constructor(private vehiculeService: VehiculeService) {}
 
@@ -63,24 +67,24 @@ export class MaintenanceVehiculeComponent implements OnInit {
     );
   }
 
-  updateVehicule(form: NgForm) {
-    if (form.valid && this.vehiculeToUpdate.id) { // Vérifiez que l'ID est défini
-      this.isSubmitting = true;
-      this.vehiculeService.updateVehicule(this.vehiculeToUpdate.id, this.vehiculeToUpdate).subscribe(
-        () => {
-          this.isSubmitting = false;
-          form.resetForm();
-        },
-        error => {
-          console.error(error);
-          this.isSubmitting = false;
-        }
-      );
-    } else {
-      console.error("ID du véhicule manquant.");
-    }
+ updateVehicule(form: NgForm) {
+  if (form.valid && this.vehiculeToUpdate.id) { // Vérifiez que l'ID est défini
+    this.isSubmitting = true;
+    this.vehiculeService.updateVehicule(this.vehiculeToUpdate.id, this.vehiculeToUpdate).subscribe(
+      () => {
+        this.isSubmitting = false;
+        form.resetForm();
+      },
+      error => {
+        console.error(error);
+        this.isSubmitting = false;
+      }
+    );
+  } else {
+    console.error("ID du véhicule manquant.");
   }
-  
+}
+
 
   clearUpdateForm() {
     this.vehiculeToUpdate = {
@@ -93,16 +97,28 @@ export class MaintenanceVehiculeComponent implements OnInit {
     };
   }
 
-  deleteVehicule(id: string): void {
-    this.vehiculeService.deleteVehicule(id).subscribe(
-      () => {
-        this.vehicules = this.vehicules.filter(v => v.matricule !== id);
-      },
-      (error) => {
-        console.error('Error deleting vehicule', error);
-      }
-    );
+ 
+  deleteVehicule(): void {
+    if (this.vehiculeIdToDelete) {
+      this.vehiculeService.deleteVehicule(this.vehiculeIdToDelete).subscribe(
+        () => {
+          // Après la suppression réussie, récupérez les détails du véhicule supprimé
+          this.vehiculeService.getVehiculeById(this.vehiculeIdToDelete).subscribe(
+            (data: any) => {
+              this.deletedVehicule = data; // Mettre à jour les détails du véhicule supprimé
+            },
+            error => {
+              console.error('Erreur lors de la récupération du véhicule après suppression:', error);
+            }
+          );
+        },
+        error => {
+          console.error('Erreur lors de la suppression du véhicule:', error);
+        }
+      );
+    }
   }
+  
 
   selectVehiculeForUpdate(id: string): void {
     this.selectedVehiculeId = id;

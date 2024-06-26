@@ -115,13 +115,54 @@
         </button>
       </form>
     </div>
+    <div class="col-md-6 d-flex flex-wrap justify-content-center align-items-center">
+      <img src="assets/images/garage.png" class="animated-image m-2" alt="Image animée du véhicule">
+    </div>
+  </div>
+</div>
+
+<hr class="hr-animated">
+
+<!--______________________________________Delete_____________________________________________-->
+
+<div class="container mt-4 vehicle-form-container">
+  <hr class="hr-animated">
+  <h2 class="form-title">Supprimer un Véhicule</h2>
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <form #deleteFormRef="ngForm" (ngSubmit)="deleteVehicule()">
+        <div class="form-group">
+          <label for="deleteId">ID du Véhicule</label>
+          <input type="text" class="form-control" id="deleteId" [(ngModel)]="vehiculeIdToDelete" name="id" required #id="ngModel">
+          <div *ngIf="id.invalid && (id.dirty || id.touched)" class="alert alert-danger">
+            <div *ngIf="id.errors?.['required']">ID est requis.</div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-danger">Supprimer</button>
+      </form>
+    </div>
+    <div class="col-md-6">
+      <!-- Zone pour afficher les détails du véhicule avant suppression -->
+      <div *ngIf="deletedVehicule" class="card mt-3">
+        <div class="card-body">
+          <h5 class="card-title">Détails du Véhicule à Supprimer</h5>
+          <p><strong>Matricule:</strong> {{ deletedVehicule.matricule }}</p>
+          <p><strong>Modèle:</strong> {{ deletedVehicule.modele }}</p>
+          <p><strong>Couleur:</strong> {{ deletedVehicule.couleur }}</p>
+          <p><strong>Énergie:</strong> {{ deletedVehicule.energie }}</p>
+          <p><strong>Prix:</strong> {{ deletedVehicule.prix }}</p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
 
-<!--______________________________________Delete_____________________________________________-->
 
 
+
+
+<!--__________________________________________________________________________________________-->
 
   <h2>Liste des Véhicules</h2>
   <div class="row">
@@ -133,8 +174,8 @@
           <p class="card-text">Énergie : {{ vehicule.energie }}</p>
         </div>
         <div class="card-footer">
-          <button class="btn btn-primary mr-2" (click)="selectVehiculeForUpdate(vehicule.matricule)">Modifier</button>
-          <button class="btn btn-danger" (click)="deleteVehicule(vehicule.matricule)">Supprimer</button>
+          <button class="btn btn-primary mr-2">Modifier</button>
+          <button class="btn btn-danger" >Supprimer</button>
         </div>
       </div>
     </div>
