@@ -133,4 +133,23 @@ h2 {
     transform: translateX(0); /* Retour à la position initiale */
   }
 }
+.btn-edit {
+  background-color: navy;
+  color: white;
+}
+
+.btn-delete {
+  background-color: lightgray;
+  color: black;
+}
+
+.btn-delete:hover {
+  background-color: red;
+  color: white;
+}
+
+
+
+
+
 

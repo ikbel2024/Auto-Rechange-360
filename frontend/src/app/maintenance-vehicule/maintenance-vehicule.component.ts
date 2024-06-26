@@ -10,6 +10,16 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./maintenance-vehicule.component.css']
 })
 export class MaintenanceVehiculeComponent implements OnInit {
+
+  vehiculeToUpdate: Vehicule = {
+    id: '',
+    matricule: '',
+    modele: '',
+    couleur: '',
+    energie: '',
+    prix: 0
+  };
+
   vehicules: Vehicule[] = [];
   vehiculeToAdd: Vehicule = { matricule: '', modele: '', couleur: '', energie: '', prix: 0 }; // Initialiser avec les valeurs par défaut de l'interface
   selectedVehiculeId: string = ''; // ID du véhicule sélectionné pour l'édition
@@ -53,23 +63,34 @@ export class MaintenanceVehiculeComponent implements OnInit {
     );
   }
 
-
-  updateVehicule(): void {
-    if (!this.selectedVehiculeId) {
-      console.error('ID du véhicule non spécifié pour la mise à jour');
-      return;
+  updateVehicule(form: NgForm) {
+    if (form.valid && this.vehiculeToUpdate.id) { // Vérifiez que l'ID est défini
+      this.isSubmitting = true;
+      this.vehiculeService.updateVehicule(this.vehiculeToUpdate.id, this.vehiculeToUpdate).subscribe(
+        () => {
+          this.isSubmitting = false;
+          form.resetForm();
+        },
+        error => {
+          console.error(error);
+          this.isSubmitting = false;
+        }
+      );
+    } else {
+      console.error("ID du véhicule manquant.");
     }
-    // Supposons que this.vehiculeToAdd contient les données mises à jour du véhicule
-    this.vehiculeService.updateVehicule(this.selectedVehiculeId, this.vehiculeToAdd).subscribe(
-      (data) => {
-        console.log('Véhicule mis à jour avec succès', data);
-        this.loadVehicules(); // Recharger la liste après la mise à jour
-        this.clearSelection();
-      },
-      (error) => {
-        console.error('Error updating vehicule', error);
-      }
-    );
+  }
+  
+
+  clearUpdateForm() {
+    this.vehiculeToUpdate = {
+      id: '',
+      matricule: '',
+      modele: '',
+      couleur: '',
+      energie: '',
+      prix: 0
+    };
   }
 
   deleteVehicule(id: string): void {
