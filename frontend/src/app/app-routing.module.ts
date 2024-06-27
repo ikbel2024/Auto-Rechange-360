@@ -19,6 +19,7 @@ import { AddCategorieComponent } from './categorie/add-categorie/add-categorie.c
 import { CountCategorieComponent } from './categorie/count-categorie/count-categorie.component';
 import { VehiculeComponent } from './vehicule/vehicule.component';  
 import { MaintenanceVehiculeComponent } from './maintenance-vehicule/maintenance-vehicule.component';
+import { HistoriqueComponent } from './historique/historique.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/tv', pathMatch: 'full' },
@@ -39,6 +40,7 @@ const routes: Routes = [
   { path: 'product', component: DetailProdComponent },
   { path: 'vehicles', component: VehiculeComponent },
   { path: 'maintenance-vehicule', component: MaintenanceVehiculeComponent },
+  { path: 'historique-entretiens', component: HistoriqueComponent },
   { path: '**', component: NotFoundComponent },
 ];
 

@@ -27,6 +27,7 @@ import { CountCategorieComponent } from './categorie/count-categorie/count-categ
 import { ChatBotComponent } from './chat-bot/chat-bot.component';
 import { VehiculeComponent } from './vehicule/vehicule.component';
 import { MaintenanceVehiculeComponent } from './maintenance-vehicule/maintenance-vehicule.component';
+import { HistoriqueComponent } from './historique/historique.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { MaintenanceVehiculeComponent } from './maintenance-vehicule/maintenance
     CountCategorieComponent,
     ChatBotComponent,
     VehiculeComponent,
-    MaintenanceVehiculeComponent, // Ajout de cette ligne
+    MaintenanceVehiculeComponent,
+    HistoriqueComponent, // Ajout de cette ligne
   ],
   imports: [
     BrowserModule,
