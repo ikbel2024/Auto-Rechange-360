@@ -9,6 +9,9 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./login-form.component.css']
 })
 export class LoginFormComponent {
+loginWithGoogle() {
+throw new Error('Method not implemented.');
+}
   loginForm: FormGroup;
   errorMessage = '';
 
@@ -30,6 +33,8 @@ export class LoginFormComponent {
 
     const { email, password } = this.loginForm.value;
 
+    console.log('Submitting form with email:', email, 'and password:', password);
+
     this.authService.login(email, password).subscribe({
       next: (response) => {
         this.authService.saveToken(response.token);
@@ -49,6 +54,9 @@ export class LoginFormComponent {
     } else if (error.status >= 500) {
       // Server-side error
       return 'Internal server error. Please try again later.';
+    } else if (error.status === 400) {
+      // Bad request error
+      return 'Invalid request. Please check your input and try again.';
     } else {
       // Application-specific error
       return error.error.message || 'Login failed. Please try again.';

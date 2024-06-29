@@ -1,22 +1,29 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label for="email">Email</label>
-      <input id="email" formControlName="email" type="email">
-      <div *ngIf="isFieldInvalid('email')" class="error-message">
-        {{ getEmailErrorMessage() }}
-      </div>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input id="email" formControlName="email" type="email" class="form-control">
+    <div *ngIf="isFieldInvalid('email')" class="error-message">
+      {{ getEmailErrorMessage() }}
     </div>
-  
-    <div>
-      <label for="password">Password</label>
-      <input id="password" formControlName="password" type="password">
-      <div *ngIf="isFieldInvalid('password')" class="error-message">
-        {{ getPasswordErrorMessage() }}
-      </div>
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input id="password" formControlName="password" type="password" class="form-control">
+    <div *ngIf="isFieldInvalid('password')" class="error-message">
+      {{ getPasswordErrorMessage() }}
     </div>
-  
-    <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
-  
-    <button type="submit">Login</button>
-  </form>
-  
+  </div>
+
+  <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <button type="submit" class="btn btn-primary">Login</button>
+
+  <button type="button" class="btn btn-google" (click)="loginWithGoogle()">Login with Google</button>
+
+  <!-- Links for reset password and registration -->
+  <div class="links">
+    <a routerLink="/request-reset-password">Forgot Password?</a>
+    <a routerLink="/register">Register</a>
+  </div>
+</form>

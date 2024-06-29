@@ -1,0 +1,50 @@
+<div class="panel">
+    <div class="panel-heading">
+      <h2 class="title">
+        <i class="fas fa-user-slash"></i>
+        Utilisateurs Bannis
+      </h2>
+    </div>
+    <div class="panel-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Adresse</th>
+            <th>Email</th>
+            <th>Num Tel</th>
+            <th>Rôle</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of bannedUsers">
+            <td>{{ user.nom }}</td>
+            <td>{{ user.prenom }}</td>
+            <td>{{ user.adresse }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.num_tel }}</td>
+            <td>{{ user.role }}</td>
+            <td>
+              <ul class="action-list">
+                <li>
+                  <!-- Bouton pour débannir l'utilisateur -->
+                  <button class="btn-unban" (click)="unbanUser(user)">
+                    Débannir
+                  </button>
+                </li>
+              </ul>
+            </td>
+          </tr>
+          <tr *ngIf="bannedUsers.length === 0">
+            <td colspan="7" class="text-center">Aucun utilisateur banni trouvé.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="panel-footer">
+      <!-- Optionnel : pied de page avec des statistiques ou autres informations -->
+    </div>
+  </div>
+  

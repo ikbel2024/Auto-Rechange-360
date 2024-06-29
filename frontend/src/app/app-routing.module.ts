@@ -24,6 +24,10 @@ import { LoginFormComponent } from './login/login-form/login-form.component';
 import { RegisterFormComponent } from './login/register-form/register-form.component';
 import { UserListComponent } from './login/userlist-form/userlist-form.component';
 import { AdminAuthGuardService } from './services/admin-auth-guard.service';
+import { ResetpassFormComponent } from './login/resetpass-form/resetpass-form.component';
+import { RequestResetPasswordComponent } from './login/requestresetpassword-form/requestresetpassword-form.component';
+import { UserUpdateComponent } from './login/user-update/user-update.component';
+import { BannedUsersComponent } from './login/banned-users/banned-users.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -31,6 +35,14 @@ const routes: Routes = [
   { path: 'register', component: RegisterFormComponent },
   { path: 'userlist', component: UserListComponent },
   { path: 'admin/userlist', component: UserListComponent, canActivate: [AdminAuthGuardService] },
+  { path: 'resetpassword/:token', component: ResetpassFormComponent },
+  { path: 'request-reset-password', component: RequestResetPasswordComponent },
+  { path: 'user/update/:id', component: UserUpdateComponent },
+  { path: 'banned-users', component: BannedUsersComponent },
+
+  
+
+
 
 
 

@@ -1,38 +1,76 @@
-<!-- src/app/components/user-list/user-list.component.html -->
-<div class="user-list">
-  <h2>User List</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nom</th>
-        <th>Prénom</th>
-        <th>Adresse</th>
-        <th>Email</th>
-        <th>Num Tel</th>
-        <th>Mot de passe</th>
-        <th>Rôle</th>
-        <th>Matricule fiscale</th>
-        <th>Actions</th> <!-- Nouvelle colonne pour les actions -->
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of users">
-        <td>{{ user.id }}</td>
-        <td>{{ user.nom }}</td>
-        <td>{{ user.prenom }}</td>
-        <td>{{ user.adresse }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.num_tel }}</td>
-        <td>{{ user.mot_de_passe }}</td>
-        <td>{{ user.role }}</td>
-        <td>{{ user.matricule_fiscale }}</td>
-        <td>
-          <button (click)="updateUser(user)" class="btn-update">Update</button>
-          <button (click)="deleteUser(user)" class="btn-delete">Delete</button>
-          <button (click)="banUser(user)" class="btn-ban">Ban</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <div class="navbar-left">
+      <button class="btn-navbar" routerLink="/banned-users">Utilisateurs Bannis</button>
+      <button class="btn-navbar" (click)="filterUsers('new')">Nouveaux Utilisateurs</button>
+      <button class="btn-navbar" (click)="showStatistics()">Statistiques</button>
+    </div>
+    <div class="navbar-right">
+      <form (ngSubmit)="onSearch()" class="search-form">
+        <input type="text" class="form-control" placeholder="Rechercher..." [(ngModel)]="searchTerm" name="searchTerm">
+        <button type="submit" class="btn-search">
+          <i class="fas fa-search"></i> Rechercher
+        </button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div class="panel">
+  <div class="panel-heading">
+    <h2 class="title">
+      <i class="fas fa-users"></i>
+      Liste des Utilisateurs
+    </h2>
+  </div>
+  <div class="panel-body">
+    <!-- Votre tableau existant -->
+    <table class="table">
+      <!-- Entêtes du tableau -->
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Adresse</th>
+          <th>Email</th>
+          <th>Num Tel</th>
+          <th>Rôle</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <!-- Corps du tableau -->
+      <tbody>
+        <tr *ngFor="let user of filteredUsers">
+          <td>{{ user.nom }}</td>
+          <td>{{ user.prenom }}</td>
+          <td>{{ user.adresse }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.num_tel }}</td>
+          <td>{{ user.role }}</td>
+          <td>
+            <ul class="action-list">
+              <!-- Actions pour chaque utilisateur -->
+              <li><a [routerLink]="['/user/update', user._id]" class="btn-update" data-tip="Modifier">Modifier</a></li>
+              <li><a (click)="deleteUser(user)" class="btn-delete" data-tip="Supprimer">Supprimer</a></li>
+              <li><a (click)="banUser(user)" class="btn-ban" data-tip="Bannir">Bannir</a></li>
+            </ul>
+          </td>
+        </tr>
+        <!-- Message si aucun utilisateur trouvé -->
+        <tr *ngIf="filteredUsers.length === 0">
+          <td colspan="7" class="text-center">Aucun utilisateur trouvé.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="panel-footer">
+    <!-- Pied de page avec le nombre total d'utilisateurs -->
+    <div class="col">Total des Utilisateurs: {{ users.length }}</div>
+    <!-- Pagination -->
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+    </ul>
+  </div>
 </div>

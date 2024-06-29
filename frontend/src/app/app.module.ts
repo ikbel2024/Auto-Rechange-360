@@ -36,6 +36,9 @@ import { RegisterFormComponent } from './login/register-form/register-form.compo
 import { AdminFormComponent } from './login/admin-form/admin-form.component';
 import { ResetpassFormComponent } from './login/resetpass-form/resetpass-form.component';
 import { UserListComponent } from './login/userlist-form/userlist-form.component';
+import { RequestResetPasswordComponent } from './login/requestresetpassword-form/requestresetpassword-form.component';
+import { UserUpdateComponent } from './login/user-update/user-update.component';
+import { BannedUsersComponent } from './login/banned-users/banned-users.component';
 
 
 @NgModule({
@@ -67,7 +70,10 @@ import { UserListComponent } from './login/userlist-form/userlist-form.component
     RegisterFormComponent,
     AdminFormComponent,
     ResetpassFormComponent,
-    UserListComponent
+    UserListComponent,
+    RequestResetPasswordComponent,
+    UserUpdateComponent,
+    BannedUsersComponent,
     
   ],
   imports: [

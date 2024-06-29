@@ -1,5 +1,6 @@
 export interface User {
-    id?: string;
+[x: string]: any;
+    _id: string;
     nom: string;
     prenom: string;
     adresse: string;
@@ -8,8 +9,8 @@ export interface User {
     mot_de_passe: string;
     role: string;
     matricule_fiscale?: string;
-    isBanned?: boolean;
-    isValidated?: boolean;
-    loginCount?: number;
+    isBanned: boolean;
+    isValidated: boolean;
+    loginCount: number;
   }
   

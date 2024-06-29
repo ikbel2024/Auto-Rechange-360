@@ -20,14 +20,11 @@
   <label for="role">Rôle :</label>
   <select id="role" formControlName="role">
     <option value="" disabled selected>Sélectionnez un rôle</option>
-    <option value="admin">admin</option>
-    <option value="client">client</option>
-    <option value="fournisseur">fournisseur</option>
-    <option value="livreur">livreur</option>
-
+    <option value="admin">Admin</option>
+    <option value="client">Client</option>
+    <option value="fournisseur">Fournisseur</option>
+    <option value="livreur">Livreur</option>
   </select>
-
-  <!-- Ajoutez d'autres champs de formulaire avec formControlName correspondant -->
 
   <button type="submit" [disabled]="usersForm.invalid">Soumettre</button>
 </form>
