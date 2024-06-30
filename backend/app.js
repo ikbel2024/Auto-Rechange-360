@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(cors({
   origin: 'http://localhost:4200', // Allow requests from this origin
-  methods: ['GET', 'POST'], // Allow only GET and POST requests
+  methods: ['GET', 'POST','DELETE','PUT'], // Allow only GET and POST requests
   allowedHeaders: ['Content-Type', 'Authorization'] // Allow these headers
 }));
 
