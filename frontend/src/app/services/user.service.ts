@@ -104,7 +104,7 @@ banUser(userId: string): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-  return this.http.put<any>(`${this.apiUrl}/users/${userId}/ban`, {headers});
+  return this.http.put<any>(`${this.apiUrl}/ban/${userId}`, {headers});
 }
 
 unbanUser(userId: string): Observable<any> {
@@ -117,6 +117,6 @@ unbanUser(userId: string): Observable<any> {
   const headers = new HttpHeaders({
     'Authorization': `Bearer ${token}`
   });
-  return this.http.put<any>(`${this.apiUrl}/users/${userId}/unban`, {headers});
+  return this.http.put<any>(`${this.apiUrl}/unban/${userId}`, {headers});
 }
 }

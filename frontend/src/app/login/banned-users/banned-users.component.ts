@@ -3,19 +3,24 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../model/user';
 import { UserFilterService } from '../../services/user-filter.service';
+import { UserService } from 'src/app/services/user.service';
+
 
 @Component({
   selector: 'app-banned-users',
   templateUrl: './banned-users.component.html',
   styleUrls: ['./banned-users.component.css']
 })
+
 export class BannedUsersComponent implements OnInit {
-  userService: any;
+
+  constructor(private userFilterService: UserFilterService , private userService: UserService) { }
+
   unbanUser(user: User): void {
     this.userService.unbanUser(user._id).subscribe(
       () => {
         console.log(`User ${user._id} unbanned successfully.`);
-        this.loadBannedUsers(); // Actualiser la liste après débannissement
+        this.loadBannedUsers();
       },
       (error: any) => {
         console.error('Error unbanning user:', error);
@@ -27,7 +32,6 @@ export class BannedUsersComponent implements OnInit {
   loading: boolean = false;
   errorMessage: string = '';
 
-  constructor(private userFilterService: UserFilterService) { }
 
   ngOnInit(): void {
     this.loadBannedUsers();
@@ -48,6 +52,5 @@ export class BannedUsersComponent implements OnInit {
     );
   }
 
-  // Ajoutez ici d'autres méthodes si nécessaire, par exemple pour supprimer ou mettre à jour les utilisateurs bannis
-
+  
 }
