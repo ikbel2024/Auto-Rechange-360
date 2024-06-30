@@ -119,4 +119,20 @@ unbanUser(userId: string): Observable<any> {
   });
   return this.http.put<any>(`${this.apiUrl}/unban/${userId}`, {headers});
 }
+
+getUserRoleStatistics(): Observable<any> {
+  return this.http.get<any>(`${this.apiUrl}/stats/role`);
+}
+
+getUserLoginStatistics(): Observable<any> {
+  return this.http.get<any>(`${this.apiUrl}/stats/login`);
+}
+
+getBannedUserStatistics(): Observable<any> {
+  return this.http.get<any>(`${this.apiUrl}/stats/banned`);
+}
+
+getUserRegistrationStatistics(): Observable<any> {
+  return this.http.get<any>(`${this.apiUrl}/stats/registration`);
+}
 }

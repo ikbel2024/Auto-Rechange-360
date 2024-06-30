@@ -33,12 +33,14 @@ import { CountCategorieComponent } from './categorie/count-categorie/count-categ
 import { ChatBotComponent } from './chat-bot/chat-bot.component';
 import { LoginFormComponent } from './login/login-form/login-form.component';
 import { RegisterFormComponent } from './login/register-form/register-form.component';
-import { AdminFormComponent } from './login/admin-form/admin-form.component';
+import { AdminWelcomeComponent } from './login/admin-form/admin-form.component';
 import { ResetpassFormComponent } from './login/resetpass-form/resetpass-form.component';
 import { UserListComponent } from './login/userlist-form/userlist-form.component';
 import { RequestResetPasswordComponent } from './login/requestresetpassword-form/requestresetpassword-form.component';
 import { UserUpdateComponent } from './login/user-update/user-update.component';
 import { BannedUsersComponent } from './login/banned-users/banned-users.component';
+import { UserStatisticsComponent } from './login/user-statistics/user-statistics.component';
+
 
 
 @NgModule({
@@ -68,12 +70,14 @@ import { BannedUsersComponent } from './login/banned-users/banned-users.componen
     ChatBotComponent,
     LoginFormComponent,
     RegisterFormComponent,
-    AdminFormComponent,
+    LoginFormComponent,
     ResetpassFormComponent,
     UserListComponent,
     RequestResetPasswordComponent,
     UserUpdateComponent,
     BannedUsersComponent,
+    UserStatisticsComponent,
+    AdminWelcomeComponent,
     
   ],
   imports: [

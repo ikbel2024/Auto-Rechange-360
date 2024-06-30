@@ -3,7 +3,7 @@
     <div class="navbar-left">
       <button class="btn-navbar" routerLink="/banned-users">Utilisateurs Bannis</button>
       <button class="btn-navbar" (click)="filterUsers('new')">Nouveaux Utilisateurs</button>
-      <button class="btn-navbar" (click)="showStatistics()">Statistiques</button>
+      <button class="btn-navbar" routerLink="/statistiques">Statistiques</button>
     </div>
     <div class="navbar-right">
       <form (ngSubmit)="onSearch()" class="search-form">
