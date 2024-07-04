@@ -1,0 +1,74 @@
+<div class="checkout-container">
+  <h2>Passer à la caisse</h2>
+
+  <!-- Étape 1: Commande confirmée -->
+  <div *ngIf="currentStep === 1" class="step-container">
+    <h3>Étape 1: Commande confirmée</h3>
+    <p>Nom du client: {{ client }}</p>
+    <p>Adresse de livraison: {{ adresse }}</p>
+    <p>Téléphone: {{ telephone }}</p>
+    <p>Méthode de paiement: {{ methodePaiement }}</p>
+
+    <div class="cart-details">
+      <h4>Résumé de la commande</h4>
+      <ul>
+        <li *ngFor="let item of cartItems">{{ item.name }} (x{{ item.quantity }})</li>
+      </ul>
+      <p>Total des produits: {{ totalProduits | currency }}</p>
+      <p>Frais de livraison: {{ fraisLivraison | currency }}</p>
+      <p>Total de la commande: {{ totalCommande | currency }}</p>
+    </div>
+
+    <div class="button-container">
+      <button class="confirmation-button" (click)="confirmerReception()">Confirmer la réception</button>
+      <button class="cancel-button" (click)="annulerCommande()">Annuler la commande</button>
+    </div>
+  </div>
+
+  <!-- Étape 2: Commande en livraison -->
+  <div *ngIf="currentStep === 2" class="step-container">
+    <h3>Étape 2: Commande en livraison</h3>
+    <p>Votre commande est en cours de livraison.</p>
+    <p>Nom du client: {{ client }}</p>
+    <p>Adresse de livraison: {{ adresse }}</p>
+    <p>Téléphone: {{ telephone }}</p>
+
+    <div class="cart-details">
+      <h4>Résumé de la commande</h4>
+      <ul>
+        <li *ngFor="let item of cartItems">{{ item.name }} (x{{ item.quantity }})</li>
+      </ul>
+      <p>Total des produits: {{ totalProduits | currency }}</p>
+      <p>Frais de livraison: {{ fraisLivraison | currency }}</p>
+      <p>Total de la commande: {{ totalCommande | currency }}</p>
+    </div>
+
+    <!-- <div class="button-container"> -->
+      <!-- <button class="confirmation-button" (click)="confirmerReception()">Confirmer la réception</button> -->
+    <!-- </div> -->
+  </div>
+
+  <!-- Étape 3: Commande livrée -->
+  <div *ngIf="currentStep === 3" class="step-container">
+    <h3>Étape 3: Commande livrée</h3>
+    <p>Votre commande a été livrée avec succès !</p>
+    <p>Nom du client: {{ client }}</p>
+    <p>Adresse de livraison: {{ adresse }}</p>
+    <p>Téléphone: {{ telephone }}</p>
+
+    <div class="cart-details">
+      <h4>Résumé de la commande</h4>
+      <ul>
+        <li *ngFor="let item of cartItems">{{ item.name }} (x{{ item.quantity }})</li>
+      </ul>
+      <p>Total des produits: {{ totalProduits | currency }}</p>
+      <p>Frais de livraison: {{ fraisLivraison | currency }}</p>
+      <p>Total de la commande: {{ totalCommande | currency }}</p>
+    </div>
+  </div>
+
+  <!-- Bouton Télécharger reçu -->
+  <!-- <div class="button-container"> -->
+    <!-- <button class="download-button" (click)="telechargerRecu()">Télécharger le reçu de paiement</button> -->
+  <!-- </div> -->
+</div>

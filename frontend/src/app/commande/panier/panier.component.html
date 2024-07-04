@@ -1,0 +1,47 @@
+<div class="cart-container">
+  <h2>Votre Panier</h2>
+  <!-- <div *ngIf="cartItems.length === 0" class="empty-cart"> -->
+    <!-- <p>Votre panier est vide.</p> -->
+  <!-- </div> -->
+  <div  class="cart-items">
+    <div *ngFor="let item of cartItems; let i = index" class="cart-item">
+      <div class="cart-item-details">
+        <span class="cart-item-name">{{ item.name }}</span>
+        <span class="cart-item-price">{{ item.price | currency:'EUR' }}</span>
+        <div class="cart-item-quantity">
+          <button (click)="decreaseQuantity(i)" class="quantity-button">-</button>
+          <span>{{ item.quantity }}</span>
+          <button (click)="increaseQuantity(i)" class="quantity-button" [disabled]="item.quantity >= item.stock">+</button>
+          <span *ngIf="item.quantity >= item.stock" class="out-of-stock">Rupture de stock</span>
+        </div>
+      </div>
+      <button (click)="removeItem(i)" class="remove-button">Retirer</button>
+    </div>
+    <div class="cart-total">
+      <div class="total-details">
+        <div class="total-subsection">
+          <span>Total Produits:</span>
+          <span>{{ totalProduits | currency:'EUR' }}</span>
+        </div>
+        <div class="total-subsection">
+          <span>Frais de livraison:</span>
+          <span>{{ deliveryFee | currency:'EUR' }}</span>
+        </div>
+        <div class="total-subsection total-grand">
+          <span>Total Commande:</span>
+          <span>{{ totalProduits + deliveryFee | currency:'EUR' }}</span>
+        </div>
+      </div>
+      <div *ngIf="totalProduits < freeDeliveryThreshold" class="delivery-info">
+        <p>Ajoutez {{ freeDeliveryThreshold - totalProduits | currency:'EUR' }} de plus pour obtenir la livraison gratuite !</p>
+      </div>
+      <div *ngIf="totalProduits >= freeDeliveryThreshold" class="delivery-info">
+        <p>Livraison gratuite !</p>
+      </div>
+      <div class="button-container">
+        <button (click)="emptyCart()" class="empty-cart-button">Vider le panier</button>
+        <button  (click)="checkout()" class="checkout-button">Passer la commande</button>
+      </div>
+    </div>
+  </div>
+</div>

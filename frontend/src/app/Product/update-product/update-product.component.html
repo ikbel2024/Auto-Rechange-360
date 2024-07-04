@@ -1,0 +1,141 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" routerLink="/administration">
+                        <i class="fas fa-chart-line me-1"></i>Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/addProduct">
+                        <i class="fas fa-box-open me-1"></i>Products
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/ShowCategorie">
+                        <i class="fas fa-cubes me-1"></i>Stocks
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="sidebar">
+            <!-- Admin Panel Buttons -->
+            <div class="admin-buttons">
+                <button class="btn btn-dark btn-block mb-2" routerLink="/addProduct">Add Product</button>
+                <button class="btn btn-dark btn-block mb-2" routerLink="/ShowProucts">Show Products</button>
+                <button class="btn btn-dark btn-block mb-2" routerLink="/SearchProducts">Search Product</button>
+                <button class="btn btn-dark btn-block mb-2" routerLink="/CountProduct">Count Products</button>
+            </div>
+            <!-- Back Button -->
+            <button class="btn btn-dark btn-secondary mt-3" (click)="goBack()">Back to Dashboard</button>
+        </div>
+        <div class="col-md-9">
+            <h2>Update Product</h2>
+            <form [formGroup]="productForm" enctype="multipart/form-data" (ngSubmit)="updateProduit()" novalidate>
+                <!-- Name -->
+                <div class="form-group row">
+                    <label for="name" class="col-sm-3 col-form-label">Name:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="name" formControlName="name" [ngClass]="{ 'is-invalid': productForm.get('name')?.touched && productForm.get('name')?.invalid }">
+                        <div *ngIf="productForm.get('name')?.touched && productForm.get('name')?.invalid" class="invalid-feedback">
+                            Name is required.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reference -->
+                <div class="form-group row">
+                    <label for="reference" class="col-sm-3 col-form-label">Reference:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="reference" formControlName="reference" [ngClass]="{ 'is-invalid': productForm.get('reference')?.touched && productForm.get('reference')?.invalid }">
+                        <div *ngIf="productForm.get('reference')?.touched && productForm.get('reference')?.invalid" class="invalid-feedback">
+                            Reference is required.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Date Added -->
+                <div class="form-group row">
+                    <label for="dateAdded" class="col-sm-3 col-form-label">Date Added:</label>
+                    <div class="col-sm-9">
+                        <input type="date" class="form-control" id="dateAdded" formControlName="dateAdded" [ngClass]="{ 'is-invalid': productForm.get('dateAdded')?.touched && productForm.get('dateAdded')?.invalid }">
+                        <div *ngIf="productForm.get('dateAdded')?.touched && productForm.get('dateAdded')?.invalid" class="invalid-feedback">
+                            Date Added is required.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price -->
+                <div class="form-group row">
+                    <label for="price" class="col-sm-3 col-form-label">Price:</label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control" id="price" formControlName="price" [ngClass]="{ 'is-invalid': productForm.get('price')?.touched && productForm.get('price')?.invalid }">
+                        <div *ngIf="productForm.get('price')?.touched && productForm.get('price')?.invalid" class="invalid-feedback">
+                            Price is required.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group row">
+                    <label for="description" class="col-sm-3 col-form-label">Description:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="description" formControlName="description" [ngClass]="{ 'is-invalid': productForm.get('description')?.touched && productForm.get('description')?.invalid }">
+                        <div *ngIf="productForm.get('description')?.touched && productForm.get('description')?.invalid" class="invalid-feedback">
+                            Description is required.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category -->
+                <div class="form-group row">
+                    <label for="category" class="col-sm-3 col-form-label">Category:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="category" formControlName="category" [ngClass]="{ 'is-invalid': productForm.get('category')?.touched && productForm.get('category')?.invalid }">
+                        <div *ngIf="productForm.get('category')?.touched && productForm.get('category')?.invalid" class="invalid-feedback">
+                            Category is required.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stock Quantity -->
+                <div class="form-group row">
+                    <label for="stockQuantity" class="col-sm-3 col-form-label">Stock Quantity:</label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control" id="stockQuantity" formControlName="stockQuantity" [ngClass]="{ 'is-invalid': productForm.get('stockQuantity')?.touched && productForm.get('stockQuantity')?.invalid }">
+                        <div *ngIf="productForm.get('stockQuantity')?.touched && productForm.get('stockQuantity')?.invalid" class="invalid-feedback">
+                            Stock Quantity is required.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image -->
+                <div class="form-group row">
+                    <label for="image" class="col-sm-3 col-form-label">Image:</label>
+                    <div class="col-sm-9">
+                        <input type="file" (change)="selectFile($event)" formControlName="image" accept="image/*">
+                    </div>
+                </div>
+
+                <!-- Existing Image -->
+                <div class="form-group row">
+                    <label for="existingDocs" class="col-sm-3 col-form-label">Existing Image:</label>
+                    <div class="col-sm-9">
+                        <ul>
+                            <li><span>{{ fileName }}</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Update Button -->
+                <button type="submit" class="btn btn-primary btn-block mt-3" [disabled]="productForm.invalid">Update Product</button>
+            </form>
+        </div>
+    </div>
+</div>
