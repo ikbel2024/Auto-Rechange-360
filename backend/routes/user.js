@@ -7,6 +7,8 @@ const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const bcrypt = require('bcrypt');
 const { OAuth2Client } = require('google-auth-library');
+const axios = require('axios');
+
 
 
 const {
@@ -143,22 +145,50 @@ router.get('/validate/:token', async (req, res) => {
   }
 });
 
-// Upload profile photo (any user)
-router.post('/upload-photo/:id', uploadProfilePhoto);
-
-
+// Route pour bannir un utilisateur
 router.put('/ban/:id', async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      return res.status(404).json({ msg: 'Utilisateur non trouvé' });
+    const userId = req.params.id;
+    const updatedUser = await User.findByIdAndUpdate(userId, { isBanned: true }, { new: true });
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
     }
 
-    await user.banUser();
-    res.json({ msg: 'Utilisateur banni avec succès' });
+    res.status(200).json({ message: 'User banned successfully', user: updatedUser });
   } catch (error) {
-    console.error(error.message);
-    res.status(500).send('Erreur serveur');
+    console.error('Error banning user:', error);
+    res.status(500).json({ error: 'Failed to ban user' });
+  }
+});
+
+// Upload profile photo (any user)
+router.post('/upload-profile-photo', async (req, res) => {
+  try {
+    const { userId, photoUrl } = req.body;
+
+    // Vérifiez si userId et photoUrl sont fournis
+    if (!userId || !photoUrl) {
+      return res.status(400).json({ error: 'userId and photoUrl are required.' });
+    }
+
+    // Créer un nouveau document de photo de profil
+    const newProfilePhoto = new ProfilePhoto({
+      userId: userId,
+      photoUrl: photoUrl
+    });
+
+    // Sauvegarder le document dans la base de données
+    const savedProfilePhoto = await newProfilePhoto.save();
+
+    // Mettre à jour le champ profilePhotoUrl de l'utilisateur
+    await User.findByIdAndUpdate(userId, { profilePhotoUrl: photoUrl });
+
+    // Répondre avec succès
+    res.status(200).json({ message: 'Profile photo uploaded successfully.', savedProfilePhoto });
+  } catch (error) {
+    console.error('Error uploading profile photo:', error);
+    res.status(500).json({ error: 'Failed to upload profile photo.' });
   }
 });
 
@@ -253,12 +283,14 @@ router.post('/resetpassword/:token', async (req, res) => {
     user.resetPasswordExpires = undefined;
     await user.save();
 
-    res.status(200).send('Password has been reset.');
+    // Retourner une réponse JSON indiquant que le mot de passe a été réinitialisé avec succès
+    res.status(200).json({ message: 'Password has been reset successfully.' });
   } catch (err) {
     console.error('Error resetting password:', err);
     res.status(500).send('Error resetting password.');
   }
 });
+
 const client = new OAuth2Client('622271200203-obvk96u36cm1ivhuvbjum2hpgj2h6pri.apps.googleusercontent.com');
 
 // Route to handle Google login
@@ -300,6 +332,30 @@ router.post('/update-user', async (req, res) => {
     res.json({ message: 'User information updated successfully', user });
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
+  }
+});
+
+const RECAPTCHA_SECRET_KEY = '6LevzggqAAAAAJ7y_2wbui85hqykXDyJSQ-2c-Mq'; // Remplacez par votre clé secrète reCAPTCHA
+
+router.post('/submit-form', async (req, res) => {
+  const { captchaResponse } = req.body;
+
+  const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET_KEY}&response=${captchaResponse}`;
+
+  try {
+    const response = await axios.post(verifyUrl);
+    const { success } = response.data;
+
+    if (success) {
+      // Si le reCAPTCHA est validé avec succès, continuer le traitement du formulaire
+      res.status(200).json({ message: 'Form submitted successfully' });
+    } else {
+      // Si le reCAPTCHA échoue, renvoyer une erreur
+      res.status(400).json({ message: 'reCAPTCHA verification failed' });
+    }
+  } catch (error) {
+    console.error('Error verifying reCAPTCHA:', error);
+    res.status(500).json({ message: 'Error verifying reCAPTCHA' });
   }
 });
 

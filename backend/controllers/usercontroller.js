@@ -118,25 +118,30 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-exports.uploadProfilePhoto = [
-  upload.single('photo'),
-  async (req, res) => {
-    try {
-      const { id } = req.params;
-      const photoUrl = `http://localhost:3000/uploads/${req.file.filename}`;
+exports.uploadProfilePhoto = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const profilePhoto = req.file;
 
-      const profilePhoto = new ProfilePhoto({
-        userId: id,
-        photoUrl: photoUrl
-      });
-
-      await profilePhoto.save();
-      res.json({ message: 'Photo de profil ajoutée avec succès', photoUrl });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    if (!profilePhoto) {
+      return res.status(400).send('No photo uploaded.');
     }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).send('User not found.');
+    }
+
+    // Mettre à jour l'URL de la photo de profil de l'utilisateur
+    user.profilePhotoUrl = `/uploads/${profilePhoto.filename}`;
+    await user.save();
+
+    res.status(200).send('Profile photo uploaded successfully.');
+  } catch (error) {
+    console.error('Error uploading profile photo:', error);
+    res.status(500).send('Error uploading profile photo.');
   }
-];
+};
 
 
 /*exports.resetPassword = async (req, res) => {
@@ -181,19 +186,20 @@ exports.verifyEmail = async (req, res) => {
 
 exports.banUser = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
+    const userId = req.params.id;
+    const updatedUser = await User.findByIdAndUpdate(userId, { banned: true }, { new: true });
+
+    if (!updatedUser) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    user.isBanned = true;
-    await user.save();
-
-    res.json({ message: 'User banned successfully' });
+    res.status(200).json({ message: 'User banned successfully', user: updatedUser });
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    console.error('Error banning user:', error);
+    res.status(500).json({ error: 'Failed to ban user' });
   }
-};
+}
+
 
 exports.unbanUser = async (req, res) => {
   try {
