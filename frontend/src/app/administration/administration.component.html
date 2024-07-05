@@ -63,27 +63,30 @@
 
     <router-outlet></router-outlet>
 
- 
 
-    <!-- ________________________Recent Activity and Progress Tracker______________________________-->
+    <!-- ___________________________Recent Activity and Progress Tracker______________________________-->
     <div class="row">
-        <!-- Progress Tracker -->
-        <div class="col-md-6">
-          <div class="card shadow-sm mb-4">
-            <div class="card-body">
-              <h5 class="card-title text-center mb-4">Progress Tracker</h5>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item" *ngFor="let vehicule of vehicules; let i = index">
-                  <div class="progress">
-                    <div class="progress-bar bg-primary" role="progressbar" [style.width]="getProgressWidth(vehicule.prix)" [attr.aria-valuenow]="vehicule.prix" aria-valuemin="0" aria-valuemax="100"> {{ vehicule.prix }}% </div>
+      <!-- Progress Tracker -->
+      <div class="col-md-6">
+        <div class="card shadow-sm mb-4">
+          <div class="card-body">
+            <h5 class="card-title text-center mb-4">Progress Tracker</h5>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item" *ngFor="let vehicule of vehicules; let i = index">
+                <div class="progress">
+                  <div class="progress-bar bg-primary" role="progressbar" [style.width]="getProgressWidth(vehicule.modele)" [attr.aria-valuenow]="getProgressValue(vehicule.modele)" aria-valuemin="0" aria-valuemax="100"> 
+                    {{ getProgressValue(vehicule.modele) }}% 
                   </div>
-                  <span class="progress-label">{{ vehicule.modele }}</span> <span class="badge bg-primary">{{ vehicule.energie }}</span>
-                </li>
-              </ul>
-            </div>
+                </div>
+                <span class="progress-label">{{ vehicule.modele }}</span> 
+                <span class="badge bg-primary">{{ vehicule.energie }}</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
+    </div>
+    
       
 
     

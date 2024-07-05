@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { VehiculeService } from '../services/vehicule.service';
 import { Vehicule } from '../model/vehicule';
@@ -11,6 +11,12 @@ import { Vehicule } from '../model/vehicule';
 })
 export class UpdateVehiculeComponent implements OnInit {
 
+  isSubmitting: boolean = false;
+  selectedVehiculeId: string = ''; 
+  vehicules: Vehicule[] = [];
+  vehiculeToAdd: Vehicule = { matricule: '', modele: '', couleur: '', energie: '', prix: 0 }; // Initialiser avec les valeurs par défaut de l'interface
+
+
   vehiculeToUpdate: Vehicule = {
     id: '',
     matricule: '',
@@ -19,55 +25,95 @@ export class UpdateVehiculeComponent implements OnInit {
     energie: '',
     prix: 0
   };
-  isSubmitting: boolean = false;
 
-  constructor(private route: ActivatedRoute, private vehiculeService: VehiculeService) {}
+  constructor( private route: ActivatedRoute, private router: Router, private vehiculeService: VehiculeService) 
+  {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      const vehiculeId = params['id'];
-      if (vehiculeId) {
-        this.loadVehiculeDetails(vehiculeId);
-      }
-    });
+    this.loadVehicules();
   }
 
-  loadVehiculeDetails(id: string): void {
-    this.vehiculeService.getVehiculeById(id).subscribe(
-      (vehicule: Vehicule) => {
-        this.vehiculeToUpdate = vehicule;
-        console.log('Détails du véhicule chargés:', vehicule); // Vérifiez les détails du véhicule chargés
+
+  loadVehicules(): void {
+    this.vehiculeService.getVehicules().subscribe(
+      (data: Vehicule[]) => {
+        this.vehicules = data;
       },
       (error) => {
-        console.error('Erreur lors du chargement des détails du véhicule', error);
+        console.error('Error fetching vehicules', error);
       }
     );
   }
 
-  updateVehicule(form: NgForm): void {
-    if (form.valid && this.vehiculeToUpdate.id) {
-      this.isSubmitting = true;
-      this.vehiculeService.updateVehicule(this.vehiculeToUpdate.id, this.vehiculeToUpdate).subscribe(
-        () => {
-          console.log('Véhicule mis à jour avec succès');
-          this.isSubmitting = false;
-        },
-        (error) => {
-          console.error('Erreur lors de la mise à jour du véhicule', error);
-          this.isSubmitting = false;
-        }
-      );
+
+
+  addVehicule(form: NgForm): void {
+    if (form.invalid) {
+      return; // Arrêter l'ajout si le formulaire est invalide
     }
+
+    this.isSubmitting = true;
+    this.vehiculeService.addVehicule(this.vehiculeToAdd).subscribe(
+      (data) => {
+        console.log('Véhicule ajouté avec succès', data);
+        this.loadVehicules();
+        this.vehiculeToAdd = { matricule: '', modele: '', couleur: '', energie: '', prix: 0 };
+        form.resetForm();
+        this.isSubmitting = false;
+      },
+      (error) => {
+        console.error('Error adding vehicule', error);
+        this.isSubmitting = false;
+      }
+    );
   }
 
-  clearUpdateForm(): void {
-    this.vehiculeToUpdate = {
-      id: '',
-      matricule: '',
-      modele: '',
-      couleur: '',
-      energie: '',
-      prix: 0
-    };
+  updateVehicule(form: NgForm) {
+  if (form.valid && this.vehiculeToUpdate.id) { // Vérifiez que l'ID est défini
+    this.isSubmitting = true;
+    this.vehiculeService.updateVehicule(this.vehiculeToUpdate.id, this.vehiculeToUpdate).subscribe(
+      () => {
+        this.isSubmitting = false;
+        form.resetForm();
+      },
+      error => {
+        console.error(error);
+        this.isSubmitting = false;
+      }
+    );
+  } else {
+    console.error("ID du véhicule manquant.");
   }
+}
+
+clearUpdateForm() {
+  this.vehiculeToUpdate = {
+    id: '',
+    matricule: '',
+    modele: '',
+    couleur: '',
+    energie: '',
+    prix: 0
+  };
+}
+
+
+selectVehiculeForUpdate(id: string): void {
+  this.selectedVehiculeId = id;
+  this.vehiculeService.getVehiculeById(id).subscribe(
+    (data) => {
+      this.vehiculeToAdd = data; // Remplir le formulaire avec les données du véhicule sélectionné
+    },
+    (error) => {
+      console.error('Error fetching vehicule for update', error);
+    }
+  );
+}
+
+clearSelection(): void {
+  this.selectedVehiculeId = '';
+  this.vehiculeToAdd = { matricule: '', modele: '', couleur: '', energie: '', prix: 0 }; // Réinitialiser l'interface
+}
+
+
 }

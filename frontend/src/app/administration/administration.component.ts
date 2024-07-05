@@ -10,11 +10,35 @@ import { VehiculeService } from '../services/vehicule.service';
 })
 export class AdministrationComponent implements OnInit {
 
-  vehicules: Vehicule[] = [];
+  vehicules: any[] = [];
+  modeleCount: { [key: string]: number } = {};
+
   constructor(private vehiculeService: VehiculeService) {}
 
   ngOnInit(): void {
-    this.loadVehicules();
+    this.vehiculeService.getVehicules().subscribe((data: any[]) => {
+      this.vehicules = data;
+      this.calculateModeleCount();
+    });
+  }
+  calculateModeleCount(): void {
+    this.vehicules.forEach((vehicule) => {
+      if (this.modeleCount[vehicule.modele]) {
+        this.modeleCount[vehicule.modele]++;
+      } else {
+        this.modeleCount[vehicule.modele] = 1;
+      }
+    });
+  }
+
+  getProgressValue(modele: string): number {
+    const count = this.modeleCount[modele] || 0;
+    const total = this.vehicules.length;
+    return (count / total) * 100;
+  }
+
+  getProgressWidth(modele: string): string {
+    return this.getProgressValue(modele) + '%';
   }
 
   loadVehicules(): void {
@@ -28,9 +52,10 @@ export class AdministrationComponent implements OnInit {
     );
   }
 
-   // Méthode pour calculer la largeur de la barre de progression
-   getProgressWidth(prix: number): string {
-    return prix + '%';
-  }
-
 }
+
+  
+
+   
+
+

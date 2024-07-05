@@ -1,4 +1,3 @@
-// vehicule.service.ts
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -46,7 +45,9 @@ export class VehiculeService {
     return this.http.get<Vehicule[]>(`${this.apiUrl}/search`, { params: criteria });
   }
 
-  getVehiculeByModele(modele: string): Observable<Vehicule> {
-    return this.http.get<Vehicule>(`${this.apiUrl}/findModele/${modele}`);
+  findVehiculeByModele(modele: string): Observable<Vehicule[]> {
+    const url = `${this.apiUrl}/findName/${modele}`; // Endpoint pour la recherche par modèle
+    return this.http.get<Vehicule[]>(url);
   }
+  
 }
