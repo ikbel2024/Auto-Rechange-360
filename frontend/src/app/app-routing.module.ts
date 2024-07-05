@@ -19,7 +19,12 @@ import { AddCategorieComponent } from './categorie/add-categorie/add-categorie.c
 import { CountCategorieComponent } from './categorie/count-categorie/count-categorie.component';
 import { VehiculeComponent } from './vehicule/vehicule.component';  
 import { MaintenanceVehiculeComponent } from './maintenance-vehicule/maintenance-vehicule.component';
+import { DeleteVehiculeComponent } from './delete-vehicule/delete-vehicule.component';
+import { DisplayVehiculesComponent } from './display-vehicules/display-vehicules.component';
+import { AddVehiculeComponent } from './add-vehicule/add-vehicule.component';
+import { UpdateVehiculeComponent } from './update-vehicule/update-vehicule.component';
 import { HistoriqueComponent } from './historique/historique.component';
+
 
 const routes: Routes = [
   { path: '', redirectTo: '/tv', pathMatch: 'full' },
@@ -38,9 +43,16 @@ const routes: Routes = [
   { path: 'SearchCategorie', component: SearchCategorieComponent },
   { path: 'CountCategorie', component: CountCategorieComponent },
   { path: 'product', component: DetailProdComponent },
+
   { path: 'vehicles', component: VehiculeComponent },
   { path: 'maintenance-vehicule', component: MaintenanceVehiculeComponent },
+  { path: 'delete-vehicules/:id', component: DeleteVehiculeComponent },
+  { path: 'display-vehicules', component: DisplayVehiculesComponent },
+  { path: 'add-vehicule', component: AddVehiculeComponent },
+  { path: 'update-vehicule/:id', component: UpdateVehiculeComponent },
+
   { path: 'historique-entretiens', component: HistoriqueComponent },
+
   { path: '**', component: NotFoundComponent },
 ];
 

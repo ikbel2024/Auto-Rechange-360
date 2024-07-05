@@ -1,0 +1,21 @@
+<!-- Liste des véhicules -->
+<h2>Liste des Véhicules</h2>
+<div class="row">
+  <div class="col-lg-3 col-md-4 col-sm-6 mb-4" *ngFor="let vehicule of vehicules">
+    <div class="card h-100 card-background">
+      <div class="card-body">
+        <h5 class="card-title">Modèle : {{ vehicule.modele }}</h5>
+        <p class="card-text">Couleur : {{ vehicule.couleur }}</p>
+        <p class="card-text">Énergie : {{ vehicule.energie }}</p>
+      </div>
+      <div class="card-footer d-flex justify-content-between">
+          <a [routerLink]="['/update-vehicule', vehicule.id]" class="btn btn-edit">
+          <i class="fas fa-edit"></i>
+          </a>
+        <button type="button" class="btn btn-danger btn-delete" (click)="deleteVehicule(vehicule.id)">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

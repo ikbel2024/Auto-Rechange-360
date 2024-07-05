@@ -9,34 +9,9 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./maintenance-vehicule.component.css']
 })
 export class MaintenanceVehiculeComponent implements OnInit {
-
-  vehiculeToUpdate: Vehicule = {
-    id: '',
-    matricule: '',
-    modele: '',
-    couleur: '',
-    energie: '',
-    prix: 0
-  };
-
+  
   vehicules: Vehicule[] = [];
-  vehiculeToAdd: Vehicule = { matricule: '', modele: '', couleur: '', energie: '', prix: 0 };
-  selectedVehiculeId: string = '';
-  isSubmitting: boolean = false;
-
-
-  vehiculeIdToView: string = '';
-  selectedVehicule: Vehicule | null = null;
-
-  vehiculeIdToDelete: string = '';
-  selectedVehiculeForDeletion: Vehicule | null = null;
-
-
   constructor(private vehiculeService: VehiculeService) {}
-
-  ngOnInit(): void {
-    this.loadVehicules();
-  }
 
   loadVehicules(): void {
     this.vehiculeService.getVehicules().subscribe(
@@ -49,132 +24,15 @@ export class MaintenanceVehiculeComponent implements OnInit {
     );
   }
 
-  addVehicule(form: NgForm): void {
-    if (form.invalid) {
-      return;
-    }
-
-    this.isSubmitting = true;
-    this.vehiculeService.addVehicule(this.vehiculeToAdd).subscribe(
-      (data) => {
-        console.log('Véhicule ajouté avec succès', data);
-        this.loadVehicules();
-        this.vehiculeToAdd = { matricule: '', modele: '', couleur: '', energie: '', prix: 0 };
-        form.resetForm();
-        this.isSubmitting = false;
-      },
-      (error) => {
-        console.error('Error adding vehicule', error);
-        this.isSubmitting = false;
-      }
-    );
+  ngOnInit(): void {
+    this.loadVehicules();
   }
 
-  updateVehicule(form: NgForm): void {
-    if (form.valid && this.vehiculeToUpdate.id) {
-      this.isSubmitting = true;
-      this.vehiculeService.updateVehicule(this.vehiculeToUpdate.id, this.vehiculeToUpdate).subscribe(
-        () => {
-          console.log('Véhicule mis à jour avec succès');
-          this.loadVehicules();
-          form.resetForm();
-          this.clearUpdateForm();
-          this.isSubmitting = false;
-        },
-        (error) => {
-          console.error('Error updating vehicule', error);
-          this.isSubmitting = false;
-        }
-      );
-    } else {
-      console.error('ID du véhicule manquant ou formulaire invalide');
-    }
+  displayedComponent: string = 'display'; // Par défaut sur 'display'
+
+  showComponent(component: string) {
+    this.displayedComponent = component;
   }
 
-  clearUpdateForm(): void {
-    this.vehiculeToUpdate = {
-      id: '',
-      matricule: '',
-      modele: '',
-      couleur: '',
-      energie: '',
-      prix: 0
-    };
-  }
-
-  confirmDelete(id: string | undefined): void {
-    if (id) {
-      console.log(`Confirmation de la suppression du véhicule avec l'ID : ${id}`);
-      this.deleteVehicule();
-    } else {
-      console.error('ID du véhicule à supprimer non défini');
-    }
-  }
-  
-  onVehiculeIdToViewChange(id: string): void {
-    if (id) {
-      this.vehiculeService.getVehiculeById(id).subscribe(
-        (data: Vehicule) => {
-          this.selectedVehicule = data;
-        },
-        (error) => {
-          console.error('Erreur lors de la récupération du véhicule', error);
-          this.selectedVehicule = null;
-        }
-      );
-    } else {
-      this.selectedVehicule = null;
-    }
-  }
-
-  onVehiculeIdToDeleteChange(id: string): void {
-    if (id) {
-      this.vehiculeService.getVehiculeById(id).subscribe(
-        (data: Vehicule) => {
-          this.selectedVehiculeForDeletion = data;
-        },
-        (error) => {
-          console.error('Erreur lors de la récupération du véhicule pour suppression', error);
-          this.selectedVehiculeForDeletion = null;
-        }
-      );
-    } else {
-      this.selectedVehiculeForDeletion = null;
-    }
-  }
-
-  deleteVehicule(): void {
-    if (this.vehiculeIdToDelete) {
-      this.vehiculeService.deleteVehicule(this.vehiculeIdToDelete).subscribe(
-        () => {
-          console.log('Véhicule supprimé avec succès');
-          this.loadVehicules();
-          this.selectedVehiculeForDeletion = null;
-          this.vehiculeIdToDelete = ''; // Réinitialiser l'ID après la suppression
-        },
-        (error) => {
-          console.error('Erreur lors de la suppression du véhicule', error);
-        }
-      );
-    } else {
-      console.error('ID du véhicule à supprimer non défini');
-    }
-  }
-
-
-  clearSelection(): void {
-    this.selectedVehiculeId = '';
-    this.vehiculeToUpdate = {
-      id: '',
-      matricule: '',
-      modele: '',
-      couleur: '',
-      energie: '',
-      prix: 0
-    };
-  }
-
-
-  
 
 }

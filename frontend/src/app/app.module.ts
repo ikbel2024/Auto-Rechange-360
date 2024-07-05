@@ -28,6 +28,10 @@ import { ChatBotComponent } from './chat-bot/chat-bot.component';
 import { VehiculeComponent } from './vehicule/vehicule.component';
 import { MaintenanceVehiculeComponent } from './maintenance-vehicule/maintenance-vehicule.component';
 import { HistoriqueComponent } from './historique/historique.component';
+import { AddVehiculeComponent } from './add-vehicule/add-vehicule.component';
+import { UpdateVehiculeComponent } from './update-vehicule/update-vehicule.component';
+import { DeleteVehiculeComponent } from './delete-vehicule/delete-vehicule.component';
+import { DisplayVehiculesComponent } from './display-vehicules/display-vehicules.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +58,11 @@ import { HistoriqueComponent } from './historique/historique.component';
     ChatBotComponent,
     VehiculeComponent,
     MaintenanceVehiculeComponent,
-    HistoriqueComponent, // Ajout de cette ligne
+    HistoriqueComponent,
+    AddVehiculeComponent,
+    UpdateVehiculeComponent,
+    DeleteVehiculeComponent,
+    DisplayVehiculesComponent, // Ajout de cette ligne
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,56 @@
+<div class="container mt-4 vehicle-form-container">
+    <hr class="hr-animated">
+    <h2 class="form-title" [ngClass]="{'flashing': isSubmitting}">Ajouter un Véhicule</h2>
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <form #formRef="ngForm" (ngSubmit)="addVehicule(formRef)" class="vehicle-form row g-3">
+          <div class="col-md-6">
+            <label for="matricule">Matricule</label>
+            <input type="text" class="form-control" id="matricule" [(ngModel)]="vehiculeToAdd.matricule" name="matricule" required #matricule="ngModel">
+            <div *ngIf="matricule.invalid && (matricule.dirty || matricule.touched)" class="alert alert-danger">
+              <div *ngIf="matricule.errors?.['required']">Matricule est requis.</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="modele">Modèle</label>
+            <input type="text" class="form-control" id="modele" [(ngModel)]="vehiculeToAdd.modele" name="modele" required #modele="ngModel">
+            <div *ngIf="modele.invalid && (modele.dirty || modele.touched)" class="alert alert-danger">
+              <div *ngIf="modele.errors?.['required']">Modèle est requis.</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="couleur">Couleur</label>
+            <input type="text" class="form-control" id="couleur" [(ngModel)]="vehiculeToAdd.couleur" name="couleur" required #couleur="ngModel">
+            <div *ngIf="couleur.invalid && (couleur.dirty || couleur.touched)" class="alert alert-danger">
+              <div *ngIf="couleur.errors?.['required']">Couleur est requise.</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="energie">Énergie</label>
+            <input type="text" class="form-control" id="energie" [(ngModel)]="vehiculeToAdd.energie" name="energie" required #energie="ngModel">
+            <div *ngIf="energie.invalid && (energie.dirty || energie.touched)" class="alert alert-danger">
+              <div *ngIf="energie.errors?.['required']">Énergie est requise.</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="prix">Prix</label>
+            <input type="number" class="form-control" id="prix" [(ngModel)]="vehiculeToAdd.prix" name="prix" required min="0" #prix="ngModel">
+            <div *ngIf="prix.invalid && (prix.dirty || prix.touched)" class="alert alert-danger">
+              <div *ngIf="prix.errors?.['required']">Prix est requis.</div>
+              <div *ngIf="prix.errors?.['min']">Le prix doit être supérieur ou égal à 0.</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <button type="submit" class="btn btn-primary w-100">
+              <i class="fas fa-plus"></i> Ajouter
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-6 d-flex flex-wrap justify-content-center">
+        <img src="assets/images/voiture_rouge.png" class="animated-image m-2" alt="Image animée 3">
+      </div>
+    </div>
+    <hr class="hr-animated">
+  </div>
+  

@@ -1,0 +1,37 @@
+<!--______________________________________Delete_____________________________________________-->
+<div class="container mt-4 vehicle-form-container">
+    <hr class="hr-animated">
+    <h2 class="form-title">Supprimer un Véhicule</h2>
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <form #deleteFormRef="ngForm" (ngSubmit)="deleteVehicule()">
+          <div class="form-group">
+            <label for="deleteId">ID du Véhicule</label>
+            <input type="text" class="form-control" id="deleteId" [(ngModel)]="vehiculeIdToDelete" name="id" required #id="ngModel"
+              (ngModelChange)="onVehiculeIdToDeleteChange($event)"
+              [ngClass]="{'is-invalid': id.invalid && (id.dirty || id.touched)}">
+            <div *ngIf="id.invalid && (id.dirty || id.touched)" class="alert alert-danger">
+              <div *ngIf="id.errors?.['required']">ID est requis.</div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-danger btn-delete">
+            <i class="fas fa-trash"></i> Supprimer
+          </button>
+        </form>
+      </div>
+      <div class="col-md-6">
+        <!-- Zone pour afficher les détails du véhicule avant suppression -->
+        <div *ngIf="selectedVehicule" class="card mt-3 card-danger">
+          <div class="card-body">
+            <h5 class="card-title">Détails du Véhicule à Supprimer</h5>
+            <p><strong>Matricule:</strong> {{ selectedVehicule.matricule }}</p>
+            <p><strong>Modèle:</strong> {{ selectedVehicule.modele }}</p>
+            <p><strong>Couleur:</strong> {{ selectedVehicule.couleur }}</p>
+            <p><strong>Énergie:</strong> {{ selectedVehicule.energie }}</p>
+            <p><strong>Prix:</strong> {{ selectedVehicule.prix }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr class="hr-animated">
