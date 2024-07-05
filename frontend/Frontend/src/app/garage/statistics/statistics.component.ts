@@ -4,23 +4,23 @@ import { GarageService } from '../../services/garage.service';
 @Component({
   selector: 'app-statistics',
   templateUrl: './statistics.component.html',
-  styleUrl: './statistics.component.css',
+  styleUrls: ['./statistics.component.css'],
 })
 export class StatisticsComponent implements OnInit {
-  stats: any = [];
+  stats: any[] = []; // Assurez-vous que stats est un tableau d'objets
 
   constructor(private garageService: GarageService) {}
+
   ngOnInit(): void {
-    this.stats = this.garageService.getStatsService();
-    console.log(this.stats);
-
-    /*.subscribe(
-  (  response: any) => this.villes = response
-)*/
+    this.garageService.getStatsService().subscribe(
+      (data: any[]) => {
+        this.stats = data; // Assurez-vous que data est bien un tableau d'objets
+        console.log('Statistics loaded:', this.stats);
+      },
+      error => {
+        console.error('Error fetching statistics:', error);
+        // Gérer l'erreur si nécessaire
+      }
+    );
   }
-
-  ville: any = {
-    name: '',
-    count: null,
-  };
 }

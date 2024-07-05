@@ -1,106 +1,75 @@
-<div class="garage-detail-container">
-    
-    <div >
-        <h1>{{ garage.name }}</h1>
-        
-        <div class="garage-rating">
-            <span *ngFor="let star of stars" [class.filled]="star <= garage.rating">&#9733;</span>
-        </div>
-        <div class="garage-details">
-
-
-        <h6>Address:</h6>
-        <p class="garage-address">{{ garage.address }}</p>
-        <h6>Working hours:</h6>
-        <p class="garage-openh">{{ garage.openingHours }}</p>
-            <h6>Our services:</h6>
-            <div class="garage-services">
-                <p *ngFor="let service of garage.servicesOffered">
-                    {{service}}
-                </p>
-            </div>
-            <h6>Contacts:</h6>
-            <p class="garage-email">Email: {{garage.email}}</p>
-            <p class="garage-phone">Phone: {{garage.phone}}</p>
-            <h6>Meet the Team:</h6>
-            <div>
-                <p *ngFor="let employee of garage.employees">
-                    {{employee.name}}</p>
-                </div>
-            </div>
-                <div class="reviews-wrapper">
-                    <h3>Client feedbacks</h3>
-                    <div class="reviews">
-                
-                    <div *ngFor="let review of garage.reviews" class="user-review">
-                        <h6 *ngIf="review.user">{{review.user}}</h6>
-                        <h6 *ngIf="!review.user">Foulen Fouleni</h6>
-                        <p class="comment">{{review.comment}}</p>
-                        <div class="garage-rating">
-                            Rating: <span *ngFor="let star of stars | slice:0:3"
-                            [class.filled]="star <= review.rating">&#9733;</span>
-                        
-                    </div>
-                    </div>
-                    <div class="add-review">
-                        <h4>Ajouter un commentaire</h4>
-                        <label for="name">Name</label>
-                        <input id="name" name="name" [(ngModel)]="review.user"/>
-                        <label for="comment">Comment</label>
-                        <input id="comment" name="comment" [(ngModel)]="review.comment"/>
-                        <label for="">Rating</label>
-                        <div  class="add-rating">
-
-                            <div *ngFor="let rate of stars" class="user-rating">
-                                <input type="radio" id="rating"[value]="rate" name="rating" [(ngModel)]="review.rating"/>
-                                <label>{{rate}}</label>
-                            </div>
-                        </div>
-                            <button (click)="addReview()">Ajouter</button>
-                    </div>
-            </div>
-        </div>
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h4>Garage Details</h4>
     </div>
-    <form #appointmentForm="ngForm" class="container" [class.failed]="failed">
-        <h2>Prenez rendez-vous </h2>
+    <div class="card-body">
+      <h5 class="card-title">{{ garage.name }}</h5>
+      <p class="card-text">{{ garage.address }}</p>
+      <p class="card-text">{{ garage.city }}, {{ garage.postalCode }}</p>
+      <p class="card-text">Phone: {{ garage.phone }}</p>
+      <p class="card-text">Email: {{ garage.email }}</p>
+      <p class="card-text">Opening Hours: {{ garage.openingHours }}</p>
+      <h6 class="mt-4">Services Offered:</h6>
+      <ul class="list-unstyled">
+        <li *ngFor="let service of garage.servicesOffered">{{ service }}</li>
+      </ul>
+    </div>
+  </div>
 
-        <!--Client credentials-->
-        <label for="prenom" class="label">Prénom:</label>
-        <input id="prenom" type="text" placeholder="Prénom" class="input" name="firstname"
-            [(ngModel)]="appointment.firstname">
-        <label for="nom" class="label">Nom:</label>
-        <input id="nom" type="text" placeholder="Nom" class="input" name="lastname" [(ngModel)]="appointment.lastname">
-        <label for="telephone" class="label">Telephone:</label>
-        <input id="telephone" type="text" placeholder="xx xxx xxx" class="input" name="number"
-            [(ngModel)]="appointment.number">
+  <div class="mt-4">
+    <h4>Book Appointment</h4>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="clientName">Client Name</label>
+        <input type="text" id="clientName" name="clientName" class="form-control" [(ngModel)]="appointment.clientName" required />
+      </div>
+      <div class="form-group">
+        <label for="clientPhone">Client Phone</label>
+        <input type="text" id="clientPhone" name="clientPhone" class="form-control" [(ngModel)]="appointment.clientPhone" required />
+      </div>
+      <div class="form-group">
+        <label for="appointmentDate">Appointment Date</label>
+        <input type="date" id="appointmentDate" name="appointmentDate" class="form-control" [(ngModel)]="appointment.appointmentDate" required />
+      </div>
+      <div class="form-group">
+        <label for="serviceRequired">Service Required</label>
+        <input type="text" id="serviceRequired" name="serviceRequired" class="form-control" [(ngModel)]="appointment.serviceRequired" required />
+      </div>
+      <!-- Time Slots -->
 
-        <!-- Services -->
-        <label for="choice" class="label">Select a Service:</label>
-        <div class="choice-wrapper">
-
-            <div *ngFor="let service of garage.servicesOffered" class="choice service">
-                <input type="radio" id="service" name="service" [value]="service" [(ngModel)]="appointment.serviceDesired"
-                    required />
-               <label for="service">{{ service }}</label> 
-            </div>
-        </div>
-
-        <!-- Time Slots -->
-
-        <label for="timeSlot" class="label">Select a Time Slot:</label>
-        <div class="choice-wrapper ">
-            <div *ngFor="let slot of timeSlots" class="choice slot">
-                <input id="slot" class="slot" type="radio" name="slot" [value]="slot" [(ngModel)]="appointment.timeSlot"
-                    required />
-               <label for="slot" >{{ slot }}</label>
-            </div>
-        </div>
-        <p *ngIf="failed" [class.failed]="failed">Error booking the appointment</p>
-        <!-- Submit Button -->
-        <button type="submit" [disabled]="!appointmentForm.form.valid" (click)="onSubmit()">
-            Payment
-        </button>
+      <label for="timeSlot" class="label">Select a Time Slot:</label>
+      <div class="choice-wrapper ">
+          <div *ngFor="let slot of timeSlots" class="choice slot">
+              <input id="slot" class="slot" type="radio" name="slot" [value]="slot" [(ngModel)]="appointment.timeSlot"
+                  required />
+             <label for="slot" >{{ slot }}</label>
+          </div>
+      </div>
+      <p *ngIf="failed" [class.failed]="failed">Error booking the appointment</p>
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <p *ngIf="failed" class="text-danger mt-2">Failed to book appointment. Please try again later.</p>
     </form>
+  </div>
 
-
+  <div class="mt-4">
+    <h4>Add Review</h4>
+    <form>
+      <div class="form-group">
+        <label for="user">Your Name</label>
+        <input type="text" id="user" name="user" class="form-control" [(ngModel)]="review.user" required />
+      </div>
+      <div class="form-group">
+        <label for="comment">Your Review</label>
+        <textarea id="comment" name="comment" class="form-control" rows="3" [(ngModel)]="review.comment" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="rating">Rating</label>
+        <select id="rating" name="rating" class="form-control" [(ngModel)]="review.rating" required>
+          <option *ngFor="let star of stars" [value]="star">{{ star }}</option>
+        </select>
+      </div>
+      <button type="button" class="btn btn-primary" (click)="addReview()">Submit Review</button>
+    </form>
+  </div>
 </div>

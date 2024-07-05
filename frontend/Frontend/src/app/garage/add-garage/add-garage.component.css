@@ -1,21 +1,60 @@
-.container{
-    display: flex;
-    flex-direction: column;
+/* add-garage.component.css */
+
+/* Style pour le formulaire */
+form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
 }
 
-.container{
-    width: 40%;
+/* Style pour chaque groupe de champs */
+div {
+  margin-bottom: 15px;
 }
 
-input{
-    border-radius: 4px;
-    padding: 1rem;
-    width: 20rem;  
-    height: 2.5rem;
-  }
+/* Style pour les labels */
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
 
-  fieldset{
-    border: 1.5px solid rgb(213, 234, 221);
-    padding: 0.5rem;
+/* Style pour les inputs */
+input {
+  width: calc(100% - 20px);
+  padding: 8px;
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
 
-  }
+/* Style pour les messages d'erreur */
+div.ng-invalid.ng-touched {
+  color: red;
+}
+
+/* Style pour le bouton de soumission */
+button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Style pour le bouton de soumission désactivé */
+button[type="submit"]:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Style pour les messages d'erreur */
+div.error {
+  color: red;
+  font-size: 0.9em;
+}

@@ -1,67 +1,85 @@
-<form  (ngSubmit)="onSubmit()" class="container">
+<form (ngSubmit)="onSubmit()" class="container" [formGroup]="garageForm">
     <h2>Modifier un garage</h2>
+    
     <div class="form-group row mb-2">
         <label for="name" class="col-sm-2 col-form-label">Name:</label>
         <div class="col-sm-7">
-            <input id="name" name="name" type="text" class="form-control form-control-sm" [(ngModel)]="garage.name" required>
+            <input id="name" name="name" type="text" class="form-control form-control-sm" formControlName="name" required>
         </div>
     </div>
+    
     <div class="form-group row mb-2">
         <label for="address" class="col-sm-2 col-form-label">Address:</label>
         <div class="col-sm-7">
-            <input id="address" name="address" type="text" class="form-control form-control-sm" [(ngModel)]="garage.address" required>
+            <input id="address" name="address" type="text" class="form-control form-control-sm" formControlName="address" required>
         </div>
     </div>
+    
     <div class="form-group row mb-2">
-        <label for="City" class="col-sm-2 col-form-label">City</label>
+        <label for="city" class="col-sm-2 col-form-label">City:</label>
         <div class="col-sm-7">
-            <input id="City" name="City" type="text" class="form-control form-control-sm" [(ngModel)]="garage.city" required>
+            <input id="city" name="city" type="text" class="form-control form-control-sm" formControlName="city" required>
         </div>
     </div>
+    
     <div class="form-group row mb-2">
-        <label for="postalCode" class="col-sm-2 col-form-label">Code postal:</label>
+        <label for="postalCode" class="col-sm-2 col-form-label">Postal Code:</label>
         <div class="col-sm-7">
-            <input id="postalCode" name="postalCode" type="text" class="form-control form-control-sm" [(ngModel)]="garage.postalCode" required>
+            <input id="postalCode" name="postalCode" type="text" class="form-control form-control-sm" formControlName="postalCode" required>
         </div>
     </div>
+    
     <div class="form-group row mb-2">
-        <label for="phone" class="col-sm-2 col-form-label">phone:</label>
+        <label for="phone" class="col-sm-2 col-form-label">Phone:</label>
         <div class="col-sm-7">
-            <input id="phone" name="phone" type="text" class="form-control form-control-sm" [(ngModel)]="garage.phone" required>
+            <input id="phone" name="phone" type="text" class="form-control form-control-sm" formControlName="phone" required>
         </div>
     </div>
+    
     <div class="form-group row mb-2">
-        <label for="Email" class="col-sm-2 col-form-label">Email:</label>
+        <label for="email" class="col-sm-2 col-form-label">Email:</label>
         <div class="col-sm-7">
-            <input id="Email" name="Email" type="text" class="form-control form-control-sm" [(ngModel)]="garage.email" required>
+            <input id="email" name="email" type="text" class="form-control form-control-sm" formControlName="email" required>
         </div>
     </div>
+    
     <div class="form-group row mb-2">
-        <label for="Opening hours" class="col-sm-2 col-form-label">Opening hours:</label>
+        <label for="openingHours" class="col-sm-2 col-form-label">Opening Hours:</label>
         <div class="col-sm-7">
-            <input id="Opening hours" name="peningHours" type="text" class="form-control form-control-sm" [(ngModel)]="garage.openingHours" required>
+            <input id="openingHours" name="openingHours" type="text" class="form-control form-control-sm" formControlName="openingHours" required>
         </div>
     </div>
-   
-    <label>Update employee:</label>
-        <div *ngFor="let employee of garage.employees; let i = index" class="form-group col-sm-7 update-employee">
-            <br>
-            <h5>Employee {{ i +1 }}</h5>
-                <label for="employee-name">Name</label>
-                <input id="employee-name" name="employee-name" type="text" class="form-control form-control-sm"  [(ngModel)]="employee.name" required>
-                <label for="position">Position</label>
-                <input id="position" name="position" type="text" class="form-control form-control-sm"  [(ngModel)]="employee.position" required>
-                <label for="phone">phone</label>
-                <input id="phone" name="phone" type="text" class="form-control form-control-sm"  [(ngModel)]="employee.phone" required>
-                <label for="email">email</label>
-                <input id="email" name="email" type="text" class="form-control form-control-sm"  [(ngModel)]="employee.email" required>
-        
+    
+    <div class="form-group col-sm-7">
+        <label for="employees">Employees:</label>
+        <div formArrayName="employees">
+            <div *ngFor="let employee of employees.controls; let i = index" class="update-employee">
+                <h5>Employee {{ i + 1 }}</h5>
+                <div [formGroupName]="i">
+                    <label for="employee-name{{ i }}">Name:</label>
+                    <input id="employee-name{{ i }}" name="employee-name{{ i }}" type="text" class="form-control form-control-sm" formControlName="name" required>
+                    
+                    <label for="position{{ i }}">Position:</label>
+                    <input id="position{{ i }}" name="position{{ i }}" type="text" class="form-control form-control-sm" formControlName="position" required>
+                    
+                    <label for="phone{{ i }}">Phone:</label>
+                    <input id="phone{{ i }}" name="phone{{ i }}" type="text" class="form-control form-control-sm" formControlName="phone" required>
+                    
+                    <label for="email{{ i }}">Email:</label>
+                    <input id="email{{ i }}" name="email{{ i }}" type="text" class="form-control form-control-sm" formControlName="email" required>
+                </div>
+                <button type="button" class="btn btn-danger btn-sm" (click)="removeEmployee(i)">Remove</button>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary btn-sm mt-2" (click)="addEmployee()">Add Employee</button>
     </div>
+    
     <div class="form-group row mb-2">
         <label for="services" class="col-sm-2 col-form-label">Services:</label>
-        <div class="col-sm-7" >
-            <input id="services" name="services" type="text" class="form-control form-control-sm" [(ngModel)]="garage.servicesOffered" required>
+        <div class="col-sm-7">
+            <input id="services" name="services" type="text" class="form-control form-control-sm" formControlName="servicesOffered" required>
         </div>
     </div>
-    <button type="submit" class="btn btn-dark  mb-2">Modifier Garage</button>
+    
+    <button type="submit" class="btn btn-dark mb-2">Update Garage</button>
 </form>

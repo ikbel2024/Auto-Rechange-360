@@ -1,67 +1,100 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GarageService } from '../../services/garage.service';
 import { Appointment } from '../../model/appointment.model';
-import { Review } from '../../model/garage.model';
+import { Review, Garage } from '../../model/garage.model';
+
+
 
 @Component({
   selector: 'app-garage-details',
   templateUrl: './garage-details.component.html',
-  styleUrl: './garage-details.component.css'
+  styleUrls: ['./garage-details.component.css']
 })
-export class GarageDetailsComponent {
-failed:boolean = false;
+export class GarageDetailsComponent implements OnInit {
+  
+  
+  
+
+  failed: boolean = false;
   stars: number[] = [1, 2, 3, 4, 5];
-  id: any = '';
-  garage: any
- 
-  appointment:Appointment=
-  {
-    firstname : "",
-    lastname : "",
-    number: "",
-    serviceDesired: "",
-    timeSlot: ""
-  }
+  id: string = '';
+  garage!: Garage; // Utilisation de l'interface Garage pour le typage
+  garageId: string = '';
+
+  appointment: Appointment = {
+    clientName: '',
+    clientPhone: '',
+    appointmentDate: new Date(),
+    serviceRequired: '',
+    garage: '',
+    timeSlot: '',
+  };
   timeSlots: string[] = [];
 
-review:Review = {
-  _id: "",
-  user: "",
-comment: "",
-rating: 0
-}
+  review: Review = {
+    _id: '',
+    user: '',
+    comment: '',
+    rating: 0,
+    garage:''
 
-constructor(private activatedRoute : ActivatedRoute, private garageService : GarageService){}
+  };
 
-ngOnInit(): void {
-  this.activatedRoute.paramMap.subscribe(params => {
-    this.id = params.get('id');
-  });
-  this.garageService.getGarageByIdService(this.id).subscribe((data : any) => {
-    this.garage = data
-  });
-  this.timeSlots = this.garageService.getAvailableTimeSlots();
-}
-onSubmit() {
-  this.garageService.bookAppointmentService(this.appointment).subscribe(
-    response => {
-      console.log('Appointment posted successfully', response);
-    },
-    error => {
-      console.error('There was an error!', error);
-      this.failed = true;
-      
+  constructor(private activatedRoute: ActivatedRoute, private garageService: GarageService) {}
+
+  ngOnInit(): void {
+    
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.id = params.get('id')!;
+      this.loadGarageDetails(this.id);
+    });
+    this.timeSlots = this.garageService.getAvailableTimeSlots();
+  }
+  
+
+  loadGarageDetails(id: string): void {
+    this.garageService.getGarageById(id).subscribe(
+      (data: Garage) => {
+        this.garage = data;
+      },
+      error => {
+        console.error('Error fetching garage details:', error);
+      }
+    );
+  }
+
+  onSubmit(): void {
+    if (this.id) {
+      this.appointment.garage = this.id;
+      this.garageService.bookAppointment(this.id, this.appointment).subscribe(
+        response => {
+          console.log('Appointment posted successfully', response);
+        },
+        error => {
+          console.error('There was an error!', error);
+          this.failed = true;
+        }
+      );
+    } else {
+      console.error('Garage ID is missing.');
     }
-  )
-}
+  }
 
-addReview(){
-  this.garageService.addReviewService(this.review,this.garage._id);
-  /*.subscribe(
-    response => {
-      console.log('Review posted successfully', response);
+  addReview(): void {
+    if (this.garage && this.garage._id) {
+      this.review.garage = this.garage._id;
+      this.garageService.addReview(this.garage._id, this.review).subscribe(
+        response => {
+          console.log('Review posted successfully', response);
+          // Optionally, refresh the garage details or handle the response
+        },
+        error => {
+          console.error('Error adding review:', error);
+        }
+      );
+    } else {
+      console.error('Garage ID is missing.');
     }
-  )*/
-}
+  }
 }
