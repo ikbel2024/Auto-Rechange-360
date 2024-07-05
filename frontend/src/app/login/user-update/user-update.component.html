@@ -1,25 +1,24 @@
 <form [formGroup]="updateForm" (ngSubmit)="onSubmit()" class="update-form">
-    <div class="form-group">
-      <label for="nom">Nom:</label>
-      <input type="text" id="nom" formControlName="nom" required class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="prenom">Prénom:</label>
-      <input type="text" id="prenom" formControlName="prenom" required class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="adresse">Adresse:</label>
-      <input type="text" id="adresse" formControlName="adresse" class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="email">Email:</label>
-      <input type="email" id="email" formControlName="email" required class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="num_tel">Numéro de téléphone:</label>
-      <input type="text" id="num_tel" formControlName="num_tel" required class="form-control">
-    </div>
+  <div class="form-group">
+    <label for="nom">Nom:</label>
+    <input type="text" id="nom" formControlName="nom" required class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="prenom">Prénom:</label>
+    <input type="text" id="prenom" formControlName="prenom" required class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="adresse">Adresse:</label>
+    <input type="text" id="adresse" formControlName="adresse" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="email">Email:</label>
+    <input type="email" id="email" formControlName="email" required class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="num_tel">Numéro de téléphone:</label>
+    <input type="text" id="num_tel" formControlName="num_tel" required class="form-control">
+  </div>
   
-    <button type="submit" [disabled]="updateForm.invalid" class="btn-submit">Mettre à jour</button>
-  </form>
-  
+  <button type="submit" [disabled]="updateForm.invalid" class="btn-submit">Mettre à jour</button>
+</form>

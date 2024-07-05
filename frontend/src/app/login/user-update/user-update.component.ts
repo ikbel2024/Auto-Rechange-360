@@ -9,8 +9,9 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./user-update.component.css']
 })
 export class UserUpdateComponent implements OnInit {
-  @Input() user!: User; // Propriété d'entrée pour recevoir les données de l'utilisateur du composant parent
+  @Input() user!: User; // Propriété d'entrée pour l'utilisateur à modifier
   updateForm!: FormGroup;
+filteredUsers: any;
 
   constructor(private fb: FormBuilder, private userService: UserService) { }
 
@@ -19,7 +20,6 @@ export class UserUpdateComponent implements OnInit {
   }
 
   private initForm(): void {
-    // Initialise le formulaire avec les données de l'utilisateur actuel
     this.updateForm = this.fb.group({
       nom: [this.user.nom, Validators.required],
       prenom: [this.user.prenom, Validators.required],
@@ -31,35 +31,33 @@ export class UserUpdateComponent implements OnInit {
 
   onSubmit(): void {
     if (this.updateForm.valid) {
-      // Récupère les valeurs du formulaire
       const updatedUser: User = {
-        _id: this.user._id, // Assure de garder l'ID pour l'identification
+        _id: this.user._id,
         nom: this.updateForm.value.nom,
         prenom: this.updateForm.value.prenom,
         adresse: this.updateForm.value.adresse,
         email: this.updateForm.value.email,
         num_tel: this.updateForm.value.num_tel,
-        // Ajoutez d'autres champs d'utilisateur à mettre à jour ici
-        mot_de_passe: '', // Par exemple, si vous avez besoin de gérer un mot de passe
-        role: '', // Ou le rôle de l'utilisateur
-        isBanned: false, // Si l'utilisateur est banni ou non
-        isValidated: false, // Si l'utilisateur est validé ou non
-        loginCount: 0 // Le nombre de connexions de l'utilisateur
+        // Assurez-vous d'ajouter d'autres champs d'utilisateur à mettre à jour ici
+        mot_de_passe: '', // Exemple : gestion du mot de passe
+        role: '', // Exemple : rôle de l'utilisateur
+        isBanned: false, // Exemple : statut d'interdiction
+        isValidated: false, // Exemple : statut de validation
+        loginCount: 0 // Exemple : nombre de connexions
       };
 
-      // Appel du service pour mettre à jour l'utilisateur
       this.userService.updateUser(updatedUser).subscribe(
         (response) => {
           console.log('User updated successfully:', response);
-          // Gérez le succès : affichez un message ou redirigez
+          // Gérer le succès : afficher un message ou rediriger
         },
         (error) => {
           console.error('Error updating user:', error);
-          // Gérez l'erreur : affichez un message d'erreur
+          // Gérer l'erreur : afficher un message d'erreur
         }
       );
     } else {
-      // Gérez les erreurs de validation du formulaire si nécessaire
+      // Gérer les erreurs de validation du formulaire si nécessaire
     }
   }
 }
