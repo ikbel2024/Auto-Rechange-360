@@ -5,7 +5,7 @@
     <div class="col-md-6">
       <form #updateFormRef="ngForm" (ngSubmit)="updateVehicule(updateFormRef)" class="vehicle-form">
         <div class="form-group">
-          <label for="updateId">ID</label>
+          <label for="updateId">Internal code</label>
           <input type="text" class="form-control" id="updateId" [(ngModel)]="vehiculeToUpdate.id" name="id" required #id="ngModel">
           <div *ngIf="id.invalid && (id.dirty || id.touched)" class="alert alert-danger">
             <div *ngIf="id.errors?.['required']">ID est requis.</div>
