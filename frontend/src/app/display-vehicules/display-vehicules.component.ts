@@ -14,7 +14,9 @@ export class DisplayVehiculesComponent implements OnInit {
   vehicules: Vehicule[] = [];
   selectedVehicule: Vehicule | null = null;
   modeleSearchQuery: string = '';
-  filteredVehicules: Vehicule[] = []; // Nouvelle propriété pour les véhicules filtrés
+  filteredVehicules: Vehicule[] = []; 
+
+  vehiculeIdToView: string = '';
 
 
   constructor(private vehiculeService: VehiculeService) {}
