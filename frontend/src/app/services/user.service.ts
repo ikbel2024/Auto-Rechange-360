@@ -56,9 +56,11 @@ export class UserService {
     return this.http.get<User>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
   }
 
-  register(user: User): Observable<RegisterResponse> {
-    return this.http.post<RegisterResponse>(`${this.apiUrl}/register`, user);
-  }
+  // src/app/services/user.service.ts
+register(user: User): Observable<any> {
+  return this.http.post(`${this.apiUrl}/register`, user);
+}
+
 
   updateUser(user: User): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/users/${user._id}`, user);
@@ -134,5 +136,10 @@ getBannedUserStatistics(): Observable<any> {
 
 getUserRegistrationStatistics(): Observable<any> {
   return this.http.get<any>(`${this.apiUrl}/stats/registration`);
+}
+uploadProfilePhoto(userId: string, photo: File): Observable<any> {
+  const formData = new FormData();
+  formData.append('photo', photo);
+  return this.http.post(`${this.apiUrl}/upload-photo/${userId}`, formData);
 }
 }

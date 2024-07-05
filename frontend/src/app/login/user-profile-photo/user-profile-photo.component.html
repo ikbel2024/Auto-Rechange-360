@@ -1,0 +1,10 @@
+<div>
+    <h2>Télécharger une photo de profil</h2>
+    <form (ngSubmit)="uploadPhoto()">
+      <input type="file" (change)="onFileChange($event)">
+      <button type="submit">Télécharger</button>
+    </form>
+    <button (click)="finalizeRegistration()">Ignorer et finaliser l'inscription</button>
+    <div *ngIf="message" class="message">{{ message }}</div>
+  </div>
+  

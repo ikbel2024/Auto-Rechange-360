@@ -40,6 +40,7 @@ import { RequestResetPasswordComponent } from './login/requestresetpassword-form
 import { UserUpdateComponent } from './login/user-update/user-update.component';
 import { BannedUsersComponent } from './login/banned-users/banned-users.component';
 import { UserStatisticsComponent } from './login/user-statistics/user-statistics.component';
+import { UserProfilePhotoComponent } from './login/user-profile-photo/user-profile-photo.component';
 
 
 
@@ -78,6 +79,7 @@ import { UserStatisticsComponent } from './login/user-statistics/user-statistics
     BannedUsersComponent,
     UserStatisticsComponent,
     AdminWelcomeComponent,
+    UserProfilePhotoComponent,
     
   ],
   imports: [

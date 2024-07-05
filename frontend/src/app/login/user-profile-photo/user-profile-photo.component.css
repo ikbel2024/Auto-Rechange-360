@@ -1,0 +1,51 @@
+
+div {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 1em;
+  }
+  
+  h2 {
+    margin-bottom: 1em;
+  }
+  
+  form {
+    margin-bottom: 1em;
+  }
+  
+  input {
+    border: 1px solid #ccc;
+    padding: .5em;
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: .5em;
+    margin-bottom: 1em;
+  }
+  
+  button {
+    padding: 1em;
+    border: none;
+    border-radius: .5em;
+    background: #5cb85c;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    margin-right: .5em;
+  }
+  
+  button:hover {
+    background: #4cae4c;
+  }
+  
+  .message {
+    margin-top: 1em;
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 1em;
+    background: #dff0d8;
+    color: #3c763d;
+  }
+  
