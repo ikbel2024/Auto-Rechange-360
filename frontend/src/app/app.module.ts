@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -41,6 +41,11 @@ import { UserUpdateComponent } from './login/user-update/user-update.component';
 import { BannedUsersComponent } from './login/banned-users/banned-users.component';
 import { UserStatisticsComponent } from './login/user-statistics/user-statistics.component';
 import { UserProfilePhotoComponent } from './login/user-profile-photo/user-profile-photo.component';
+import { RecaptchaModule } from 'ng-recaptcha';
+import { UserProfileComponent  } from './login/user-profile/user-profile.component';
+
+
+
 
 
 
@@ -80,6 +85,8 @@ import { UserProfilePhotoComponent } from './login/user-profile-photo/user-profi
     UserStatisticsComponent,
     AdminWelcomeComponent,
     UserProfilePhotoComponent,
+    UserProfilePhotoComponent,
+    UserProfileComponent
     
   ],
   imports: [
@@ -88,8 +95,14 @@ import { UserProfilePhotoComponent } from './login/user-profile-photo/user-profi
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    RecaptchaModule,
+
+    
   ],
   providers: [],
   bootstrap: [AppComponent],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA  
+  ],
 })
 export class AppModule {}

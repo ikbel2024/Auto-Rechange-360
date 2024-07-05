@@ -24,6 +24,11 @@
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/register">S'inscrire</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/profile/{{ userId }}" *ngIf="userId">Profil</a>
+                </li>
+
+                
 
             </ul>
         </div>

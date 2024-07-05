@@ -31,6 +31,7 @@ import { BannedUsersComponent } from './login/banned-users/banned-users.componen
 import { UserStatisticsComponent } from './login/user-statistics/user-statistics.component';
 import { AdminWelcomeComponent } from './login/admin-form/admin-form.component';
 import { UserProfilePhotoComponent } from './login/user-profile-photo/user-profile-photo.component';
+import { UserProfileComponent } from './login/user-profile/user-profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -44,6 +45,8 @@ const routes: Routes = [
   { path: 'banned-users', component: BannedUsersComponent },
   { path: 'statistiques', component: UserStatisticsComponent },
   { path: 'user-profile-photo/:id', component: UserProfilePhotoComponent },
+  { path: 'profile/:id', component: UserProfileComponent },
+
 
 
 

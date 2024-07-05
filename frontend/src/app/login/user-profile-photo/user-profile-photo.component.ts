@@ -8,7 +8,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./user-profile-photo.component.css']
 })
 export class UserProfilePhotoComponent {
-  selectedPhoto: File | null = null;
+  selectedPhotoUrl: string | null = null;
   message: string | null = null;
   userId: string;
 
@@ -18,25 +18,44 @@ export class UserProfilePhotoComponent {
 
   onFileChange(event: any) {
     if (event.target.files.length > 0) {
-      this.selectedPhoto = event.target.files[0];
+      const file = event.target.files[0];
+      // Example of generating a URL from the file, adjust as per your needs
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.selectedPhotoUrl = reader.result as string;
+      };
     }
   }
 
   uploadPhoto() {
-    if (this.selectedPhoto) {
-      this.userService.uploadProfilePhoto(this.userId, this.selectedPhoto).subscribe(
+    if (this.selectedPhotoUrl) {
+      this.userService.uploadProfilePhoto(this.userId, this.selectedPhotoUrl).subscribe(
         () => {
-          this.message = 'Photo de profil téléchargée avec succès!';
-          this.router.navigate(['/profile', this.userId]);
+          // Show success message or animation
+          this.message = 'Inscription terminée avec succès! Redirection vers la page de connexion...';
+
+          // Redirect to login page after a delay (example: 3 seconds)
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 3000);
         },
         error => {
+          console.error('Erreur lors du téléchargement de la photo de profil :', error);
           this.message = 'Erreur lors du téléchargement de la photo de profil.';
         }
       );
     }
   }
-
   finalizeRegistration() {
-    this.router.navigate(['/profile', this.userId]);
+    this.router.navigate(['/login', this.userId]);
+  }
+
+  submitForm() {
+    if (this.selectedPhotoUrl) {
+      this.uploadPhoto();
+    } else {
+      this.message = 'Veuillez sélectionner une photo avant de soumettre le formulaire.';
+    }
   }
 }

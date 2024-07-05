@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { User } from '../model/user';
 import { RegisterResponse } from '../model/register-response.interface';
 import { AuthService } from './auth.service';
@@ -85,15 +85,10 @@ register(user: User): Observable<any> {
 
   
 
-  resetPassword(resetToken: string, password: string): Observable<void> {
-    console.log('Sending reset password request with token:', resetToken, 'and password:', password);
-    return this.http.post<void>(`${this.apiUrl}/resetpassword/${resetToken}`, { password }).pipe(
-      catchError((error: HttpErrorResponse) => {
-        console.error('Error resetting password:', error);
-        return throwError(error);
-      })
-    );
-}
+  resetPassword(token: string, newPassword: string) {
+    return this.http.post(`${this.apiUrl}/resetpassword/${token}`, { newPassword });
+  }
+
 
 banUser(userId: string): Observable<any> {
 
@@ -137,9 +132,28 @@ getBannedUserStatistics(): Observable<any> {
 getUserRegistrationStatistics(): Observable<any> {
   return this.http.get<any>(`${this.apiUrl}/stats/registration`);
 }
-uploadProfilePhoto(userId: string, photo: File): Observable<any> {
-  const formData = new FormData();
-  formData.append('photo', photo);
-  return this.http.post(`${this.apiUrl}/upload-photo/${userId}`, formData);
+getUserProfile(userId: string): Observable<any> {
+  return this.http.get(`${this.apiUrl}/users/${userId}`);
 }
+uploadProfilePhoto(userId: string, photoUrl: string): Observable<any> {
+  const body = { userId, photoUrl };
+  return this.http.post(`${this.apiUrl}/upload-profile-photo`, body);
+}
+getUserDetails(userId: string): Observable<any> {
+  return this.http.get<any>(`${this.apiUrl}/user/${userId}`).pipe(
+    catchError((error) => {
+      return throwError(error);
+    })
+  );
+}
+
+getUsersBanned(): Observable<User[]> {
+  // Appel à votre UserService pour récupérer uniquement les utilisateurs bannis
+  return this.getUsers().pipe(
+    map((users: User[]) => users.filter(user => user.isBanned))
+  );
+}
+
+
+
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-resetpass-form',
@@ -37,7 +38,7 @@ export class ResetpassFormComponent implements OnInit {
       return 'Password is required';
     }
     if (control?.hasError('minlength')) {
-      return 'Password must be at least 6 characters ';
+      return 'Password must be at least 6 characters long';
     }
     return '';
   }
@@ -49,17 +50,18 @@ export class ResetpassFormComponent implements OnInit {
 
   onSubmit(): void {
     if (this.resetPasswordForm.valid) {
-      const password = this.resetPasswordForm.value.password;
-      console.log('Submitting reset password form with token:', this.token, 'and password:',password);
+      const newPassword = this.resetPasswordForm.value.password;
 
-      this.userService.resetPassword(this.token,password).subscribe(
-        () => {
+      this.userService.resetPassword(this.token, newPassword).subscribe(
+        (response: any) => {
+          console.log('Password reset successful:', response.message);
           this.resetSuccessful = true;
-          this.router.navigate(['/login']); // Redirigez l'utilisateur vers la page de connexion après la réinitialisation
+          // Rediriger l'utilisateur vers la page de connexion après une réinitialisation réussie
+          this.router.navigate(['/login']);
         },
-        error => {
+        (error: HttpErrorResponse) => {
           console.error('Error resetting password:', error);
-          this.errorMessage = 'Error resetting password. Please try again.';
+          this.errorMessage = error.error || 'Error resetting password. Please try again.';
         }
       );
     }

@@ -1,11 +1,14 @@
-<form [formGroup]="resetPasswordForm" (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
-    <div class="form-group">
-      <label for="password">New Password</label>
-      <input id="password" formControlName="password" type="password" class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('password')}">
-      <div *ngIf="isFieldInvalid('password')" class="invalid-feedback">
-        {{ getPasswordErrorMessage() }}
-      </div>
+<form [formGroup]="resetPasswordForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="password">New Password:</label>
+    <input id="password" type="password" formControlName="password">
+    <div *ngIf="isFieldInvalid('password')">
+      <small *ngIf="resetPasswordForm.controls['password'].errors?.['required']">Password is required.</small>
+      <small *ngIf="resetPasswordForm.controls['password'].errors?.['minlength']">Password must be at least 6 characters long.</small>
     </div>
-    <button type="submit" class="btn btn-primary mt-3">Reset Password</button>
-  </form>
-  <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+  </div>
+  <button type="submit" [disabled]="resetPasswordForm.invalid">Reset Password</button>
+  <div *ngIf="errorMessage">
+    <small class="error">{{ errorMessage }}</small>
+  </div>
+</form>
