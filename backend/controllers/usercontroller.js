@@ -4,6 +4,9 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const { sendSMS } = require('../services/smsService');
+const multer = require('multer');
+const ProfilePhoto = require('../models/ProfilePhoto');
+
 
 // Register a new user
 exports.register = async (req, res) => {
@@ -16,13 +19,17 @@ exports.register = async (req, res) => {
 
   try {
     const user = new User({ nom, prenom, adresse, email, num_tel, mot_de_passe, role, matricule_fiscale });
-    await user.save();
+    const savedUser = await user.save();
     await user.sendValidationEmail();
-    res.status(201).json({ message: 'User registered successfully. Please check your email for verification link.' });
+    res.status(201).json({
+      message: 'User registered successfully. Please check your email for verification link.',
+      user: savedUser
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 // Login a user
 exports.login = async (req, res) => {
@@ -100,16 +107,39 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
-// Google OAuth callback
-exports.googleAuthCallback = async (req, res) => {
-  // Generate JWT for authenticated user
-  const payload = { id: req.user.id, role: req.user.role };
-  const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function(req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
 
-  res.json({ token });
-};
+const upload = multer({ storage: storage });
 
-exports.resetPassword = async (req, res) => {
+exports.uploadProfilePhoto = [
+  upload.single('photo'),
+  async (req, res) => {
+    try {
+      const { id } = req.params;
+      const photoUrl = `http://localhost:3000/uploads/${req.file.filename}`;
+
+      const profilePhoto = new ProfilePhoto({
+        userId: id,
+        photoUrl: photoUrl
+      });
+
+      await profilePhoto.save();
+      res.json({ message: 'Photo de profil ajoutée avec succès', photoUrl });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+];
+
+
+/*exports.resetPassword = async (req, res) => {
   const { num_tel, newPassword } = req.body;
   try {
     const user = await User.findOne({ num_tel });
@@ -125,7 +155,7 @@ exports.resetPassword = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
-};
+};*/
 
 exports.verifyEmail = async (req, res) => {
   const { token } = req.params;

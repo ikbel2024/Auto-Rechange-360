@@ -44,7 +44,7 @@ exports.register = async (req, res) => {
   }
 };
 
-exports.login = async (req, res) => {
+/*exports.login = async (req, res) => {
   const { email, mot_de_passe, role } = req.body;
 
   try {
@@ -70,4 +70,4 @@ exports.login = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-};
+};*/

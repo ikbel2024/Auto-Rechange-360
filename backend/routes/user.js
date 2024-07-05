@@ -6,6 +6,8 @@ const User = require('../models/user');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const bcrypt = require('bcrypt');
+const { OAuth2Client } = require('google-auth-library');
+
 
 const {
   register,
@@ -18,7 +20,8 @@ const {
   getUserStatsByRole,
   getUserLoginStats,
   getBannedUserStats,
-  getUserRegistrationStats
+  getUserRegistrationStats, 
+  uploadProfilePhoto
 
 } = require('../controllers/usercontroller');
 const authMiddleware = require('../middleware/authMiddleware');
@@ -46,7 +49,6 @@ router.post('/login', [
 
 // Google OAuth routes
 router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-router.get('/auth/google/callback', passport.authenticate('google', { session: false }), googleAuthCallback);
 
 // Get all users (admin only)
 router.get('/users', authMiddleware(['admin']), getAllUsers);
@@ -141,19 +143,9 @@ router.get('/validate/:token', async (req, res) => {
   }
 });
 
-router.post('/profile-photo', upload.single('profilePhoto'), async (req, res) => {
-  try {
-    const user = await User.findById(req.user._id);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-    // Now you can access user properties like user._id
-    // ... other code ...
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
+// Upload profile photo (any user)
+router.post('/upload-photo/:id', uploadProfilePhoto);
+
 
 router.put('/ban/:id', async (req, res) => {
   try {
@@ -256,8 +248,7 @@ router.post('/resetpassword/:token', async (req, res) => {
       return res.status(400).send('Password must be at least 6 characters long.');
     }
 
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-    user.mot_de_passe = hashedPassword;
+    user.mot_de_passe = newPassword;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
     await user.save();
@@ -268,6 +259,48 @@ router.post('/resetpassword/:token', async (req, res) => {
     res.status(500).send('Error resetting password.');
   }
 });
+const client = new OAuth2Client('622271200203-obvk96u36cm1ivhuvbjum2hpgj2h6pri.apps.googleusercontent.com');
 
+// Route to handle Google login
+router.post('/google-login', async (req, res) => {
+  const { token } = req.body;
+  const ticket = await client.verifyIdToken({
+    idToken: token,
+    audience: '622271200203-obvk96u36cm1ivhuvbjum2hpgj2h6pri.apps.googleusercontent.com',
+  });
+  const payload = ticket.getPayload();
+
+  let user = await User.findOne({ email: payload.email });
+
+  if (!user) {
+    user = new User({
+      email: payload.email,
+      googleId: payload.sub,
+      // Other fields can be filled later
+    });
+    await user.save();
+  }
+
+  res.json({ message: 'Google login successful', user });
+});
+
+// Route to update user information
+router.post('/update-user', async (req, res) => {
+  const { email, name, firstName, address, phoneNumber, fiscalNumber } = req.body;
+
+  try {
+    const user = await User.findOneAndUpdate(
+      { email },
+      {
+        $set: { name, firstName, address, phoneNumber, fiscalNumber }
+      },
+      { new: true }
+    );
+
+    res.json({ message: 'User information updated successfully', user });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
 module.exports = router;

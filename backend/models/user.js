@@ -28,7 +28,8 @@ const userSchema = new mongoose.Schema({
   validationTokenExpiry: { type: Date },
   profilePhotoUrl: { type: String },
   resetPasswordToken : { type: String }, 
-  resetPasswordExpires: { type: Date }
+  resetPasswordExpires: { type: Date },
+
 });
 
 userSchema.pre('save', async function(next) {
@@ -43,6 +44,7 @@ userSchema.methods.sendValidationEmail = async function() {
   const token = crypto.randomBytes(20).toString('hex');
   this.validationToken = token;
   this.validationTokenExpiry = Date.now() + 3600000; // 1 heure
+  this.isValidated = true ; 
 
   const mailOptions = {
     from: 'grakrem23@gmail.com',
