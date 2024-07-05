@@ -35,7 +35,6 @@ async function show(req, res, next) {
 }
 
 
-// Function to delete a Vehicule
 async function deleteVehicule(req, res, next) {
     try {
         console.log(`Attempting to delete vehicle with ID: ${req.params.id}`);
@@ -47,9 +46,7 @@ async function deleteVehicule(req, res, next) {
         }
     } catch (err) {
         console.error(err);
-        if (!res.headersSent) {
-            res.status(500).send("Erreur interne du serveur");
-        }
+        res.status(500).send("Erreur interne du serveur");
     }
 }
 
