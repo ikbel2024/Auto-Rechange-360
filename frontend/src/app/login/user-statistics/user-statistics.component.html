@@ -1,0 +1,41 @@
+<div class="panel">
+  <div class="panel-heading">
+    <h2 class="title">
+      <i class="fas fa-chart-pie"></i>
+      User Statistics
+    </h2>
+  </div>
+  <div class="panel-body">
+    <div class="stat-section">
+      <h3>Statistics by Roles</h3>
+      <ul class="stat-list">
+        <li *ngFor="let stat of roleStats" class="stat-item">
+          <span class="stat-label">{{ stat._id }}</span>
+          <span class="stat-value">{{ stat.count }}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="stat-section">
+      <h3>User Login Statistics</h3>
+      <ul class="stat-list">
+        <li *ngFor="let stat of loginStats" class="stat-item">
+          <span class="stat-label">{{ stat._id }}</span>
+          <span class="stat-value">{{ stat.loginCount }}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="stat-section">
+      <h3>Number of Banned Users</h3>
+      <p class="banned-user-count">{{ bannedUserCount }}</p>
+    </div>
+    <div class="stat-section">
+      <h3>Registration Statistics per Month</h3>
+      <ul class="stat-list">
+        <li *ngFor="let stat of registrationStats" class="stat-item">
+          <span class="stat-label">{{ getMonthName(stat._id) }}</span>
+          <span class="stat-value">{{ stat.count }}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

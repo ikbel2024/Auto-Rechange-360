@@ -1,0 +1,14 @@
+<form [formGroup]="resetPasswordForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="password">New Password:</label>
+    <input id="password" type="password" formControlName="password">
+    <div *ngIf="isFieldInvalid('password')">
+      <small *ngIf="resetPasswordForm.controls['password'].errors?.['required']">Password is required.</small>
+      <small *ngIf="resetPasswordForm.controls['password'].errors?.['minlength']">Password must be at least 6 characters long.</small>
+    </div>
+  </div>
+  <button type="submit" [disabled]="resetPasswordForm.invalid">Reset Password</button>
+  <div *ngIf="errorMessage">
+    <small class="error">{{ errorMessage }}</small>
+  </div>
+</form>

@@ -1,0 +1,78 @@
+<nav class="navbar">
+  <div class="navbar-inner">
+    <div class="navbar-left">
+      <button class="btn-navbar" routerLink="/banned-users">Banned Users</button>
+      <button class="btn-navbar" (click)="filterUsers('new')">New Users</button>
+      <button class="btn-navbar" routerLink="/statistiques">Statistics</button>
+    </div>
+    <div class="navbar-right">
+      <form (ngSubmit)="onSearch()" class="search-form">
+        <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="searchTerm" name="searchTerm">
+        <button type="submit" class="btn-search">
+          <i class="fas fa-search"></i> Search
+        </button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+<div class="panel">
+  <div class="panel-heading">
+    <h2 class="title">
+      <i class="fas fa-users"></i>
+      Users List
+    </h2>
+  </div>
+  <div class="panel-body">
+    <!-- Your existing table -->
+    <table class="table">
+      <!-- Table headers -->
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>First Name</th>
+          <th>Address</th>
+          <th>Email</th>
+          <th>Phone Number</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <!-- Table body -->
+      <tbody>
+        <tr *ngFor="let user of filteredUsers">
+          <td>{{ user.nom }}</td>
+          <td>{{ user.prenom }}</td>
+          <td>{{ user.adresse }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.num_tel }}</td>
+          <td>{{ user.role }}</td>
+          <td>
+            <ul class="action-list">
+              <!-- Actions for each user -->
+              <li><a [routerLink]="['/user/update', user._id]" class="btn-update" data-tip="Update">Update</a></li>
+              <li><a (click)="deleteUser(user)" class="btn-delete" data-tip="Delete">Delete</a></li>
+              <li><a (click)="banUser(user)" class="btn-ban" data-tip="Ban">Ban</a></li>
+            </ul>
+          </td>
+        </tr>
+        <!-- Message if no users found -->
+        <tr *ngIf="filteredUsers.length === 0">
+          <td colspan="7" class="text-center">No users found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="panel-footer">
+    <!-- Footer with total number of users -->
+    <div class="col">Total Users: {{ users.length }}</div>
+    <!-- Pagination -->
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+    </ul>
+  </div>
+</div>
+

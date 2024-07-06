@@ -1,0 +1,13 @@
+<div class="row">
+  <h2 align="center">Vehicles in our garages</h2>
+  <hr class="hr-animated">
+  <div class="col-lg-3 col-md-4 col-sm-6 mb-4" *ngFor="let vehicule of vehicules">
+    <div class="card h-100 card-background"> 
+      <div class="card-body">
+        <h5 class="card-title">Model : {{ vehicule.modele }}</h5>
+        <p class="card-text">Color : {{ vehicule.couleur }}</p>
+        <p class="card-text">Energy : {{ vehicule.energie }}</p>
+      </div>
+    </div>
+  </div>
+</div>

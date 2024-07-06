@@ -1,0 +1,60 @@
+.panel {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 20px;
+  padding: 15px;
+  background-color: #fff;
+}
+
+.panel-heading {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+}
+
+.title {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.stat-section {
+  margin-bottom: 20px;
+}
+
+.stat-section h3 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.stat-list {
+  list-style: none;
+  padding: 0;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+}
+
+.stat-label {
+  font-weight: bold;
+}
+
+.stat-value {
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 20px;
+  padding: 5px 10px;
+}
+
+.banned-user-count {
+  font-size: 1.5em;
+  color: #dc3545;
+  font-weight: bold;
+}

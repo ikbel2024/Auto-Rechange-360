@@ -1,0 +1,135 @@
+.table-responsive {
+  margin: 20px 0;
+}
+
+.btn {
+  margin-right: 5px;
+}
+
+.btn-primary {
+  background-color: navy;
+  border-color: navy;
+}
+
+.btn-danger {
+  background-color: gray;
+  border-color: gray;
+}
+
+.btn i {
+  margin-right: 5px;
+}
+
+h2 {
+  color: #333;
+}
+
+.table {
+  margin-top: 20px;
+}
+
+.btn-edit {
+  background-color: navy;
+  color: white;
+}
+
+.btn-delete {
+  background-color: lightgray;
+  color: black;
+}
+
+.btn-delete:hover {
+  background-color: red;
+  color: white;
+}.vehicle-form-container {
+  background-color: #f0f0f0; /* Couleur d'arrière-plan */
+  padding: 20px; /* Espacement intérieur */
+  text-align: center; /* Centrer le contenu */
+}
+
+.form-title {
+  text-align: left; /* Aligner le titre à gauche */
+  animation: none; /* Désactiver l'animation par défaut */
+}
+
+.flashing {
+  animation: blink 1s infinite; /* Animation de clignotement */
+}
+
+@keyframes blink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+
+.vehicle-form {
+  margin: 0 auto; /* Centrer le formulaire */
+  max-width: 400px; /* Largeur maximale du formulaire */
+}
+
+.vehicle-form .form-group {
+  text-align: left; /* Aligner le texte des labels à gauche */
+}
+.vehicle-form .form-group .form-control {
+  width: 100%; /* Occupera toute la largeur disponible */
+}
+
+.alert {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+.hr-animated {
+  width: 100%;
+  height: 2px;
+  background-color: #007bff; /* Couleur de votre choix */
+  margin-top: 20px; /* Espacement par rapport au formulaire */
+  animation: grow 1s ease-in-out infinite alternate; /* Animation nommée 'grow' avec durée 1 seconde */
+}
+
+@keyframes grow {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+.btn-primary {
+  background-color: #343a40; /* Gris foncé */
+  border-color: #343a40; /* Gris foncé */
+}
+
+.btn-primary:hover {
+  background-color: #23272b; /* Une teinte légèrement plus foncée pour le hover */
+  border-color: #23272b; /* Une teinte légèrement plus foncée pour le hover */
+}
+
+
+.animated-image {
+  max-width: 100%; /* Adapter la taille de l'image selon les besoins */
+  height: auto; /* Ajuster la hauteur en fonction de l'image */
+  animation: slide-in 1s ease-in-out infinite alternate; /* Animation nommée 'slide-in' */
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(-50px); /* Déplacement initial vers la gauche */
+  }
+  to {
+    transform: translateX(0); /* Retour à la position initiale */
+  }
+}

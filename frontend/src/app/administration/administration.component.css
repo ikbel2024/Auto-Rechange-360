@@ -1,0 +1,246 @@
+/* General Styles */
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: bold;
+}
+
+.navbar-brand {
+    font-size: 24px;
+}
+
+.navbar-nav .nav-link {
+    font-size: 18px;
+    margin-right: 20px;
+    color: #090808;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.navbar-nav .nav-link.active {
+    color: #00555A;
+}
+
+
+/* Navbar */
+
+.navbar {
+    background-color: #007bff;
+    padding: 10px 0;
+}
+
+
+/* Card Styles */
+
+.card {
+    margin-bottom: 20px;
+    border: 1px solid #525050;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: #00555A;
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px 8px 0 0;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.card-text {
+    color: #666;
+}
+
+.col-md-6 .card {
+    min-height: 200px;
+}
+
+
+/* Welcome Message */
+
+.welcome-message {
+    font-size: 20px;
+    font-style: italic;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+
+/* Feature Cards */
+
+.feature-card {
+    text-align: center;
+}
+
+.feature-card h5 {
+    font-size: 18px;
+}
+
+.feature-container {
+    display: flex;
+    align-items: center;
+}
+
+.feature-content {
+    margin-right: 20px;
+}
+
+.feature-image {
+    width: 70px;
+    height: auto;
+    margin-left: 10px;
+}
+
+
+/* Timeline */
+
+.timeline-item-marker-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.activity-time {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 1px;
+}
+
+
+/* Progress Tracker */
+
+.progress-label {
+    font-weight: bold;
+}
+
+
+/* Form controls styling */
+
+.form-control {
+    border-radius: 0.25rem;
+}
+
+
+/* Button styling */
+
+.btn-info {
+    background-color: #00555A;
+    border-color: #00555A;
+    color: #ffffff;
+}
+
+.btn-info:hover {
+    background-color: #003b3f;
+    border-color: #003b3f;
+}
+
+.btn-secondary {
+    background-color: #666;
+    border-color: #666;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: #444;
+    border-color: #444;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+
+/* Layout styling */
+
+.layout {
+    display: flex;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+
+/* Sidebar styling */
+
+.sidebar {
+    width: 280px;
+    background-color: #f8f9fa;
+    padding: 50px;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+
+/* Content area styling */
+
+.content {
+    margin-left: 20px;
+    padding: 20px;
+    flex-grow: 1;
+}
+
+
+/* Admin buttons styling */
+
+.admin-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+/* Navbar styling */
+
+app-navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.welcome-message {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+
+/* Animations */
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.animated.infinite.pulse {
+    animation: pulse 2s infinite;
+}

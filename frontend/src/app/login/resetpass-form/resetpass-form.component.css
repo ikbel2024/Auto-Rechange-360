@@ -1,0 +1,57 @@
+.reset-password-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .reset-password-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .reset-password-form label {
+    font-weight: bold;
+  }
+  
+  .reset-password-form input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .reset-password-form button[type="submit"] {
+    display: block;
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+  }
+  
+  .reset-password-form button[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  
+  .error-message {
+    color: #f44336;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
+  .success-message {
+    color: #4CAF50;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  

@@ -1,0 +1,42 @@
+<div class="container-fluid product-detail-container">
+    <div class="row align-items-center">
+        <!-- Left Column: Product Image -->
+        <div class="col-md-6">
+            <div class="product-image">
+                <img [src]="'http://localhost:3000/' + product.image" class="img-fluid rounded shadow-lg" alt="{{ product.name }}">
+            </div>
+        </div>
+
+        <!-- Right Column: Product Details -->
+        <div class="col-md-6">
+            <div class="row mt-4">
+                <div class="col text-center">
+                    <h2 class="welcome-title">Find Parts for Your Vehicle</h2>
+                    <p class="welcome-text">Discover personalized parts for your vehicle.</p>
+                </div>
+            </div>
+
+
+            <div class="product-details">
+                <h2 class="product-title">{{ product.name }}</h2>
+                <hr class="my-4">
+                <div class="details-section">
+                    <p><strong>Référence:</strong> {{ product.reference }}</p>
+                    <p><strong>Price:</strong> {{ product.price }}</p>
+                    <p><strong>Category:</strong> {{ product.category }}</p>
+                    <p><strong>Date Added:</strong> {{ product.dateAdded | date:'dd-MM-yyyy'}}</p>
+                </div>
+                <div class="description-section">
+                    <h4>Description:</h4>
+                    <p>{{ product.description }}</p>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="product-actions mt-4">
+                <button class="btn btn-success me-3" (click)="buyNow()">Buy Now</button>
+                <button class="btn btn-outline-primary" (click)="goBack()">Back</button>
+            </div>
+        </div>
+    </div>
+</div>

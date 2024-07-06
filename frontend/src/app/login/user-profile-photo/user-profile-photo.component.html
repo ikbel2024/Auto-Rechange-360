@@ -1,0 +1,24 @@
+<div class="container mt-5">
+  <div class="card shadow-sm">
+    <div class="card-header">
+      <h2 class="mb-0 title">Upload a Profile Photo</h2>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="submitForm()" #registrationForm="ngForm" class="mb-3">
+        <div class="form-group">
+          <label for="profilePhoto" class="form-label">Upload a Profile Photo</label>
+          <input type="file" id="profilePhoto" (change)="onFileChange($event)" class="form-control-file" required>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid">Download</button>
+        <button type="button" class="btn btn-secondary ml-2" (click)="finalizeRegistration()">Skip and Complete Registration</button>
+      </form>
+
+      <div *ngIf="selectedPhotoUrl" class="photo-preview mt-4">
+        <h3 class="photo-title">Photo Preview:</h3>
+        <img [src]="selectedPhotoUrl" alt="Profile Photo Preview" class="photo-frame img-thumbnail">
+      </div>
+
+      <div *ngIf="message" class="alert alert-info mt-3">{{ message }}</div>
+    </div>
+  </div>
+</div>

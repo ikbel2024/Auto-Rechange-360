@@ -1,0 +1,63 @@
+/* Custom Styles */
+
+.navbar-custom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar-collapse {
+    flex-grow: 0;
+}
+
+.navbar-brand {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-inline {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-inline .form-control {
+    width: 300px;
+    /* Adjust width as needed */
+}
+
+.footer {
+    background-color: #343a40;
+    /* Same color as navbar-dark bg-dark */
+    color: white;
+    padding: 20px 0;
+}
+
+.footer .footer-section-title {
+    color: #ffffff;
+}
+
+.footer .footer-section-links a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.footer .footer-section-links a:hover {
+    text-decoration: underline;
+}
+
+.footer .contact-info p {
+    color: #ffffff;
+}
+
+.footer-section-social {
+    color: #ffffff;
+}
+
+.feature-image {
+    width: 40px;
+    /* Set the desired width */
+    height: auto;
+    /* Maintain aspect ratio */
+    margin-left: 10px;
+    /* Adjust margin as needed */
+}

@@ -1,0 +1,78 @@
+<!--________________________________display-vehicules.component.html________________________________________-->
+<div class="container mt-4 vehicle-form-container">
+
+<div class="search-container container mt-4 bg-light p-3">
+  <h2 class="mb-4">Vehicle Search</h2>
+
+  <hr class="hr-animated">
+
+  <form class="form-inline mb-4">
+    <div class="form-group">
+      <label for="modeleSearch">Model :</label>
+      <input type="text" class="form-control mx-sm-3" id="modeleSearch" name="modeleSearch" [(ngModel)]="modeleSearchQuery">
+    </div>
+    <button type="button" class="btn btn-primary ml-2" (click)="searchByModele()">
+      <i class="fas fa-search"></i>
+    </button>
+  </form>
+  <hr class="horizontal-line">
+</div>
+
+
+<!--_______________________________Afficher le résultat de la recherche par modèle__________________________-->
+
+<div *ngIf="filteredVehicules.length > 0">
+  <h2>Search Results by Model "{{ modeleSearchQuery }}"</h2>
+
+  <hr class="hr-animated">
+
+  <div class="row">
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4" *ngFor="let vehicule of filteredVehicules">
+      <div class="card h-100 card-background">
+        <div class="card-body">
+          <h5 class="card-title">Model : {{ vehicule.modele }}</h5>
+          <p class="card-text">Color : {{ vehicule.couleur }}</p>
+          <p class="card-text">Energy : {{ vehicule.energie }}</p>
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+          <a [routerLink]="['/update-vehicule', vehicule.id]" class="btn btn-edit">
+            <i class="fas fa-edit"></i>
+          </a>
+          <button type="button" class="btn btn-danger btn-delete" (click)="deleteVehicule(vehicule.id)">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--_________________________________________Liste des véhicules_____________________________________-->
+<div class="container mt-4 bg-light p-3 ">
+  <h2>List of Vehicles</h2>
+
+  <hr class="hr-animated">
+
+
+  <div class="row">
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4" *ngFor="let vehicule of vehicules">
+      <div class="card h-100 card-background">
+        <div class="card-body">
+          <h5 class="card-title">Model : {{ vehicule.modele }}</h5>
+          <p class="card-text">Color  : {{ vehicule.couleur }}</p>
+          <p class="card-text">Energy : {{ vehicule.energie }}</p>
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+          <a [routerLink]="['/update-vehicule', vehicule.id]" class="btn btn-edit">
+            <i class="fas fa-edit"></i>
+          </a>
+          <button type="button" class="btn btn-danger btn-delete" (click)="deleteVehicule(vehicule.id)">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
