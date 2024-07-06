@@ -5,6 +5,7 @@ import { GarageDetailsComponent } from './garage/garage-details/garage-details.c
 import { GarageUpdateComponent } from './garage/garage-update/garage-update.component';
 import { AddGarageComponent } from './garage/add-garage/add-garage.component';
 import { StatisticsComponent } from './garage/statistics/statistics.component';
+import { GarageCategoryComponent } from './garage-category/garage-category.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,8 @@ const routes: Routes = [
   { path: 'delete/:id', component: GarageComponent },
   
   { path: 'statistics', component: StatisticsComponent },
+  { path: 'garagecategory', component: GarageCategoryComponent },
+  
   { path: '', redirectTo: '/garage', pathMatch: 'full' } // Redirect to garage as default
 ];
 

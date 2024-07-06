@@ -82,10 +82,13 @@ export class GarageService {
     
     
   }
+
   initiateStripePayment(montant: number, token: string): Observable<any> {
     return this.http.post(`${this.BASE_URL}/paiement`, { montant, token });
   }
-}
+
+  }
+
   
 
   

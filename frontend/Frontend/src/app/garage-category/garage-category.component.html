@@ -1,1 +1,167 @@
-<p>garage-category works!</p>
+<div class="container">
+    <h2>Liste des Catégories de Garage</h2>
+  
+    <!-- Tableau pour afficher les catégories de garage -->
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Spécialisation</th>
+          <th>Services Offerts</th>
+          <th>Taille</th>
+          <th>Équipements</th>
+          <th>Certifications</th>
+          <th>Politique de Prix</th>
+          <th>Relations Client</th>
+          <th>Adresse</th>
+          <th>Ville</th>
+          <th>Code Postal</th>
+          <th>Latitude</th>
+          <th>Longitude</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Boucle sur toutes les catégories de garage -->
+        <tr *ngFor="let category of garageCategories">
+          <td>{{ category.name }}</td>
+          <td>{{ category.specialization }}</td>
+          <td>
+            <ul>
+              <li *ngFor="let service of category.servicesOffered">{{ service }}</li>
+            </ul>
+          </td>
+          <td>{{ category.size }}</td>
+          <td>
+            <ul>
+              <li *ngFor="let equipment of category.equipment">{{ equipment }}</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li *ngFor="let certification of category.certifications">{{ certification }}</li>
+            </ul>
+          </td>
+          <td>{{ category.pricingPolicy }}</td>
+          <td>{{ category.customerRelations }}</td>
+          <td>{{ category.address }}</td>
+          <td>{{ category.city }}</td>
+          <td>{{ category.postalCode }}</td>
+          <td>{{ category.location.coordinates[1] }}</td>
+          <td>{{ category.location.coordinates[0] }}</td>
+          <td>
+            <!-- Boutons pour les actions -->
+            <button class="btn btn-warning btn-sm" (click)="editCategory(category)">Modifier</button>
+            <button class="btn btn-danger btn-sm" (click)="deleteCategory(category._id)">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Formulaire pour ajouter une nouvelle catégorie de garage -->
+    <div class="card">
+        <div class="card-header">
+          Ajouter une nouvelle catégorie de garage
+        </div>
+        <div class="card-body">
+          <form [formGroup]="garageCategoryForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="name">Nom:</label>
+              <input type="text" class="form-control" id="name" formControlName="name" required>
+            </div>
+            <div class="form-group">
+              <label for="specialization">Spécialisation:</label>
+              <input type="text" class="form-control" id="specialization" formControlName="specialization" required>
+            </div>
+            <div class="form-group">
+              <label for="servicesOffered">Services Offerts (séparés par des virgules):</label>
+              <input type="text" class="form-control" id="servicesOffered" [(ngModel)]="servicesString">
+            </div>
+            <div class="form-group">
+              <label for="size">Taille:</label>
+              <select class="form-control" id="size" formControlName="size">
+                <option value="Small">Petit</option>
+                <option value="Medium">Moyen</option>
+                <option value="Large">Grand</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="equipment">Équipements (séparés par des virgules):</label>
+              <input type="text" class="form-control" id="equipment" [(ngModel)]="equipmentsString">
+            </div>
+            <div class="form-group">
+              <label for="certifications">Certifications (séparées par des virgules):</label>
+              <input type="text" class="form-control" id="certifications" [(ngModel)]="certificationsString">
+            </div>
+            <div class="form-group">
+              <label for="pricingPolicy">Politique de Prix:</label>
+              <select class="form-control" id="pricingPolicy" formControlName="pricingPolicy">
+                <option value="Premium">Premium</option>
+                <option value="Competitive">Compétitif</option>
+                <option value="Budget">Budget</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="customerRelations">Relations Client:</label>
+              <select class="form-control" id="customerRelations" formControlName="customerRelations">
+                <option value="Personalized">Personnalisée</option>
+                <option value="Efficient">Efficace</option>
+                <option value="Balanced">Équilibrée</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="address">Adresse:</label>
+              <input type="text" class="form-control" id="address" formControlName="address">
+            </div>
+            <div class="form-group">
+              <label for="city">Ville:</label>
+              <input type="text" class="form-control" id="city" formControlName="city">
+            </div>
+            <div class="form-group">
+              <label for="postalCode">Code Postal:</label>
+              <input type="text" class="form-control" id="postalCode" formControlName="postalCode">
+            </div>
+            <div class="form-group">
+              <label for="latitude">Latitude:</label>
+              <input type="text" class="form-control" id="latitude" formControlName="latitude" required>
+            </div>
+            <div class="form-group">
+              <label for="longitude">Longitude:</label>
+              <input type="text" class="form-control" id="longitude" formControlName="longitude" required>
+            </div>
+            <button type="submit" class="btn btn-primary">{{ submitButtonText }}</button>
+            <button type="button" class="btn btn-secondary" (click)="resetForm()">Annuler</button>
+          </form>
+        </div>
+      </div>
+      
+  
+    <!-- Formulaire pour rechercher des catégories de garage à proximité -->
+    <div class="card mt-4">
+      <div class="card-header">
+        Rechercher des catégories de garage à proximité
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="findNearbyCategories()">
+          <div class="form-group">
+            <label for="nearbyLatitude">Latitude:</label>
+            <input type="text" class="form-control" id="nearbyLatitude" name="nearbyLatitude" [(ngModel)]="nearbyForm.value.latitude" required>
+          </div>
+          <div class="form-group">
+            <label for="nearbyLongitude">Longitude:</label>
+            <input type="text" class="form-control" id="nearbyLongitude" name="nearbyLongitude" [(ngModel)]="nearbyForm.value.longitude" required>
+          </div>
+          <div class="form-group">
+            <label for="distance">Distance (en km):</label>
+            <input type="text" class="form-control" id="distance" name="distance" [(ngModel)]="nearbyForm.value.distance" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Rechercher</button>
+        </form>
+      </div>
+    </div>
+  
+    <div *ngIf="!isEditing" class="alert alert-info mt-3">
+      Sélectionnez une catégorie pour la modifier ou la supprimer.
+    </div>
+  </div>
+  
