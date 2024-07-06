@@ -3,8 +3,8 @@ var mongo = require('mongoose');
 
  const Schema = mongo.Schema;
  const Comment= new Schema({
-        idpost : Number,
-        iduser : Number,
+        idpost : String,
+        iduser : String,
         comment : String,
         likes : Number,
         dislikes : Number,

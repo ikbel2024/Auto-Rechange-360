@@ -4,10 +4,10 @@ var mongo = require('mongoose');
 
  const Schema = mongo.Schema;
  const Respond= new Schema({
-        idpost : Number,
-        idcomment : Number,
-        idrespond : Number,
-        iduser : Number,
+        idpost : String,
+        idcomment : String,
+        idrespond : String,
+        iduser : String,
         respond : String,
         likes : Number,
         dislikes : Number,

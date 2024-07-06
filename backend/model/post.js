@@ -4,7 +4,7 @@ var mongo = require('mongoose');
 
  const Schema = mongo.Schema;
  const Post= new Schema({
-        iduser : Number,
+        iduser : String,
         name : String,
         post : String,
         likes : Number,
