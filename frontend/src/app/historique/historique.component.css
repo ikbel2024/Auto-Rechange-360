@@ -1,0 +1,170 @@
+/* Styles communs */
+.table-responsive {
+  margin: 20px 0;
+}
+
+.btn {
+  margin-right: 5px;
+}
+
+.btn-primary {
+  background-color: navy;
+  border-color: navy;
+}
+
+.btn-danger {
+  background-color: gray;
+  border-color: gray;
+}
+
+.btn i {
+  margin-right: 5px;
+}
+
+h2 {
+  color: #333;
+}
+
+/* Styles spécifiques à historique.component.css */
+
+/* Container pour formulaire et liste d'historiques */
+.container {
+  margin-top: 20px;
+}
+
+.vehicle-form-container {
+  background-color: #f0f0f0;
+  padding: 20px;
+  text-align: center;
+}
+
+.add-historique-form {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.btn-container {
+  margin-top: 10px;
+}
+
+.historiques-list {
+  margin-bottom: 20px;
+}
+
+.historique-item {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.alert {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+
+.hr-animated {
+  width: 100%;
+  height: 2px;
+  background-color: #007bff;
+  margin-top: 20px;
+  animation: grow 1s ease-in-out infinite alternate;
+}
+
+.matricule-form,
+.historique-id-form {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.matricule-form label,
+.historique-id-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.matricule-form input,
+.historique-id-form input {
+  width: calc(100% - 110px);
+  margin-right: 10px;
+}
+
+/* Animation de croissance pour hr-animated */
+@keyframes grow {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+
+/*_________________Affichage d'historiques d'entretiens________________*/
+.card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+  padding: 15px;
+}
+
+.alert {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+/*________________________suite du css pour affichage des tickets avec danger____________________ */
+.card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+  padding: 15px;
+}
+
+.alert {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.hr-animated {
+  width: 100%;
+  height: 2px;
+  background-color: #007bff;
+  margin-top: 20px;
+  animation: grow 1s ease-in-out infinite alternate;
+}
+
+@keyframes grow {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+

@@ -1,0 +1,96 @@
+<div class="container-fluid">
+    <!-- Welcome Message with Animation -->
+    <div class="row mt-4">
+        <div class="col-md-12 text-center">
+            <p class="welcome-message animated infinite pulse">
+                Welcome to the Admin Controller Center - Simplify business, manage products and categories effortlessly.
+            </p>
+        </div>
+    </div>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <div class="container">
+            <!-- Toggler button for responsive collapse -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/administration">
+                            <i class="fas fa-chart-line me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ShowProucts">
+                            <i class="fas fa-box-open me-1"></i>Products
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ShowCategorie">
+                            <i class="fas fa-cubes me-1"></i>Stocks
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="row">
+        <div class="col-md-3">
+            <!-- Sidebar with Admin Panel Buttons -->
+            <div class="sidebar">
+                <div class="admin-buttons">
+                    <button class="btn btn-dark btn-block mb-2" routerLink="/AddCategorie">Add Category</button>
+                    <button class="btn btn-dark btn-block mb-2" routerLink="/ShowCategorie">Show Category</button>
+                    <button class="btn btn-dark btn-block mb-2" routerLink="/SearchCategorie">Search Category</button>
+                    <button class="btn btn-dark btn-block mb-2" routerLink="/CountCategorie">Count Category</button>
+                </div>
+                <!-- Back Button -->
+                <button class="btn btn-dark btn-secondary mt-3" (click)="goBack()">Back to Dashboard</button>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <!-- Search Categories Section -->
+            <div class="content">
+                <h2 class="mb-4">Search Categories</h2>
+
+                <!-- Search Input and Button -->
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="searchTerm" (input)="search()">
+                    <button class="btn btn-outline-dark" type="button" (click)="search()">Search</button>
+                </div>
+
+                <!-- Table to Display Categories -->
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Reference</th>
+                                <th>Product ID</th>
+                                <th>Quantity</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let categorie of searchResults">
+                                <td>{{ categorie._id }}</td>
+                                <td>{{ categorie.name }}</td>
+                                <td>{{ categorie.reference }}</td>
+                                <td>{{ categorie.productId }}</td>
+                                <td>{{ categorie.quantity }}</td>
+                                <td>{{ categorie.description }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
