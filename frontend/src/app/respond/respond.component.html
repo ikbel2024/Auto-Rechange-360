@@ -1,0 +1,17 @@
+<div>
+    <h4>Responses</h4>
+    <form (ngSubmit)="addRespond()">
+      <div>
+        <label for="respondContent">Respond:</label>
+        <textarea id="respondContent" name="respondContent" [(ngModel)]="newRespond.respond" required></textarea>
+      </div>
+      <button type="submit">Add Respond</button>
+    </form>
+  
+    <div *ngFor="let respond of responds">
+      <p>{{ respond.respond }}</p>
+      <p>Likes: {{ respond.likes }}</p>
+      <p>Dislikes: {{ respond.dislikes }}</p>
+    </div>
+  </div>
+  

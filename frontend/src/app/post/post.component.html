@@ -1,0 +1,98 @@
+<div class="post-form">
+  <h2>Add a New Post</h2>
+  <form (ngSubmit)="addPost()" #postForm="ngForm">
+    <div>
+      <label for="name">Name:</label>
+      <input type="text" id="name" [(ngModel)]="newPost.name" name="name" required #name="ngModel">
+      <div *ngIf="name.errors?.['required']" class="error-message">
+        <div *ngIf="name.errors?.['required']">Name is required.</div>
+      </div>
+    </div>
+    <div>
+      <label for="post">Post:</label>
+      <textarea id="post" [(ngModel)]="newPost.post" name="post" required #post="ngModel"></textarea>
+      <div *ngIf="post.errors?.['required']" class="error-message">
+        <div *ngIf="post.errors?.['required']">Post is required.</div>
+      </div>
+    </div>
+    <button type="submit" [routerLink]="['/forum']" [disabled]="postForm.invalid">Add Post</button>
+  </form>
+</div>
+
+<div class="post-list">
+  <h2>All Posts</h2>
+  <ul>
+    <li *ngFor="let post of posts">
+      <h3>{{ post.name }}</h3>
+      <p>{{ post.iduser }}</p>
+      <p>{{ post.post }}</p>
+      <p>Likes: {{ post.likes }} | Views: {{ post.views }}</p>
+      <button (click)="goToPostDetail(post.id)">View Details</button>
+    </li>
+  </ul>
+</div>
+<!--
+<div class="post-form">
+    <h2>Add a New Post</h2>
+    <form (ngSubmit)="addPost()" #postForm="ngForm">
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" [(ngModel)]="newPost.name" name="name" required #name="ngModel">
+        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="error-message">
+          <div *ngIf="name.errors?.required">Name is required.</div>
+        </div>
+      </div>
+      <div>
+        <label for="post">Post:</label>
+        <textarea id="post" [(ngModel)]="newPost.post" name="post" required #post="ngModel"></textarea>
+        <div *ngIf="post.invalid && (post.dirty || post.touched)" class="error-message">
+          <div *ngIf="post.errors?.required">Post is required.</div>
+        </div>
+      </div>
+      <button type="submit" [routerLink]="['/forum']" [disabled]="postForm.invalid">Add Post</button>
+    </form>
+  </div>
+   
+  
+  <div class="post-list">
+    <h2>All Posts</h2>
+    <ul>
+      <li *ngFor="let post of posts" >
+        <h3>{{ post.name }}</h3>
+        <p>{{ post.iduser }}</p>
+        <p>{{ post.post }}</p>
+        <p>Likes: {{ post.likes }} | Views: {{ post.views }}</p>
+        <button (click)="goToPostDetail(post.id)">View Details</button>
+        <app-commentlist [postId]="post.id"></app-commentlist> 
+      </li>
+    </ul>
+  </div>
+
+-->
+  
+<!--<div>
+    <h2>Create Post</h2>
+    <form (ngSubmit)="addPost()">
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" [(ngModel)]="newPost.name" required>
+      </div>
+      <div>
+        <label for="postContent">Post Content:</label>
+        <textarea id="postContent" name="postContent" [(ngModel)]="newPost.post" required></textarea>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  
+    <h2>Posts</h2>
+    <div *ngFor="let post of posts">
+      <h3>{{ post.name }}</h3>
+      <p>{{ post.post }}</p>
+      <p>Likes: {{ post.likes }}</p>
+      <p>Views: {{ post.views }}</p>
+  -->
+      <!-- Comments for the post -->
+     <!-- <app-comment [postId]="post.id"></app-comment>
+    </div>
+  </div>-->
+  

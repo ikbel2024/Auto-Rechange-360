@@ -1,0 +1,107 @@
+<div class="container mt-4">
+    <h2>Forum Admin</h2>
+  
+    <!-- Search Form -->
+    <div class="mb-3">
+      <label for="searchInput" class="form-label">Search by name:</label>
+      <div class="input-group">
+        <input type="text" class="form-control" id="searchInput" [(ngModel)]="searchInput" placeholder="Enter post name">
+        <button class="btn btn-primary" type="button" (click)="searchPost()">Search</button>
+      </div>
+    </div>
+  
+    <!-- Table -->
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>ID</th>
+          <th>Post</th>
+          <th>User ID</th>
+          <th>Likes</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let post of posts">
+          <td>{{ post.name }}</td>
+          <td>{{ post.id }}</td>
+          <td>{{ post.post }}</td>
+          <td>{{ post.iduser }}</td>
+          <td>{{ post.likes }}</td>
+          <td>
+            <button class="btn btn-info" (click)="selectPost(post)">Edit</button>
+            <button class="btn btn-danger" (click)="deletePost(post)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Edit Form -->
+    <div *ngIf="selectedPost">
+      <h3>Edit Post</h3>
+      <form (submit)="updatePost()">
+        <div class="mb-3">
+          <label for="editName" class="form-label">Name:</label>
+          <input type="text" class="form-control" id="editName" [(ngModel)]="selectedPost.name" name="editName" required>
+        </div>
+        <div class="mb-3">
+          <label for="editPost" class="form-label">Post:</label>
+          <textarea class="form-control" id="editPost" [(ngModel)]="selectedPost.post" name="editPost" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Post</button>
+      </form>
+    </div>
+  </div>
+  
+<!--<div class="post-container">
+    <h2>Forum Admin</h2>
+  
+    <div>
+      <input type="text" placeholder="Search by name" [(ngModel)]="searchInput">
+      <button (click)="searchPost()">Search</button>
+    </div>
+  
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>ID</th>
+          <th>Post</th>
+          <th>User ID</th>
+          <th>Likes</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let post of posts">
+          <td>{{ post.name }}</td>
+          <td>{{ post.id }}</td>
+          <td>{{ post.post }}</td>
+          <td>{{ post.iduser }}</td>
+          <td>{{ post.likes }}</td>
+          <td>
+            <button (click)="selectPost(post)">Edit</button>
+            <button (click)="deletePost(post)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div *ngIf="selectedPost">
+      <h3>Edit Post</h3>
+      <form (submit)="updatePost()">
+        <div>
+          <label for="name">Name:</label>
+          <input type="text" id="name" [(ngModel)]="selectedPost.name" name="name" required>
+        </div>
+        <div>
+          <label for="post">Post:</label>
+          <textarea id="post" [(ngModel)]="selectedPost.post" name="post" required></textarea>
+        </div>
+        <button type="submit">Update Post</button>
+      </form>
+    </div>
+  
+  </div>
+-->

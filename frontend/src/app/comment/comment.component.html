@@ -1,0 +1,130 @@
+<div class="post-container">
+  <div class="post-header">
+    <h2>{{ post.name }}</h2>
+    <p>{{ post.iduser }}</p>
+  </div>
+  <div class="post-content">
+    <p>{{ post.post }}</p>
+  </div>
+  <div class="post-footer">
+    <p>Likes: {{ post.likes }} | Views: {{ post.views }}</p>
+    <button (click)="likePost()">Like</button>
+  </div>
+
+  <div class="comment-form">
+    <h3>Add a Comment</h3>
+    <form (ngSubmit)="addComment()" #commentForm="ngForm">
+      <div>
+        <label for="comment">Comment:</label>
+        <textarea id="comment" [(ngModel)]="newComment.comment" name="comment" required #comment="ngModel"></textarea>
+        <div *ngIf="comment.invalid && (comment.dirty || comment.touched)" class="error-message">
+          <div *ngIf="comment.errors?.['required']">Comment is required.</div>
+        </div>
+      </div>
+      <button type="submit" [disabled]="commentForm.invalid">Add Comment</button>
+    </form>
+  </div>
+
+  <div class="comment-section">
+    <h3>Comments</h3>
+    <ul>
+      <li *ngFor="let comment of comments" class="comment">
+        <p>{{ comment.comment }}</p>
+        <p>Likes: {{ comment.likes }} | Dislikes: {{ comment.dislikes }}</p>
+        <button (click)="likeComment(comment)">Like</button>
+        <button (click)="dislikeComment(comment)">Dislike</button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+<!--
+<div class="post-container">
+  <div class="post-header">
+    <h2>{{ post.name }}</h2>
+    <p>{{ post.iduser }}</p>
+  </div>
+  <div class="post-content">
+    <p>{{ post.post }}</p>
+  </div>
+  <div class="post-footer">
+    <p>Likes: {{ post.likes }} | Views: {{ post.views }}</p>
+    <button (click)="likePost()">Like</button>
+  </div>
+
+  <div class="comment-form">
+    <h3>Add a Comment</h3>
+    <form (ngSubmit)="addComment()">
+      <div>
+        <label for="comment">Comment:</label>
+        <textarea id="comment" [(ngModel)]="newComment.comment" name="comment" required></textarea>
+      </div>
+      <button type="submit">Add Comment</button>
+    </form>
+  </div>
+
+  <div class="comment-section">
+    <h3>Comments</h3>
+    <ul>
+      <li *ngFor="let comment of comments" class="comment">
+        <p>{{ comment.comment }}</p>
+        <p>Likes: {{ comment.likes }} | Dislikes: {{ comment.dislikes }}</p>
+        <button (click)="likeComment(comment)">Like</button>
+        <button (click)="dislikeComment(comment)">Dislike</button>
+      </li>
+    </ul>
+  </div>
+</div>
+-->
+
+
+<!--<div class="post-detail">
+  <h2>{{ post.name }}</h2>
+  <p>{{ post.iduser }}</p>
+  <p>{{ post.post }}</p>
+  <p>Likes: {{ post.likes }} | Views: {{ post.views }}</p>
+
+  <div class="comment-form">
+    <h3>Add a Comment</h3>
+    <form (ngSubmit)="addComment()">
+      <div>
+        <label for="comment">Comment:</label>
+        <textarea id="comment" [(ngModel)]="newComment.comment" name="comment" required></textarea>
+      </div>
+      <button type="submit">Add Comment</button>
+    </form>
+  </div>
+
+  <h3>Comments</h3>
+  <ul>
+    <li *ngFor="let comment of comments">
+      <p>{{ comment.comment }}</p>
+      <p>Likes: {{ comment.likes }} | Dislikes: {{ comment.dislikes }}</p>
+    </li>
+  </ul>
+</div>-->
+
+
+
+
+<!--<div>
+    <h3>Comments</h3>
+    <form (ngSubmit)="addComment()">
+      <div>
+        <label for="commentContent">Comment:</label>
+        <textarea id="commentContent" name="commentContent" [(ngModel)]="newComment.comment" required></textarea>
+      </div>
+      <button type="submit">Add Comment</button>
+    </form>
+  
+    <div *ngFor="let comment of comments">
+      <p>{{ comment.comment }}</p>
+      <p>Likes: {{ comment.likes }}</p>
+      <p>Dislikes: {{ comment.dislikes }}</p> -->
+  
+      <!-- Responses for the comment -->
+ <!--     <app-respond [commentId]="comment.id"></app-respond>
+    </div>
+  </div>-->
+  
